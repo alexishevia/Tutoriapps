@@ -1,0 +1,16 @@
+common: &common
+  adapter: mysql2
+  host: localhost
+  username: root
+  password:
+  encoding: utf8
+  pool: 5
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *common
+  database: tutoriapps_development
+
+test: &test
+  <<: *common
+  database: tutoriapps_test
