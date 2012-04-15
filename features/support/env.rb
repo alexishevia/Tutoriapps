@@ -61,6 +61,7 @@ Spork.each_run do
   load "#{Rails.root}/config/routes.rb"
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
   require 'factory_girl_rails'
+  World FactoryGirl::Syntax::Methods
 end
 
 
