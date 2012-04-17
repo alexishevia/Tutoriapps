@@ -1,8 +1,7 @@
 # coding: utf-8
 # language: es
 
-Cuando /^un usuario intente registrarse usando un correo de la UTP$/ do
-  @user_attributes = attributes_for(:user).merge(:email => 'fulano@utp.ac.pa')
+Cuando /^llene y envíe el formulario de registro$/ do
   visit root_path
   within "form.new_user" do
     fill_in I18n.t('activerecord.attributes.user.name'), 
@@ -15,6 +14,11 @@ Cuando /^un usuario intente registrarse usando un correo de la UTP$/ do
       with: @user_attributes[:password]
     click_button I18n.t('devise.sign_up')
   end
+end
+
+Cuando /^un usuario intente registrarse usando un correo de la UTP$/ do
+  @user_attributes = attributes_for(:user).merge(:email => 'fulano@utp.ac.pa')
+  Cuando "llene y envíe el formulario de registro"
 end
 
 Entonces /^se le enviará un link de confirmación a su correo$/ do
@@ -31,4 +35,13 @@ end
 
 Entonces /^no aparecerá como verificado$/ do
   @user.confirmed?.should be_false
+end
+
+Cuando /^un usuario intente registrarse usando un correo que no es de la UTP$/ do
+  @user_attributes = attributes_for(:user).merge(:email => 'fulano@gmail.com')
+  Cuando "llene y envíe el formulario de registro"
+end
+
+Entonces /^recibirá un mensaje de error$/ do
+  page.should have_content I18n.t('activerecord.errors.user.email.only_utp')
 end

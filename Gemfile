@@ -24,3 +24,9 @@ group :test do
   gem 'spork', '0.9.0'
   gem 'factory_girl_rails', '3.1.0', require: false
 end
+
+group :development, :test do
+  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+  gem 'ruby-debug19'
+end

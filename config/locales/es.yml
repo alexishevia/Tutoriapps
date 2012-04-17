@@ -204,4 +204,6 @@ es:
         current_password: Contraseña actual
         remember_me: No cerrar sesión
     errors:
-      <<: *errors
+      user:
+        email: 
+          only_utp: Solo se permiten correos de la UTP (@utp.ac.pa)
