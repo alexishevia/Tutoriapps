@@ -198,6 +198,7 @@ es:
     attributes:
       user:
         name: Nombre
+        email: Email
         password: Contraseña
         password_confirmation: Repetir contraseña
         current_password: Contraseña actual

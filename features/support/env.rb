@@ -3,6 +3,8 @@ require 'spork'
 Spork.prefork do
   require 'rubygems'
   require 'cucumber/rails'
+  require 'email_spec' # add this line if you use spork
+  require 'email_spec/cucumber'
 
   # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
   # order to ease the transition to Capybara we set the default here. If you'd
@@ -59,6 +61,7 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
   load "#{Rails.root}/config/routes.rb"
+  I18n.reload!
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
   require 'factory_girl_rails'
   World FactoryGirl::Syntax::Methods

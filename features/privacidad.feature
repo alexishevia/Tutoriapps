@@ -6,13 +6,13 @@ Característica: Privacidad
   Para expresarme con seguridad
   Quiero que mis compañeros de clase sean los únicos que puedan ver lo que comparta
 
-  @wip
   Escenario: Registrarse con correo de la UTP
     Cuando un usuario intente registrarse usando un correo de la UTP
     Entonces se le enviará un link de confirmación a su correo
     Y quedará registrado en el sistema
     Pero no aparecerá como verificado
 
+  @wip
   Escenario: Registrarse con otro correo 
     Cuando un usuario intente registrarse usando un correo que no es de la UTP
     Entonces recibirá un mensaje de error
