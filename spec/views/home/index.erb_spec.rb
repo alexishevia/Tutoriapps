@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-describe 'home/index.erb' do 
+describe 'home/index' do 
   it 'muestra formulario de registro' do 
-    render 
-    rendered.should contain('Hola mundo')
+    assign(:resource, mock_model("User").as_null_object)
+    render
+    save_and_open_page
+    rendered.should have_selector('form.new_user')
   end
 end

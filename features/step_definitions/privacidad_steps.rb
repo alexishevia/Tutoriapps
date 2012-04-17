@@ -6,7 +6,7 @@ end
 
 Cuando /^intenta registrarse usando un correo de la UTP$/ do
   user_attributes = attributes_for(:user)
-  within ".signup" do
+  within ".new_user" do
     fill_in I18n.t('activerecord.attributes.user.name'), 
       with: user_attributes[:name]
     fill_in I18n.t('activerecord.attributes.user.email'), 

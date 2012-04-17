@@ -195,5 +195,12 @@ es:
     errors:
       <<: *errors
   activerecord:
+    attributes:
+      user:
+        name: Nombre
+        password: Contraseña
+        password_confirmation: Repetir contraseña
+        current_password: Contraseña actual
+        remember_me: No cerrar sesión
     errors:
       <<: *errors
