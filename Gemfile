@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.2'
 gem 'jquery-rails', '2.0.2'
 gem 'mysql2', '0.3.11'
-gem 'sqlite3'
-gem 'devise'
+gem 'sqlite3', '1.3.5'
+gem 'devise', '2.0.4'
 
 group :assets do
   gem 'sass-rails',   '3.2.5'
@@ -27,7 +27,5 @@ group :test do
 end
 
 group :development, :test do
-  # gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
-  # gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
-  # gem 'ruby-debug19'
+  gem 'ruby-debug19'
 end

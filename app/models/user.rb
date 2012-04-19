@@ -32,4 +32,8 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+
+  validates :email, :format => { :with => /@utp.ac.pa$/, :message => 
+    "#{I18n.t('errors.invalid')} - " + 
+    "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
 end

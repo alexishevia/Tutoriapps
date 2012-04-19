@@ -12,17 +12,18 @@ Característica: Privacidad
     Y quedará registrado en el sistema
     Pero no aparecerá como verificado
 
-  @wip
   Escenario: Registrarse con otro correo 
     Cuando un usuario intente registrarse usando un correo que no es de la UTP
     Entonces recibirá un mensaje de error
     Y no quedará registrado en el sistema
 
   Escenario: Link de confirmación
-    Dado que un usuario se registró y se le envió un link de confirmación
+    Dado que un usuario se registró
+    Y se le envió un link de confirmación
     Cuando el usuario haga clic en el link de confirmación
     Entonces aparecerá como verificado
 
+  @wip
   Escenario: Iniciar sesión con correo verificado
     Dado que un usuario ha sido verificado
     Cuando intente iniciar sesión

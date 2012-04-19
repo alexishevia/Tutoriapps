@@ -3,17 +3,17 @@
 %>
   <%= devise_error_messages! %>
 
-  <div class="field"><%= f.label :name %><br />
+  <div><%= f.label :name %><br />
   <%= f.text_field :name %></div>
 
-  <div class="field"><%= f.label :email %><br />
+  <div><%= f.label :email %><br />
   <%= f.email_field :email %></div>
 
-  <div class="field"><%= f.label :password %><br />
+  <div><%= f.label :password %><br />
   <%= f.password_field :password %></div>
 
-  <div class="field"><%= f.label :password_confirmation %><br />
+  <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div class="field"><%= f.submit I18n.t('devise.sign_up') %></div>
+  <div><%= f.submit I18n.t('devise.sign_up') %></div>
 <% end %>

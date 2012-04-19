@@ -18,7 +18,7 @@ end
 
 Cuando /^un usuario intente registrarse usando un correo de la UTP$/ do
   @user_attributes = attributes_for(:user).merge(:email => 'fulano@utp.ac.pa')
-  Cuando "llene y envíe el formulario de registro"
+  step "llene y envíe el formulario de registro"
 end
 
 Entonces /^se le enviará un link de confirmación a su correo$/ do
@@ -39,9 +39,33 @@ end
 
 Cuando /^un usuario intente registrarse usando un correo que no es de la UTP$/ do
   @user_attributes = attributes_for(:user).merge(:email => 'fulano@gmail.com')
-  Cuando "llene y envíe el formulario de registro"
+  step "llene y envíe el formulario de registro"
 end
 
 Entonces /^recibirá un mensaje de error$/ do
   page.should have_content I18n.t('activerecord.errors.user.email.only_utp')
+end
+
+Entonces /^no quedará registrado en el sistema$/ do
+  @user = User.find_by_email(@user_attributes[:email])
+  @user.should be_nil
+end
+
+Dado /^que un usuario se registró$/ do
+  @user_attributes = attributes_for(:user)
+  step "llene y envíe el formulario de registro"
+end
+
+Dado /^se le envió un link de confirmación$/ do
+  step "se le enviará un link de confirmación a su correo"
+end
+
+Cuando /^el usuario haga clic en el link de confirmación$/ do
+  open_last_email_for(@user_attributes[:email])
+  click_first_link_in_email
+end
+
+Entonces /^aparecerá como verificado$/ do
+  @user = User.find_by_email(@user_attributes[:email])
+  @user.confirmed?.should be_true
 end
