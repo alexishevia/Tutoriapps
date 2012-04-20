@@ -100,3 +100,8 @@ end
 Entonces /^no podrá iniciar sesión$/ do
   page.should have_content( I18n.t 'devise.failure.unconfirmed')
 end
+
+Dado /^que un usuario ha iniciado sesión$/ do
+  step 'que un usuario ha sido verificado'
+  step 'intente iniciar sesión'
+end
