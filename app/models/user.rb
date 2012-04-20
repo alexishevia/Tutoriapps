@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 
   validates :email, :format => { :with => /@utp.ac.pa$/, :message => 
-    "#{I18n.t('errors.invalid')} - " + 
+    "#{I18n.t('errors.messages.invalid')} - " + 
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
+  validates :name, :presence => true
 end

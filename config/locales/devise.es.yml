@@ -11,6 +11,7 @@ es:
 
   devise:
     sign_up: Crear Cuenta
+    sign_in: Iniciar Sesión
     failure:
       already_authenticated: 'Ya iniciaste sesión.'
       unauthenticated: 'Tienes que registrarte o iniciar sesión antes de continuar.'

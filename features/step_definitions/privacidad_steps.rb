@@ -3,7 +3,7 @@
 
 Cuando /^llene y envíe el formulario de registro$/ do
   visit root_path
-  within "form.new_user" do
+  within "form.sign_up" do
     fill_in I18n.t('activerecord.attributes.user.name'), 
       with: @user_attributes[:name]
     fill_in I18n.t('activerecord.attributes.user.email'), 
@@ -68,4 +68,35 @@ end
 Entonces /^aparecerá como verificado$/ do
   @user = User.find_by_email(@user_attributes[:email])
   @user.confirmed?.should be_true
+end
+
+Dado /^que un usuario ha sido verificado$/ do
+  @user_attributes = attributes_for(:user)
+  user = User.new(@user_attributes)
+  user.confirmed_at = Time.now
+  user.save!
+end
+
+Cuando /^intente iniciar sesión$/ do
+  visit root_path
+  within "form.sign_in" do
+    fill_in I18n.t('activerecord.attributes.user.email'), 
+      with: @user_attributes[:email]
+    fill_in I18n.t('activerecord.attributes.user.password'), 
+      with: @user_attributes[:password]
+    click_button I18n.t('devise.sign_in')
+  end
+end
+
+Entonces /^iniciará sesión sin problemas$/ do
+  page.should have_content( I18n.t 'devise.sessions.signed_in')
+end
+
+Dado /^aún no ha sido verificado$/ do
+  @user = User.find_by_email(@user_attributes[:email])
+  @user.confirmed?.should be_false
+end
+
+Entonces /^no podrá iniciar sesión$/ do
+  page.should have_content( I18n.t 'devise.failure.unconfirmed')
 end

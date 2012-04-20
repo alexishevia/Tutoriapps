@@ -23,17 +23,18 @@ Característica: Privacidad
     Cuando el usuario haga clic en el link de confirmación
     Entonces aparecerá como verificado
 
-  @wip
   Escenario: Iniciar sesión con correo verificado
     Dado que un usuario ha sido verificado
     Cuando intente iniciar sesión
     Entonces iniciará sesión sin problemas
 
   Escenario: Iniciar sesión con correo no verificado
-    Dado que un usuario aún no ha sido verificado
+    Dado que un usuario se registró
+    Pero aún no ha sido verificado
     Cuando intente iniciar sesión
     Entonces no podrá iniciar sesión
 
+  @wip
   Escenario: Acceder a un grupo que pertenezco
     Dado que un usuario ha iniciado sesión
     Y que el usuario está matriculado en la materia "Cálculo II"
