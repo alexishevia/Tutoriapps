@@ -26,7 +26,9 @@ Característica: Unirme a una Clase
   @wip
   Escenario: Acceder a un grupo que no pertenezco
     Dado que un usuario ha iniciado sesión
+    Y la clase "Cálculo II" ha sido creada
     Pero el usuario no está matriculado en la clase "Cálculo II"
+    Cuando intente acceder al grupo "Cálculo II"
     Entonces no podrá ver la información del grupo
 
   Escenario: Ver mis grupos

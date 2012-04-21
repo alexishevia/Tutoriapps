@@ -56,3 +56,16 @@ Entonces /^podrá ver la información del grupo "([^"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   page.should have_content(group.name)
 end
+
+Dado /^el usuario no está matriculado en la clase "([^"]*)"$/ do |nombre|
+  group = Group.find_by_name(nombre)
+  group.members.exists?(@user).should be_false
+end
+
+Dado /^la clase "([^"]*)" ha sido creada$/ do |nombre|
+  create(:group, :name => nombre)
+end
+
+Entonces /^no podrá ver la información del grupo$/ do
+  page.status_code.should eq(403)
+end
