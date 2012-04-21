@@ -57,7 +57,7 @@ Entonces /^podrá ver la información del grupo "([^"]*)"$/ do |nombre|
   page.should have_content(group.name)
 end
 
-Dado /^el usuario no está matriculado en la clase "([^"]*)"$/ do |nombre|
+Dado /^el usuario no está matriculado en la materia "([^"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   group.members.exists?(@user).should be_false
 end
