@@ -6,7 +6,7 @@ class Ability
       can :read, Group, :id => user.group_ids
     end
     if user.admin?
-        can :create, Group
+        can :manage, Group
     end
   end
 end

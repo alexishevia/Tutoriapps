@@ -16,7 +16,7 @@ Cuando /^llene y envíe el formulario de registro$/ do
   end
 end
 
-Cuando /^un usuario intente registrarse usando un correo de la UTP$/ do
+Cuando /^un estudiante intente registrarse usando un correo de la UTP$/ do
   @user_attrs = attributes_for(:user, :email => 'fulano@utp.ac.pa')
   step "llene y envíe el formulario de registro"
 end
@@ -37,17 +37,17 @@ Entonces /^no aparecerá como verificado$/ do
   @user.confirmed?.should be_false
 end
 
-Cuando /^un usuario intente registrarse usando un correo que no es de la UTP$/ do
+Cuando /^un estudiante intente registrarse usando un correo que no es de la UTP$/ do
   @user_attrs = attributes_for(:user, :email => 'fulano@gmail.com')
   step "llene y envíe el formulario de registro"
 end
 
-Entonces /^el usuario no quedará registrado en el sistema$/ do
+Entonces /^el estudiante no quedará registrado en el sistema$/ do
   @user = User.find_by_email(@user_attrs[:email])
   @user.should be_nil
 end
 
-Dado /^que un usuario se registró$/ do
+Dado /^que un estudiante se registró$/ do
   @user_attrs = attributes_for(:user)
   step "llene y envíe el formulario de registro"
 end
@@ -56,7 +56,7 @@ Dado /^se le envió un link de confirmación$/ do
   step "se le enviará un link de confirmación a su correo"
 end
 
-Cuando /^el usuario haga clic en el link de confirmación$/ do
+Cuando /^el estudiante haga clic en el link de confirmación$/ do
   open_last_email_for(@user_attrs[:email])
   click_first_link_in_email
 end
@@ -66,7 +66,7 @@ Entonces /^aparecerá como verificado$/ do
   @user.confirmed?.should be_true
 end
 
-Dado /^que un usuario ha sido verificado$/ do
+Dado /^que un estudiante ha sido verificado$/ do
   @user_attrs = attributes_for(:user)
   @user = User.new(@user_attrs)
   @user.confirmed_at = Time.now
@@ -97,7 +97,7 @@ Entonces /^no podrá iniciar sesión$/ do
   page.should have_content( I18n.t 'devise.failure.unconfirmed')
 end
 
-Dado /^que un usuario ha iniciado sesión$/ do
-  step 'que un usuario ha sido verificado'
+Dado /^que un estudiante ha iniciado sesión$/ do
+  step 'que un estudiante ha sido verificado'
   step 'intente iniciar sesión'
 end

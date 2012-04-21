@@ -9,7 +9,7 @@ Dado /^que se le han dado permisos de administrador$/ do
 end
 
 Dado /^que un administrador ha iniciado sesión$/ do
-  step 'que un usuario ha sido verificado'
+  step 'que un estudiante ha sido verificado'
   step 'que se le han dado permisos de administrador'
   step 'intente iniciar sesión'
 end
@@ -38,11 +38,7 @@ Entonces /^el grupo no quedará registrado en el sistema$/ do
   Group.find_by_name(@group_attrs[:name]).should be_nil
 end
 
-Dado /^que un estudiante ha iniciado sesión$/ do
-  step 'que un usuario ha iniciado sesión'
-end
-
-Dado /^que el usuario está matriculado en la materia "([^"]*)"$/ do |nombre|
+Dado /^que el estudiante está matriculado en la materia "([^"]*)"$/ do |nombre|
   group = create(:group, :name => nombre)
   group.members << @user
 end
@@ -57,7 +53,7 @@ Entonces /^podrá ver la información del grupo "([^"]*)"$/ do |nombre|
   page.should have_content(group.name)
 end
 
-Dado /^el usuario no está matriculado en la materia "([^"]*)"$/ do |nombre|
+Dado /^el estudiante no está matriculado en la materia "([^"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   group.members.exists?(@user).should be_false
 end

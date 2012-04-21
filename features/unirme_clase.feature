@@ -18,14 +18,14 @@ Característica: Unirme a una Clase
     Entonces el grupo no quedará registrado en el sistema
 
   Escenario: Acceder a un grupo que pertenezco
-    Dado que un usuario ha iniciado sesión
-    Y que el usuario está matriculado en la materia "Cálculo II"
+    Dado que un estudiante ha iniciado sesión
+    Y que el estudiante está matriculado en la materia "Cálculo II"
     Cuando intente acceder al grupo "Cálculo II"
     Entonces podrá ver la información del grupo "Cálculo II"
 
   Escenario: Acceder a un grupo que no pertenezco
-    Dado que un usuario ha iniciado sesión
+    Dado que un estudiante ha iniciado sesión
     Y la clase "Cálculo II" ha sido creada
-    Pero el usuario no está matriculado en la materia "Cálculo II"
+    Pero el estudiante no está matriculado en la materia "Cálculo II"
     Cuando intente acceder al grupo "Cálculo II"
     Entonces no podrá ver la información del grupo
