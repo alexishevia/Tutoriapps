@@ -14,8 +14,7 @@ Característica: Privacidad
 
   Escenario: Registrarse con otro correo 
     Cuando un usuario intente registrarse usando un correo que no es de la UTP
-    Entonces recibirá un mensaje de error
-    Y no quedará registrado en el sistema
+    Entonces el usuario no quedará registrado en el sistema
 
   Escenario: Link de confirmación
     Dado que un usuario se registró

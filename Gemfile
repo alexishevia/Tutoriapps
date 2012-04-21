@@ -4,6 +4,7 @@ gem 'rails', '3.2.2'
 gem 'jquery-rails', '2.0.2'
 gem 'mysql2', '0.3.11'
 gem 'devise', '2.0.4'
+gem 'cancan', '1.6.7'
 
 group :assets do
   gem 'sass-rails',   '3.2.5'

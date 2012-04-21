@@ -42,11 +42,7 @@ Cuando /^un usuario intente registrarse usando un correo que no es de la UTP$/ d
   step "llene y envíe el formulario de registro"
 end
 
-Entonces /^recibirá un mensaje de error$/ do
-  page.should have_content I18n.t('activerecord.errors.user.email.only_utp')
-end
-
-Entonces /^no quedará registrado en el sistema$/ do
+Entonces /^el usuario no quedará registrado en el sistema$/ do
   @user = User.find_by_email(@user_attrs[:email])
   @user.should be_nil
 end
