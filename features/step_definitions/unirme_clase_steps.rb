@@ -41,3 +41,18 @@ end
 Dado /^que un estudiante ha iniciado sesión$/ do
   step 'que un usuario ha iniciado sesión'
 end
+
+Dado /^que el usuario está matriculado en la materia "([^"]*)"$/ do |nombre|
+  group = create(:group, :name => nombre)
+  group.members << @user
+end
+
+Cuando /^intente acceder al grupo "([^"]*)"$/ do |nombre|
+  group = Group.find_by_name(nombre)
+  visit group_path(group)
+end
+
+Entonces /^podrá ver la información del grupo "([^"]*)"$/ do |nombre|
+  group = Group.find_by_name(nombre)
+  page.should have_content(group.name)
+end

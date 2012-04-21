@@ -32,14 +32,3 @@ Característica: Privacidad
     Pero aún no ha sido verificado
     Cuando intente iniciar sesión
     Entonces no podrá iniciar sesión
-
-  Escenario: Acceder a un grupo que pertenezco
-    Dado que un usuario ha iniciado sesión
-    Y que el usuario está matriculado en la materia "Cálculo II"
-    Cuando intente acceder al grupo de "Cálculo II"
-    Entonces podrá ver toda la información del grupo
-
-  Escenario: Acceder a un grupo que no pertenezco
-    Dado que un usuario ha iniciado sesión
-    Pero el usuario no está matriculado en la clase "Cálculo II"
-    Entonces no podrá ver la información del grupo

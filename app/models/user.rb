@@ -38,4 +38,6 @@ class User < ActiveRecord::Base
     "#{I18n.t('errors.messages.invalid')} - " + 
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
   validates :name, :presence => true
+
+  has_and_belongs_to_many :groups, :uniq => true
 end
