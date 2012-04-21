@@ -131,6 +131,8 @@ es:
       create: Crear %{model}
       submit: Guardar %{model}
       update: Actualizar %{model}
+    messages:
+      created: "%{model} creado exitosamente."
   number:
     currency:
       format:
@@ -195,6 +197,8 @@ es:
     errors:
       <<: *errors
   activerecord:
+    models:
+      group: Grupo
     attributes:
       user:
         name: Nombre
@@ -203,6 +207,8 @@ es:
         password_confirmation: Repetir contraseña
         current_password: Contraseña actual
         remember_me: No cerrar sesión
+      group:
+        name: Nombre
     errors:
       user:
         email: 

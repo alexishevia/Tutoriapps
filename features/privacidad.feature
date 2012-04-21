@@ -34,7 +34,6 @@ Característica: Privacidad
     Cuando intente iniciar sesión
     Entonces no podrá iniciar sesión
 
-  @wip
   Escenario: Acceder a un grupo que pertenezco
     Dado que un usuario ha iniciado sesión
     Y que el usuario está matriculado en la materia "Cálculo II"

@@ -21,6 +21,7 @@
 #  created_at             :datetime        not null
 #  updated_at             :datetime        not null
 #  name                   :string(255)
+#  admin                  :boolean(1)      default(FALSE), not null
 #
 
 class User < ActiveRecord::Base
