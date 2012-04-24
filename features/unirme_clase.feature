@@ -17,6 +17,8 @@ Característica: Unirme a una Clase
     Cuando intente crear un grupo nuevo
     Entonces el grupo no quedará registrado en el sistema
 
+  Escenario: Administrador agrega un estudiante a un grupo
+
   Escenario: Acceder a un grupo que pertenezco
     Dado que un estudiante ha iniciado sesión
     Y que el estudiante está matriculado en la materia "Cálculo II"

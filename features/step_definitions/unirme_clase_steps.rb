@@ -38,27 +38,27 @@ Entonces /^el grupo no quedará registrado en el sistema$/ do
   Group.find_by_name(@group_attrs[:name]).should be_nil
 end
 
-Dado /^que el estudiante está matriculado en la materia "([^"]*)"$/ do |nombre|
+Dado /^que el estudiante está matriculado en la materia "([^\"]*)"$/ do |nombre|
   group = create(:group, :name => nombre)
   group.members << @user
 end
 
-Cuando /^intente acceder al grupo "([^"]*)"$/ do |nombre|
+Cuando /^intente acceder al grupo "([^\"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   visit group_path(group)
 end
 
-Entonces /^podrá ver la información del grupo "([^"]*)"$/ do |nombre|
+Entonces /^podrá ver la información del grupo "([^\"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   page.should have_content(group.name)
 end
 
-Dado /^el estudiante no está matriculado en la materia "([^"]*)"$/ do |nombre|
+Dado /^el estudiante no está matriculado en la materia "([^\"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   group.members.exists?(@user).should be_false
 end
 
-Dado /^la clase "([^"]*)" ha sido creada$/ do |nombre|
+Dado /^la clase "([^\"]*)" ha sido creada$/ do |nombre|
   create(:group, :name => nombre)
 end
 

@@ -24,6 +24,7 @@ group :test do
   gem 'spork', '0.9.0'
   gem 'factory_girl_rails', '3.1.0', require: false
   gem 'launchy', '2.1.0'
+  gem 'forgery', '0.5.0'
 end
 
 group :development, :test do

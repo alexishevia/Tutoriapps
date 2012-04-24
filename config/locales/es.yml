@@ -1,4 +1,6 @@
 es:
+  error: Error
+  fix_and_try_again: Por favor corrija estos errores y vuélvalo a intentar
   date:
     abbr_day_names:
     - dom
@@ -199,6 +201,7 @@ es:
   activerecord:
     models:
       group: Grupo
+      post: Post
     attributes:
       user:
         name: Nombre

@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
 
   def show
+    @post = @group.posts.build
   end
 
   def new
@@ -11,7 +12,7 @@ class GroupsController < ApplicationController
   def create
     if @group.save
       redirect_to @group, :notice => I18n.t('helpers.messages.created', 
-        :model => I18n.t('group'))
+        :model => I18n.t('activerecord.models.group'))
     else
       render :action => 'new'
     end
