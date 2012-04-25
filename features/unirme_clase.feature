@@ -18,6 +18,7 @@ Característica: Unirme a una Clase
     Entonces el grupo no quedará registrado en el sistema
 
   Escenario: Administrador agrega un estudiante a un grupo
+    Dado PENDIENTE
 
   Escenario: Acceder a un grupo que pertenezco
     Dado que un estudiante ha iniciado sesión
@@ -33,3 +34,4 @@ Característica: Unirme a una Clase
     Entonces no podrá ver la información del grupo
 
   Escenario: Ver mis grupos
+    Dado PENDIENTE
