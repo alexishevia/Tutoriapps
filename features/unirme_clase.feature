@@ -7,19 +7,6 @@ Característica: Unirme a una Clase
   Y poder solicitar ayuda a las personas adecuadas
   Quiero poder unirme al grupo de una clase específica
 
-  Escenario: Administrador crea un grupo
-    Dado que un administrador ha iniciado sesión
-    Cuando intente crear un grupo nuevo
-    Entonces el grupo quedará registrado en el sistema
-
-  Escenario: Estudiante crea un grupo
-    Dado que un estudiante ha iniciado sesión
-    Cuando intente crear un grupo nuevo
-    Entonces el grupo no quedará registrado en el sistema
-
-  Escenario: Administrador agrega un estudiante a un grupo
-    Dado PENDIENTE
-
   Escenario: Acceder a un grupo que pertenezco
     Dado que un estudiante ha iniciado sesión
     Y que el estudiante está matriculado en la materia "Cálculo II"
@@ -34,4 +21,7 @@ Característica: Unirme a una Clase
     Entonces no podrá ver la información del grupo
 
   Escenario: Ver mis grupos
-    Dado PENDIENTE
+    Dado que un estudiante ha iniciado sesión
+    Y que el estudiante está matriculado en 3 materias
+    Cuando entre a su página de inicio
+    Entonces podrá ver los grupos para las 3 materias en las que está matriculado
