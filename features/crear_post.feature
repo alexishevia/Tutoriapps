@@ -6,7 +6,6 @@ Característica: Crear Post
   Para compartir información con mis compañeros
   Quiero crear posts en mis grupos
 
-  @wip
   Escenario: Crear un post en mi grupo
     Dado que un estudiante ha iniciado sesión
     Y que el estudiante está matriculado en la materia "Cálculo II"
@@ -20,6 +19,7 @@ Característica: Crear Post
     Cuando intente crear un post en el muro de "Cálculo II"
     Entonces el post no quedará grabado en el sistema
 
+  @wip
   Escenario: Ver posts
     Dado que un estudiante ha iniciado sesión
     Y que el estudiante está matriculado en la materia "Cálculo II"

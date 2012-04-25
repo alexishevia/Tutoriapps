@@ -3,3 +3,6 @@
   <%= f.error_messages %>
   <%= f.text_field :text %><%= f.submit %>
 <% end %>
+<% for post in @group.posts %>
+  <div><%= post.text %></div>
+<% end %>

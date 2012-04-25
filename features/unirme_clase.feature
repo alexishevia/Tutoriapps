@@ -31,3 +31,5 @@ Característica: Unirme a una Clase
     Pero el estudiante no está matriculado en la materia "Cálculo II"
     Cuando intente acceder al grupo "Cálculo II"
     Entonces no podrá ver la información del grupo
+
+  Escenario: Ver mis grupos
