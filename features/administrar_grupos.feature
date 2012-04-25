@@ -17,4 +17,4 @@ Característica: Administrar Grupos
     Entonces el grupo no quedará registrado en el sistema
 
   Escenario: Administrador agrega un estudiante a un grupo
-    Dado PENDIENTE
+    Dado que un administrador ha iniciado sesión

@@ -42,8 +42,8 @@ Dado /^que el estudiante está matriculado en (\d+) materias$/ do |n|
   @user.groups.count.should eq(n)
 end
 
-Cuando /^entre a su página de inicio$/ do
-  visit home_path
+Cuando /^entre a la página de inicio$/ do
+  visit root_path
 end
 
 Entonces /^podrá ver los grupos para las (\d+) materias en las que está matriculado$/ do |n|

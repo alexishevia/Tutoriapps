@@ -23,5 +23,5 @@ Característica: Unirme a una Clase
   Escenario: Ver mis grupos
     Dado que un estudiante ha iniciado sesión
     Y que el estudiante está matriculado en 3 materias
-    Cuando entre a su página de inicio
+    Cuando entre a la página de inicio
     Entonces podrá ver los grupos para las 3 materias en las que está matriculado

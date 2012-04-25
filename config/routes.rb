@@ -1,5 +1,6 @@
 Tutoriapps::Application.routes.draw do
-  get '/home', :to => 'home#home', :as => 'home'
+  get '/home', :to => 'home#home', :as => 'user_root'
+
   devise_for :users
 
   resources :groups do
