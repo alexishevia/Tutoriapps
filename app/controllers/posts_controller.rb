@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def create
     @group = Group.find(params[:group_id])
-    @post = @group.posts.build(params[:post].merge(:user => current_user))
+    @post = @group.posts.build(params[:post].merge(:author => current_user))
     if @post.save
       redirect_to @group
     else

@@ -11,8 +11,8 @@
 #
 
 class Post < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
 
-  validates :user, :group, :text, :presence => true
+  validates :author, :group, :text, :presence => true
 end
