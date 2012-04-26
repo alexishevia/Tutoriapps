@@ -1,8 +1,72 @@
-<%= @group.name %>
-<%= form_for [@group, @post] do |f| %>
-  <%= f.error_messages %>
-  <%= f.text_field :text %><%= f.submit %>
-<% end %>
-<% for post in @group.posts %>
-  <div><%= post.text %></div>
-<% end %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Mis Grupos:</li>
+          <% for group in @groups %>
+            <li><%= link_to group.name, group %></li>
+          <% end %>
+          <% if can? :create, Group %>
+            <li>
+              <%= link_to I18n.t('helpers.submit.create', 
+              :model => I18n.t('activerecord.models.group')), new_group_path %>
+            </li>
+          <% end %>
+        </ul>
+        <ul class="nav nav-list">
+          <li class="nav-header">Miembros:</li>
+          <li>Usuario1</li>
+          <li>Usuario2</li>
+          <li>Usuario3</li>
+          <% if can? :manage, Group %>
+            <li>
+              <form>
+                <input type="email" />
+                <input type="submit" value="agregar usuario" />
+              </form>
+            </li>
+          <% end %>
+        </ul>
+      </div><!--/.well -->
+    </div><!--/span-->
+    <div class="span9">
+      <div class="hero-unit">
+        <%= @group.name %>
+        <%= form_for [@group, @post] do |f| %>
+          <%= f.error_messages %>
+          <%= f.text_field :text %><%= f.submit %>
+        <% end %>
+        <% for post in @group.posts %>
+          <div><%= post.text %></div>
+        <% end %>
+
+        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+      </div>
+      <div class="row-fluid">
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+        <div class="span4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+      </div><!--/row-->
+    </div><!--/span-->
+  </div><!--/row-->
+
+  <hr>
+
+  <footer>
+    <p>&copy; Turoriapps 2012</p>
+</footer>
+
+</div><!--/.fluid-container-->

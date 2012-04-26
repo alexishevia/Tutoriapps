@@ -4,6 +4,11 @@ class GroupsController < ApplicationController
 
   def show
     @post = @group.posts.build
+    if can? :manage, Group
+      @groups = Group.all
+    else
+      @groups = current_user.groups
+    end 
   end
 
   def new
