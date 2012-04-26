@@ -1,4 +1,6 @@
 es:
+  error: Error
+  fix_and_try_again: Por favor corrija estos errores y vuélvalo a intentar
   date:
     abbr_day_names:
     - dom
@@ -131,6 +133,8 @@ es:
       create: Crear %{model}
       submit: Guardar %{model}
       update: Actualizar %{model}
+    messages:
+      created: "%{model} creado exitosamente."
   number:
     currency:
       format:
@@ -195,6 +199,9 @@ es:
     errors:
       <<: *errors
   activerecord:
+    models:
+      group: Grupo
+      post: Post
     attributes:
       user:
         name: Nombre
@@ -203,6 +210,8 @@ es:
         password_confirmation: Repetir contraseña
         current_password: Contraseña actual
         remember_me: No cerrar sesión
+      group:
+        name: Nombre
     errors:
       user:
         email: 

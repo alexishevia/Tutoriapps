@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.2'
 gem 'jquery-rails', '2.0.2'
 gem 'mysql2', '0.3.11'
-# gem 'sqlite3', '1.3.5'
 gem 'devise', '2.0.4'
+gem 'cancan', '1.6.7'
 
 group :assets do
   gem 'sass-rails',   '3.2.5'
@@ -24,6 +24,8 @@ group :test do
   gem 'capybara', '1.1.2'
   gem 'spork', '0.9.0'
   gem 'factory_girl_rails', '3.1.0', require: false
+  gem 'launchy', '2.1.0'
+  gem 'forgery', '0.5.0'
 end
 
 group :development, :test do
@@ -31,5 +33,5 @@ group :development, :test do
   gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
   gem 'ruby-debug19'
   gem 'rspec-rails', '2.9.0'
-  gem 'therubyracer'
+  gem 'therubyracer', '0.10.1'
 end

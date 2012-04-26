@@ -1,7 +1,11 @@
 Tutoriapps::Application.routes.draw do
-  get "home/index"
+  get '/home', :to => 'home#home', :as => 'user_root'
 
   devise_for :users
+
+  resources :groups do
+    resources :posts, :only => :create
+  end
 
   root :to => 'home#index'
 end
