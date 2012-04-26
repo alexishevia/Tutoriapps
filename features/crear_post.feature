@@ -14,7 +14,7 @@ Característica: Crear Post
 
   Escenario: Crear un post en otro grupo
     Dado que un estudiante ha iniciado sesión
-    Y la clase "Cálculo II" ha sido creada
+    Y que la clase "Cálculo II" ha sido creada
     Pero el estudiante no está matriculado en la materia "Cálculo II"
     Cuando intente crear un post en el muro de "Cálculo II"
     Entonces el post no quedará grabado en el sistema

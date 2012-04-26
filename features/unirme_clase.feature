@@ -15,7 +15,7 @@ Característica: Unirme a una Clase
 
   Escenario: Acceder a un grupo que no pertenezco
     Dado que un estudiante ha iniciado sesión
-    Y la clase "Cálculo II" ha sido creada
+    Y que la clase "Cálculo II" ha sido creada
     Pero el estudiante no está matriculado en la materia "Cálculo II"
     Cuando intente acceder al grupo "Cálculo II"
     Entonces no podrá ver la información del grupo

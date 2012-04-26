@@ -28,7 +28,7 @@ Dado /^el estudiante no está matriculado en la materia "([^\"]*)"$/ do |nombre|
   group.members.exists?(@user).should be_false
 end
 
-Dado /^la clase "([^\"]*)" ha sido creada$/ do |nombre|
+Dado /^que la clase "([^\"]*)" ha sido creada$/ do |nombre|
   create(:group, :name => nombre)
 end
 
