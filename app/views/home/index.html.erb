@@ -13,7 +13,6 @@
           :as => resource_name, :html => {:class => 'sign_up form-vertical' }
           ) do |f|
         %>
-          <%= f.error_notification %>
           <%= f.input :name, :label => false, :placeholder => I18n.t(
             'activerecord.attributes.user.name') %>
           <%= f.input :email, :required => true, :label => false,
@@ -34,7 +33,6 @@
           :as => resource_name, :html => { :class => 'sign_in form-vertical' } 
           ) do |f| 
         %>
-          <%= devise_error_messages! %>
           <%= f.input :email, :label => false, :placeholder => I18n.t(
             'activerecord.attributes.user.email') %>
           <%= f.input :password, :label => false, :placeholder => I18n.t(
