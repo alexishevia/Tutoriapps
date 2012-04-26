@@ -13,4 +13,8 @@ class Group < ActiveRecord::Base
   has_many :posts
   has_many :enrollments
   has_many :members, :through => :enrollments, :source => :user
+
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
 end
