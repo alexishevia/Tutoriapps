@@ -40,8 +40,7 @@
           <%= f.input :password, :label => false, :placeholder => I18n.t(
             'activerecord.attributes.user.password') %>
           <% if devise_mapping.rememberable? %>
-            <%= f.input :remember_me, :as => :boolean, :wrapper_html => { 
-              :class => 'checkbox' } %>
+            <%= f.input :remember_me, :as => :boolean, :wrapper => :checkbox %>
           <% end %>
           <%= f.button :submit, I18n.t('devise.sign_in') %>
         <% end %>
