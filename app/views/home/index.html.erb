@@ -3,58 +3,51 @@
 <%= render :partial => '/layouts/head' %>
 <body id="index">
   <div class= "container">
-    <div class= "front-welcome">
-      <div class= "front-welcome-text">
-        <h1>Bienvenido a Tutoriapps</h1>
-        <p> Aprende. Comparte. Enseña</p>
-      </div>
-    </div>
+    <h1>Bienvenido a Tutoriapps</h1>
+    <p> Aprende. Comparte. Enseña</p>
 
+    <!-- Sign Up Form -->
     <div class="row-fluid">
       <div class="span6">
-        <div class= "front-signin">
-          <%= form_for resource, :url => registration_path(resource_name), 
-          :as => resource_name, :html => { :class => 'sign_up' } do |f| 
-          %>
-          <%= devise_error_messages! %>
-
-            <div><%= f.text_field :name,
-              'placeholder' => I18n.t('activerecord.attributes.user.name') %></div>
-
-            <div><%= f.email_field :email,
-              'placeholder' => I18n.t('activerecord.attributes.user.email') %></div>
-
-            <div><%= f.password_field :password,
-              'placeholder' => I18n.t('activerecord.attributes.user.password') %>
-            </div>
-
-            <div><%= f.password_field :password_confirmation,
-              'placeholder' => I18n.t('activerecord.attributes.user.password_confirmation')%></div>
-
-            <div><%= f.submit I18n.t('devise.sign_up') %></div>
-          <% end %>
-        </div>
+        <%= simple_form_for(resource, :url => registration_path(resource_name),
+          :as => resource_name, :html => {:class => 'sign_up form-vertical' }
+          ) do |f|
+        %>
+          <%= f.error_notification %>
+          <%= f.input :name, :label => false, :placeholder => I18n.t(
+            'activerecord.attributes.user.name') %>
+          <%= f.input :email, :required => true, :label => false,
+            :placeholder => I18n.t('activerecord.attributes.user.email') %>
+          <%= f.input :password,:required => true, :label => false, 
+            :placeholder => I18n.t('activerecord.attributes.user.password') %>
+          <%= f.input :password_confirmation, :placeholder => I18n.t(
+            'activerecord.attributes.user.password_confirmation'), 
+            :required => true, :label => false %>
+          <%= f.button :submit, I18n.t('devise.sign_up') %>
+        <% end %>
       </div>
-
+      <!-- End Sign Up Form -->
+      
+      <!-- Sign In Form -->
       <div class="span6">
-        <div class= "front-signup">
-          <%= form_for resource, :url => session_path(resource_name),
-          :as => resource_name, :html => { :class => 'sign_in' } do |f| %>
-            <div><%= f.email_field :email, 
-              'placeholder' => I18n.t('activerecord.attributes.user.email') %>
-            </div>
-            <div><%= f.password_field :password,
-              'placeholder' => I18n.t('activerecord.attributes.user.password') %>
-            </div>
-
-            <% if devise_mapping.rememberable? -%>
-            <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-            <% end -%>
-
-            <div><%= f.submit I18n.t('devise.sign_in') %></div>
+        <%= simple_form_for(resource, :url => session_path(resource_name),
+          :as => resource_name, :html => { :class => 'sign_in form-vertical' } 
+          ) do |f| 
+        %>
+          <%= devise_error_messages! %>
+          <%= f.input :email, :label => false, :placeholder => I18n.t(
+            'activerecord.attributes.user.email') %>
+          <%= f.input :password, :label => false, :placeholder => I18n.t(
+            'activerecord.attributes.user.password') %>
+          <% if devise_mapping.rememberable? %>
+            <%= f.input :remember_me, :as => :boolean, :wrapper_html => { 
+              :class => 'checkbox' } %>
           <% end %>
-        </div>
+          <%= f.button :submit, I18n.t('devise.sign_in') %>
+        <% end %>
       </div>
+      <!-- End Sign In Form -->
+
     </div>  
   </div>
 </body>
