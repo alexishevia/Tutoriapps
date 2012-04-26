@@ -4,14 +4,10 @@
 Cuando /^llene y envíe el formulario de registro$/ do
   visit root_path
   within "form.sign_up" do
-    fill_in I18n.t('activerecord.attributes.user.name'), 
-      with: @user_attrs[:name]
-    fill_in I18n.t('activerecord.attributes.user.email'), 
-      with: @user_attrs[:email]
-    fill_in I18n.t('activerecord.attributes.user.password'), 
-      with: @user_attrs[:password]
-    fill_in I18n.t('activerecord.attributes.user.password_confirmation'),
-      with: @user_attrs[:password]
+    fill_in 'user_name', with: @user_attrs[:name]
+    fill_in 'user_email', with: @user_attrs[:email]
+    fill_in 'user_password', with: @user_attrs[:password]
+    fill_in 'user_password_confirmation', with: @user_attrs[:password]
     click_button I18n.t('devise.sign_up')
   end
 end
@@ -76,10 +72,8 @@ end
 Cuando /^intente iniciar sesión$/ do
   visit root_path
   within "form.sign_in" do
-    fill_in I18n.t('activerecord.attributes.user.email'), 
-      with: @user_attrs[:email]
-    fill_in I18n.t('activerecord.attributes.user.password'), 
-      with: @user_attrs[:password]
+    fill_in 'user_email', with: @user_attrs[:email]
+    fill_in 'user_password', with: @user_attrs[:password]
     click_button I18n.t('devise.sign_in')
   end
 end
