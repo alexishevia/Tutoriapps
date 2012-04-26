@@ -34,7 +34,6 @@
       <div class="hero-unit">
         <%= @group.name %>
         <%= form_for [@group, @post] do |f| %>
-          <%= f.error_messages %>
           <%= f.text_field :text %><%= f.submit %>
         <% end %>
         <% for post in @group.posts %>
