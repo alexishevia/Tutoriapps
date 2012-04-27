@@ -1,13 +1,14 @@
-<div class="row">
-
-  <div class="span9 welcome">
+<% content_for :title, "Tutoriapps - #{I18n.t('slogan')}" %>
+<% content_for :body_id, 'index' %>
+<div class="row-fluid">
+  <div class="span8 welcome">
     <img src="http://www.esxinc.com/images/esx/Template/2007/HeaderImages/1464/ContinuingEducationManagement.jpg" />
   </div>
 
   <!-- Sign Up Form -->
-  <div class="span3">
-    <h3>Regístrate</h3>
-    <h4>Es fácil y rápido.</h4>
+  <div class="well span3 offset1">
+    <h3><%= t 'devise.sign_up_you' %></h3>
+    <h4><%= t 'devise.sign_up_message' %></h4>
     <hr>
     <%= simple_form_for(resource, :url => registration_path(resource_name),
       :as => resource_name, :html => {:class => 'sign_up form-vertical' }

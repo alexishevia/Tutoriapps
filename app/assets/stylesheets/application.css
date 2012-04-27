@@ -10,6 +10,5 @@
  *
  *= require_self
  *= require bootstrap_and_overrides
- *= require layout
- *= require index
+ *= require_tree .
 */

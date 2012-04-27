@@ -1,17 +1,25 @@
-<h2>Sign up</h2>
+<% content_for :title, "Tutoriapps - #{I18n.t('devise.sign_up')}" %>
+<% content_for :body_id, 'sign_up' %>
+<div class="row">
+  <div class="well span6 offset3">
+    <h1><%= t 'devise.sign_up_you' %></h1>
+    <hr>
 
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="inputs">
-    <%= f.input :email, :required => true, :autofocus => true %>
-    <%= f.input :password, :required => true %>
-    <%= f.input :password_confirmation, :required => true %>
+    <%= simple_form_for(resource, :url => registration_path(resource_name),
+      :as => resource_name) do |f| 
+    %>
+      <%= f.error_notification %>
+      <%= f.input :name, :label => false, :placeholder => I18n.t(
+        'activerecord.attributes.user.name') %>
+      <%= f.input :email, :required => true, :label => false,
+        :placeholder => I18n.t('activerecord.attributes.user.email') %>
+      <%= f.input :password,:required => true, :label => false, 
+        :placeholder => I18n.t('activerecord.attributes.user.password') %>
+      <%= f.input :password_confirmation, :placeholder => I18n.t(
+        'activerecord.attributes.user.password_confirmation'), 
+        :required => true, :label => false %>
+      <%= f.button :submit, I18n.t('devise.sign_up'), :class => 'btn btn-primary' %>
+    <% end %>
+    <%= render "links" %>
   </div>
-
-  <div class="actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "links" %>
+</div>

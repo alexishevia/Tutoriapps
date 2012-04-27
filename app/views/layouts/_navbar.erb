@@ -8,7 +8,8 @@
         <span class="icon-bar"></span>
       </a>
       <%= link_to 'Tutoriapps', root_path, :class => 'brand' %>
-      <div class="brand"><span class="slogan"> Aprende. Comparte. Enseña.</span></div>
+      <div class="brand"><span class="slogan"> 
+        Aprende · Comparte · Enseña</span></div>
       <div class="nav-collapse">
         <% if user_signed_in? %>
           <ul class="nav pull-right">
@@ -38,9 +39,12 @@
                 <%= f.input :password, :label => false, :placeholder => I18n.t(
                   'activerecord.attributes.user.password') %>
                 <% if devise_mapping.rememberable? %>
-                  <%= f.input :remember_me, :as => :boolean, :wrapper => :checkbox %>
+                  <%= f.input :remember_me, :as => :boolean, 
+                    :wrapper => :checkbox %>
                 <% end %>
                 <%= f.button :submit, I18n.t('devise.sign_in') %>
+                <%= link_to I18n.t('devise.passwords.forgot?'), 
+                new_password_path(resource_name), :class => 'forgot_password' %>
               <% end %>
               <!-- End Sign In Form -->
             </li>
