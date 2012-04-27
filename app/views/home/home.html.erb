@@ -1,21 +1,23 @@
-<div class="span3">
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Mis Grupos:</li>
-      <% for group in @groups %>
-        <li><%= link_to group.name, group %></li>
-      <% end %>
-      <% if can? :create, Group %>
-        <%= link_to I18n.t('helpers.submit.create', 
-          :model => I18n.t('activerecord.models.group')), new_group_path %>
-      <% end %>
-    </ul>
-  </div><!--/.well -->
-</div><!--/span-->
-<div class="span9">
-  <div class="hero-unit">
-    <h1>¡Bienvenido a Tutoriapps!</h1>
-    <p>Aprende. Comparte. Enseña</p>
-    <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-  </div>
+<div class="row-fluid">
+  <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">Mis Grupos:</li>
+        <% for group in @groups %>
+          <li><%= link_to group.name, group %></li>
+        <% end %>
+        <% if can? :create, Group %>
+          <%= link_to I18n.t('helpers.submit.create', 
+            :model => I18n.t('activerecord.models.group')), new_group_path %>
+        <% end %>
+      </ul>
+    </div><!--/.well -->
   </div><!--/span-->
+  <div class="span9">
+    <div class="hero-unit">
+      <h1>¡Bienvenido a Tutoriapps!</h1>
+      <p>Aprende. Comparte. Enseña</p>
+      <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    </div>
+  </div><!--/span-->
+</div>
