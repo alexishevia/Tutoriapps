@@ -135,6 +135,7 @@ es:
       submit: Guardar %{model}
       update: Actualizar %{model}
       add: Añadir %{model}
+      send: Enviar
     messages:
       created: "%{model} creado exitosamente."
   number:

@@ -1,0 +1,28 @@
+.devise {
+  .well {
+    background: none;
+    padding-bottom: 0;
+    h1 {
+      font-size: 1.5em;
+      line-height: 1em;
+    }
+    hr, .alert {
+      margin-bottom: 1.1em;
+    }
+    .help-inline {
+      margin-bottom: 0.5em;
+    }
+    form {
+      input { 
+        min-width: 90%; 
+        margin-bottom: 0.3em; 
+        &[type=submit] {
+          min-width: 0;
+          text-align: center;
+        }
+        &[type=checkbox] { min-width: 0; }
+      }
+      label { padding-bottom: 0.5em; }
+    }
+  }
+}

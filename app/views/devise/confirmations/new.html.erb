@@ -1,15 +1,16 @@
-<h2>Resend confirmation instructions</h2>
-
-<%= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="inputs">
-    <%= f.input :email, :required => true %>
+<% content_for :title, "Tutoriapps - #{I18n.t('devise.confirmations.send_email')}" %>
+<div class="row devise">
+  <div class="well span4 offset4">
+    <h1><%= I18n.t('devise.confirmations.send_email') %></h1>
+    <hr>
+    <%= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| 
+    %>
+      <%= f.error_notification %>
+      <%= f.input :email, :required => true, :label => false, :autofocus => true,
+        :placeholder => I18n.t('activerecord.attributes.user.email') %>
+      <%= f.button :submit, I18n.t('helpers.submit.send'), 
+        :class => 'btn btn-primary' %>
+      <%= render "links" %>
+    <% end %>
   </div>
-
-  <div class="actions">
-    <%= f.button :submit, "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "links" %>
+</div>

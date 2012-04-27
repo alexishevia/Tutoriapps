@@ -34,6 +34,7 @@ es:
       send_paranoid_instructions: "Si tu email existe en el sistema, recibirás instrucciones para recuperar tu contraseña en él"
     confirmations:
       didnt_receive?: '¿No recibiste el email de confirmación?'
+      send_email: 'Enviar email de confirmación'
       send_instructions: 'Recibirás instrucciones para confirmar tu cuenta en tu email en unos minutos.'
       send_paranoid_instructions: 'Si tu email existe en el sistema, recibirás instrucciones para confirmar tu cuenta en tu email en unos minutos.'
       confirmed: 'Tu cuenta fue confirmada. Has iniciado sesión.'
