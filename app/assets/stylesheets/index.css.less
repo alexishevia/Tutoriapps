@@ -1,7 +1,22 @@
-.welcome {
-  text-align: center;
-  img { 
-    padding-top: 15px;
-    max-width: 100%; 
+body#index {
+  .welcome {
+    text-align: center;
+    img { 
+      padding-top: 15px;
+      max-width: 100%; 
+    }
+  }
+  .well {
+    padding: 0.9em;
+    form {
+      margin: 0;
+      input { margin-bottom: 0.5em; }
+      label { display: inline; }
+      &.sign_in {
+        input[type=email] { width: 100%; }
+        input[type=password] { width: 52%; }
+        input[type=submit] { width: 40%; margin-left: 2%; }
+      }
+    }
   }
 }
