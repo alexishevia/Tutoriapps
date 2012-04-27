@@ -1,10 +1,9 @@
 <% content_for :title, "Tutoriapps - #{I18n.t('devise.sign_up')}" %>
 <% content_for :body_id, 'sign_up' %>
 <div class="row">
-  <div class="well span6 offset3">
+  <div class="well span4 offset4">
     <h1><%= t 'devise.sign_up_you' %></h1>
     <hr>
-
     <%= simple_form_for(resource, :url => registration_path(resource_name),
       :as => resource_name) do |f| 
     %>
@@ -19,7 +18,7 @@
         'activerecord.attributes.user.password_confirmation'), 
         :required => true, :label => false %>
       <%= f.button :submit, I18n.t('devise.sign_up'), :class => 'btn btn-primary' %>
+      <%= render "links" %>
     <% end %>
-    <%= render "links" %>
   </div>
 </div>

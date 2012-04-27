@@ -8,5 +8,18 @@ body#sign_up {
     hr, .alert {
       margin-bottom: 0.9em;
     }
+    .help-inline {
+      margin-bottom: 0.5em;
+    }
+    form {
+      input { 
+        min-width: 90%; 
+        margin-bottom: 0.3em; 
+        &[type=submit] {
+          min-width: 0;
+          text-align: center;
+        }
+      }
+    }
   }
 }
