@@ -13,7 +13,7 @@ es:
     sign_up: Crear Cuenta
     sign_in: Iniciar Sesión
     sign_up_you: Regístrate
-    sign_up_message: Es fácil y rápido.
+    sign_up_message: Es fácil y rápido
     failure:
       already_authenticated: 'Ya iniciaste sesión.'
       unauthenticated: 'Tienes que registrarte o iniciar sesión antes de continuar.'

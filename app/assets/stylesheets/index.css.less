@@ -10,13 +10,29 @@ body#index {
     padding: 0.9em;
     form {
       margin: 0;
-      input { margin-bottom: 0.5em; }
+      input { width: 100%; margin-bottom: 0.5em; }
       label { display: inline; }
       &.sign_in {
         input[type=email] { width: 100%; }
         input[type=password] { width: 52%; }
         input[type=submit] { width: 40%; margin-left: 2%; }
+        input[type=checkbox] { width: auto; }
       }
+      &.sign_up {
+        input { margin-bottom: 0.9em; }
+        #user_password_confirmation { width: 52%; }
+        input[type=submit] { width: 40%; margin-left: 2%; }
+      }
+    }
+    h2, h3 {
+      font-size: 1.2em;
+      line-height: 1em;
+      display: inline;
+      color: #505050;
+    }
+    h3 { font-size: 1em; padding-left:0.5em; color: #676767; }
+    hr {
+      margin: 0.7em 0;
     }
   }
 }
