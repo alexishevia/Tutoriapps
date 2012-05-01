@@ -40,6 +40,6 @@ class User < ActiveRecord::Base
   validates :name, :presence => true
 
   has_many :posts
-  has_many :enrollments, :foreign_key => :user_email
+  has_many :enrollments
   has_many :groups, :through => :enrollments
 end

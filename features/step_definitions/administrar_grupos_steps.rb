@@ -46,9 +46,15 @@ end
 Cuando /^intente agregar al estudiante "([^"]*)" al grupo "([^"]*)"$/ do |user_email, group_name|
   group = Group.find_by_name(group_name)
   visit group_path(group)
-  within '.add_user' do
-    fill 'user_email', :with => user_email
+  within '.new_enrollment' do
+    fill_in 'enrollment_user_email', :with => user_email
     click_button I18n.t('helpers.submit.add', 
       :model => I18n.t('activerecord.models.user'))
   end
+end
+
+Entonces /^el estudiante "([^"]*)" quedará registrado dentro del grupo "([^"]*)"$/ do |user_email, group_name|
+  user = User.find_by_email(user_email)
+  group = Group.find_by_name(group_name)
+  group.members.exists?(user).should be_true
 end

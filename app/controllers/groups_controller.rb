@@ -3,12 +3,13 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
 
   def show
-    @post = @group.posts.build
     if can? :manage, Group
       @groups = Group.all
     else
       @groups = current_user.groups
     end 
+    @post = @group.posts.build
+    @enrollment = @group.enrollments.build
   end
 
   def new

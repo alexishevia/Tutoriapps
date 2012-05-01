@@ -16,15 +16,16 @@
         </ul>
         <ul class="nav nav-list">
           <li class="nav-header">Miembros:</li>
-          <li>Usuario1</li>
-          <li>Usuario2</li>
-          <li>Usuario3</li>
+          <% for user in @group.members %>
+            <li><%= user.name %></li>
+          <% end %>
           <% if can? :manage, Group %>
             <li>
-              <form>
-                <input type="email" />
-                <input type="submit" value="agregar usuario" />
-              </form>
+              <%= simple_form_for [@group, @enrollment] do |f| %>
+                <%= f.input :user_email, :label => false %>
+                <%= f.submit I18n.t('helpers.submit.add', 
+                  :model => I18n.t('activerecord.models.user')) %>
+              <% end %>
             </li>
           <% end %>
         </ul>

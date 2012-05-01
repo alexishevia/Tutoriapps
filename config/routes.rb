@@ -5,6 +5,7 @@ Tutoriapps::Application.routes.draw do
 
   resources :groups do
     resources :posts, :only => :create
+    resources :enrollments, :only => :create
   end
 
   root :to => 'home#index'

@@ -32,9 +32,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
-  gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
-  gem 'ruby-debug19'
+  gem 'debugger'
   gem 'rspec-rails', '2.9.0'
   gem 'therubyracer', '0.10.1'
 end
