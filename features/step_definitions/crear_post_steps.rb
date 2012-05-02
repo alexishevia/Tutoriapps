@@ -1,8 +1,8 @@
 # coding: utf-8
 # language: es
 
-Cuando /^intente crear un post en el muro de "([^\"]*)"$/ do |nombre|
-  group = Group.find_by_name(nombre)
+Cuando /^intente crear un post en el muro de "([^\"]*)"$/ do |group_name|
+  group = Group.find_by_name(group_name)
   visit group_path(group)
   @post_attrs = attributes_for(:post)
   within '.new_post' do
@@ -10,6 +10,12 @@ Cuando /^intente crear un post en el muro de "([^\"]*)"$/ do |nombre|
     click_button I18n.t('helpers.submit.create', 
         :model => I18n.t('activerecord.models.post'))
   end
+end
+
+Cuando /^intente crear un post en el muro de "([^\"]*)" mediante http$/ do |group_name|
+  group = Group.find_by_name(group_name)
+  @post_attrs = attributes_for(:post)
+  post group_posts_path(group), {:post => @post_attrs}
 end
 
 Entonces /^el post quedará grabado en el sistema$/ do
