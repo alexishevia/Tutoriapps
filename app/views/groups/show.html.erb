@@ -14,12 +14,15 @@
             </li>
           <% end %>
         </ul>
-        <ul class="nav nav-list">
+        <ul class="nav nav-list members">
           <li class="nav-header">Miembros:</li>
           <% for user in @group.members %>
             <li><%= user.name %></li>
           <% end %>
           <% if can? :manage, Group %>
+            <% for user in @group.unregistered_members %>
+              <li><%= user.email %></li>
+            <% end %>
             <li>
               <%= simple_form_for [@group, @enrollment] do |f| %>
                 <%= f.input :user_email, :label => false %>

@@ -18,4 +18,10 @@ class Group < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
+  def unregistered_members
+    enrollments.where('user_id IS NULL').collect do |enrollment|
+      User.new(:email => enrollment.user_email)
+    end
+  end
+
 end
