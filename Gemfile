@@ -29,10 +29,11 @@ group :test do
   gem 'factory_girl_rails', '3.1.0', require: false
   gem 'launchy', '2.1.0'
   gem 'forgery', '0.5.0'
+  gem 'rack-test', '0.6.1'
 end
 
 group :development, :test do
-  gem 'debugger'
+  gem 'debugger', '1.1.3'
   gem 'rspec-rails', '2.9.0'
   gem 'therubyracer', '0.10.1'
 end
