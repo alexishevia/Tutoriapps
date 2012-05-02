@@ -42,12 +42,13 @@ Característica: Administrar Grupos
     Entonces recibirá el status 403
     Y el estudiante "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
 
-
   Escenario: Estudiante se auto-agrega a un grupo mediante http
     Dado que un estudiante ha iniciado sesión mediante http
     Y que la clase "Cálculo II" ha sido creada
     Pero el estudiante no está matriculado en la materia "Cálculo II"
-    Cuando intente agregarse al grupo "Cálculo II"
+    Cuando intente agregarse al grupo "Cálculo II" mediante http
+    Entonces recibirá el status 403
+    Y no aparecerá dentro del grupo "Cálculo II"
 
   Escenario: Usuario nuevo accede a sus grupos
     Dado que la clase "Cálculo II" ha sido creada

@@ -58,6 +58,11 @@ Cuando /^intente agregar al estudiante "([^"]*)" al grupo "([^"]*)" mediante htt
   post group_enrollments_path(group), {enrollment: {user_email: user_email}}
 end
 
+Cuando /^intente agregarse al grupo "([^\"]*)" mediante http$/ do |group_name|
+  group = Group.find_by_name(group_name)
+  post group_enrollments_path(group), {enrollment: {user_email: @user.email}}
+end
+
 Entonces /^el estudiante "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
   user = User.find_by_email(user_email)
   group = Group.find_by_name(group_name)
@@ -73,6 +78,10 @@ Entonces /^el estudiante "([^"]*)" no aparecerá dentro del grupo "([^"]*)"$/ do
   group.members.exists?(user).should be_false
 end
 
+Entonces /^no aparecerá dentro del grupo "([^\"]*)"$/ do |group_name|
+  step "el estudiante \"#{@user.email}\" no aparecerá dentro del grupo \"#{group_name}\""
+end
+
 Dado /^que el estudiante "([^\"]*)" no está registrado$/ do |user_email|
   User.find_by_email(user_email).should be_nil
 end
@@ -85,7 +94,7 @@ Entonces /^el email "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_e
   end
 end
 
-Dado /^que el correo "([^"]*)" se ha asignado a la clase "([^"]*)"$/ do |user_email, group_name|
+Dado /^que el correo "([^\"]*)" se ha asignado a la clase "([^\"]*)"$/ do |user_email, group_name|
   step "que un administrador ha iniciado sesión"
   step "intente agregar al estudiante \"#{user_email}\" al grupo \"#{group_name}\""
   step "cerrar sesión"
