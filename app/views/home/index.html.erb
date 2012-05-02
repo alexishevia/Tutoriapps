@@ -1,13 +1,21 @@
 <% content_for :title, "Tutoriapps - #{I18n.t('slogan')}" %>
 <% content_for :body_id, 'index' %>
-<div class="row-fluid">
 
-  <div class="span7 welcome">
-    <img src="/assets/imagefront.jpg" />
+
+<div class="row-fluid"> 
+  <div class="span7">
+    <div class="span6 offset2 welcome">
+      <img src="/assets/imagefront.jpg" />
+      <div class="welcome-text">
+        <h1>Bienvenido a Tutoriapps</h1>
+        <h2>En Tutoriapps podrás compartir información, recibir ayuda y colaborar con otros estudiantes de una forma fácil, segura y divertida</h2>
+      </div>
+    </div>
   </div>
-
   
-  <div class="span4 offset1">
+
+  <div class="span5">
+  <div class="span3">
 
     <!-- Sign In Form -->
     <div class="well">
@@ -49,5 +57,6 @@
       <% end %>
     </div>
   </div>
+</div>
   <!-- End Sign Up Form -->
 </div>
