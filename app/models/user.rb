@@ -41,14 +41,14 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :enrollments
-  has_many :groups, :through => :enrollments
 
-  alias :real_groups :groups
   def groups
     Enrollment.where('user_email = ?', email).each do |e|
-      e.update_attributes(:user_email => nil, :user => self)
+      e.update_attributes(:user_id => id, :user_email => nil)
     end
-    real_groups
+    Enrollment.where('user_id = ?', id).collect do |e|
+      Group.find(e.group_id)
+    end
   end
 
 end

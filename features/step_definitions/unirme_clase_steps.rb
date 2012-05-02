@@ -38,7 +38,7 @@ end
 
 Dado /^que el estudiante está matriculado en (\d+) materias$/ do |n|
   n = n.to_i
-  n.times { @user.groups << create(:group) }
+  n.times { create(:enrollment, :user => @user) }
   @user.groups.count.should eq(n)
 end
 
