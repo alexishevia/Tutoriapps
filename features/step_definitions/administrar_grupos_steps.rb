@@ -53,6 +53,11 @@ Cuando /^intente agregar al estudiante "([^"]*)" al grupo "([^"]*)"$/ do |user_e
   end
 end
 
+Cuando /^intente agregar al estudiante "([^"]*)" al grupo "([^"]*)" mediante http$/ do |user_email, group_name|
+  group = Group.find_by_name(group_name)
+  post group_enrollments_path(group), {enrollment: {user_email: user_email}}
+end
+
 Entonces /^el estudiante "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
   user = User.find_by_email(user_email)
   group = Group.find_by_name(group_name)
@@ -60,6 +65,12 @@ Entonces /^el estudiante "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |u
   within('.members') do
     page.should have_content(user.name)
   end
+end
+
+Entonces /^el estudiante "([^"]*)" no aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
+  user = User.find_by_email(user_email)
+  group = Group.find_by_name(group_name)
+  group.members.exists?(user).should be_false
 end
 
 Dado /^que el estudiante "([^\"]*)" no está registrado$/ do |user_email|

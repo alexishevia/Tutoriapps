@@ -32,6 +32,23 @@ Característica: Administrar Grupos
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el email "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II"
 
+  Escenario: Estudiante agrega a otro estudiante a un grupo mediante http
+    Dado que un estudiante ha iniciado sesión mediante http
+    Y que la clase "Cálculo II" ha sido creada
+    Y que el estudiante está matriculado en la materia "Cálculo II"
+    Y que el estudiante "fulano@utp.ac.pa" ya está registrado
+    Pero que el estudiante "fulano@utp.ac.pa" no está matriculado en la materia "Cálculo II"
+    Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II" mediante http
+    Entonces recibirá el status 403
+    Y el estudiante "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
+
+
+  Escenario: Estudiante se auto-agrega a un grupo mediante http
+    Dado que un estudiante ha iniciado sesión mediante http
+    Y que la clase "Cálculo II" ha sido creada
+    Pero el estudiante no está matriculado en la materia "Cálculo II"
+    Cuando intente agregarse al grupo "Cálculo II"
+
   Escenario: Usuario nuevo accede a sus grupos
     Dado que la clase "Cálculo II" ha sido creada
     Y que el correo "fulano@utp.ac.pa" se ha asignado a la clase "Cálculo II"
@@ -39,6 +56,3 @@ Característica: Administrar Grupos
     Cuando el estudiante "fulano@utp.ac.pa" se registre e inicie sesión
     Y intente acceder al grupo "Cálculo II"
     Entonces podrá ver la información del grupo "Cálculo II"
-
-  Escenario: Estudiante se agrega a un grupo
-   Dado PENDING

@@ -1,6 +1,9 @@
 class EnrollmentsController < ApplicationController
+  before_filter :authenticate_user!
+
   def create
     @group = Group.find(params[:group_id])
+    authorize! :manage, @group
     enrollment = @group.enrollments.build(params[:enrollment])
     if enrollment.save
       redirect_to @group, :notice => I18n.t('helpers.messages.added', 
