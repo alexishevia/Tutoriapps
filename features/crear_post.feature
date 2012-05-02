@@ -12,12 +12,14 @@ Característica: Crear Post
     Cuando intente crear un post en el muro de "Cálculo II"
     Entonces el post quedará grabado en el sistema
 
-  Escenario: Crear un post en otro grupo
-    Dado que un estudiante ha iniciado sesión
+  @wip
+  Escenario: Crear un post en otro grupo mediante http
+    Dado que un estudiante ha iniciado sesión mediante http
     Y que la clase "Cálculo II" ha sido creada
     Pero el estudiante no está matriculado en la materia "Cálculo II"
-    Cuando intente crear un post en el muro de "Cálculo II"
-    Entonces el post no quedará grabado en el sistema
+    Cuando intente crear un post en el muro de "Cálculo II" mediante http
+    Entonces recibirá el status 403
+    Y el post no quedará grabado en el sistema
 
   Escenario: Ver posts
     Dado que un estudiante ha iniciado sesión

@@ -10,17 +10,17 @@ end
 Cuando /^intente crear un grupo nuevo$/ do
   @group_attrs = attributes_for(:group)
   visit new_group_path
-  begin
-    within "form.new_group" do
-      fill_in I18n.t('activerecord.attributes.group.name'), 
-        with: @group_attrs[:name]
-      click_button I18n.t('helpers.submit.create', 
-        :model => I18n.t('activerecord.models.group'))
-    end
-  rescue Capybara::ElementNotFound
-    # forbidden
-    raise Capybara::ElementNotFound unless page.status_code == 403
+  within "form.new_group" do
+    fill_in I18n.t('activerecord.attributes.group.name'), 
+      with: @group_attrs[:name]
+    click_button I18n.t('helpers.submit.create', 
+      :model => I18n.t('activerecord.models.group'))
   end
+end
+
+Cuando /^intente crear un grupo nuevo mediante http$/ do
+  @group_attrs = attributes_for(:group)
+  post groups_path, @group_attrs
 end
 
 Entonces /^el grupo quedará registrado en el sistema$/ do
@@ -92,4 +92,8 @@ Cuando /^el estudiante "([^\"]*)" se registre e inicie sesión$/ do |user_email|
   @user_attrs = attributes_for(:user, :email => user_email)
   step "llene y envíe el formulario de registro"
   step "el estudiante haga clic en el link de confirmación"
+end
+
+Entonces /^recibirá el status (\d+)$/ do |code|
+  last_response.status.should eq(code.to_i)
 end

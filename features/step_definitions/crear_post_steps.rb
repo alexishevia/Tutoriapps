@@ -5,15 +5,10 @@ Cuando /^intente crear un post en el muro de "([^\"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   visit group_path(group)
   @post_attrs = attributes_for(:post)
-  begin
-    within '.new_post' do
-      fill_in 'post_text', with: @post_attrs[:text]
-      click_button I18n.t('helpers.submit.create', 
-          :model => I18n.t('activerecord.models.post'))
-    end
-  rescue Capybara::ElementNotFound
-    # forbidden
-    raise Capybara::ElementNotFound unless page.status_code == 403
+  within '.new_post' do
+    fill_in 'post_text', with: @post_attrs[:text]
+    click_button I18n.t('helpers.submit.create', 
+        :model => I18n.t('activerecord.models.post'))
   end
 end
 

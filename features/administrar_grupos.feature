@@ -11,10 +11,11 @@ Característica: Administrar Grupos
     Cuando intente crear un grupo nuevo
     Entonces el grupo quedará registrado en el sistema
 
-  Escenario: Estudiante crea un grupo
-    Dado que un estudiante ha iniciado sesión
-    Cuando intente crear un grupo nuevo
-    Entonces el grupo no quedará registrado en el sistema
+  Escenario: Estudiante crea un grupo mediante http
+    Dado que un estudiante ha iniciado sesión mediante http
+    Cuando intente crear un grupo nuevo mediante http
+    Entonces recibirá el status 403
+    Y el grupo no quedará registrado en el sistema
 
   Escenario: Administrador agrega un estudiante existente a un grupo
     Dado que la clase "Cálculo II" ha sido creada
