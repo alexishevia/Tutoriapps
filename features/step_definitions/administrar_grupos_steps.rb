@@ -73,3 +73,23 @@ Entonces /^el email "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_e
     page.should have_content(user_email)
   end
 end
+
+Dado /^que el correo "([^"]*)" se ha asignado a la clase "([^"]*)"$/ do |user_email, group_name|
+  step "que un administrador ha iniciado sesión"
+  step "intente agregar al estudiante \"#{user_email}\" al grupo \"#{group_name}\""
+  step "cerrar sesión"
+end
+
+Dado /^cerrar sesión$/ do
+  visit('/users/sign_out')
+end
+
+Dado /^que el estudiante "([^\"]*)" no está registrado en el sistema$/ do |user_email|
+  User.find_by_email(user_email).should be_nil
+end
+
+Cuando /^el estudiante "([^\"]*)" se registre e inicie sesión$/ do |user_email|
+  @user_attrs = attributes_for(:user, :email => user_email)
+  step "llene y envíe el formulario de registro"
+  step "el estudiante haga clic en el link de confirmación"
+end

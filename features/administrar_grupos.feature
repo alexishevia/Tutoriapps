@@ -24,13 +24,20 @@ Característica: Administrar Grupos
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el estudiante "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II"
 
-  @wip
   Escenario: Administrador agrega un estudiante no existente a un grupo
     Dado que la clase "Cálculo II" ha sido creada
     Y que el estudiante "fulano@utp.ac.pa" no está registrado
     Y que un administrador ha iniciado sesión
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el email "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II"
+
+  Escenario: Usuario nuevo accede a sus grupos
+    Dado que la clase "Cálculo II" ha sido creada
+    Y que el correo "fulano@utp.ac.pa" se ha asignado a la clase "Cálculo II"
+    Pero que el estudiante "fulano@utp.ac.pa" no está registrado en el sistema
+    Cuando el estudiante "fulano@utp.ac.pa" se registre e inicie sesión
+    Y intente acceder al grupo "Cálculo II"
+    Entonces podrá ver la información del grupo "Cálculo II"
 
   Escenario: Estudiante se agrega a un grupo
    Dado PENDING

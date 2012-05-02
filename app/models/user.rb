@@ -42,4 +42,13 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :enrollments
   has_many :groups, :through => :enrollments
+
+  alias :real_groups :groups
+  def groups
+    Enrollment.where('user_email = ?', email).each do |e|
+      e.update_attributes(:user_email => nil, :user => self)
+    end
+    real_groups
+  end
+
 end
