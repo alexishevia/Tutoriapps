@@ -1,23 +1,21 @@
 body#index {
   .welcome {
     text-align: center;
-    img { 
-      padding-top: 15px;
-      padding-bottom: 20px;
-      max-width: 100%; 
-    }
+    h1 { padding-bottom: 0.3em; font-size: 2em; }
+    p { font-size: 1.2em; }
+    img { padding: 1em; width: 20em; }
   }
   .well {
     padding: 0.9em;
     form {
       margin: 0;
-      input { width: 100%; margin-bottom: 0.5em; }
+      input { width: 97%; margin-bottom: 0.5em; }
       label { display: inline; }
       &.sign_in {
-        input[type=email] { width: 100%; }
         input[type=password] { width: 52%; }
         input[type=submit] { width: 40%; margin-left: 2%; }
         input[type=checkbox] { width: auto; }
+        .forgot_password { font-size: 0.96em; }
       }
       &.sign_up {
         input { margin-bottom: 0.9em; }

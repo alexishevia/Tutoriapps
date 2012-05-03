@@ -2,21 +2,16 @@
 <% content_for :body_id, 'index' %>
 
 
-<div class="row-fluid"> 
-  <div class="span7">
-    <div class="span6 offset2 welcome">
-      <img src="/assets/imagefront.jpg" />
-      <div class="welcome-text">
-        <h1>Bienvenido a Tutoriapps</h1>
-        <h2>En Tutoriapps podrás compartir información, recibir ayuda y colaborar con otros estudiantes de una forma fácil, segura y divertida</h2>
-      </div>
+<div class="row"> 
+  <div class="span7 welcome">
+    <div class="welcome-text">
+      <h1>Bienvenido a Tutoriapps</h1>
+      <p>En Tutoriapps podrás compartir información, recibir ayuda y colaborar con otros estudiantes de forma fácil, segura y divertida.</p>
     </div>
+    <img src="/assets/imagefront.jpg" />
   </div>
-  
 
-  <div class="span5">
-  <div class="span3">
-
+  <div class="span4 offset1">
     <!-- Sign In Form -->
     <div class="well">
       <%= form_for(resource, :url => session_path(resource_name),
@@ -56,7 +51,6 @@
         <%= f.submit I18n.t('devise.sign_up'), :class => 'btn btn-success' %>
       <% end %>
     </div>
+    <!-- End Sign Up Form -->
   </div>
-</div>
-  <!-- End Sign Up Form -->
 </div>
