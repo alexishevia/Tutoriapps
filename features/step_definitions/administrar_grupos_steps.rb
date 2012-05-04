@@ -34,6 +34,7 @@ end
 Dado /^que el estudiante "([^\"]*)" ya está registrado$/ do |email|
   user = create(:user, :email => email)
   user.confirmed_at = Time.now
+  user.save
   user.confirmed?.should be_true
 end
 

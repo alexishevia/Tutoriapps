@@ -1,10 +1,27 @@
 <div class="row">
   <div class="span6 offset3 well">
+
+    <!-- Elegir Grupo -->
     <ul class="nav nav-pills">
       <li class="active"><%= link_to 'Todos', root_path %></li>
       <% for group in @groups %>
         <li><%= link_to group.name, group %></li>
       <% end %>
     </ul>
+
+    <!-- Crear Post Nuevo -->
+    <%= simple_form_for [@post] do |f| %>
+      <%= f.input :text, :label => false %><%= f.button :submit %>
+    <% end %>
+
+    <!-- Ver Posts -->
+    <% for post in @posts %>
+      <div>
+        <%= post.author.name %>
+        Hace <%= time_ago_in_words(post.created_at) %>
+        <%= post.text %>
+      </div>
+    <% end %>
+
   </div>
 </div>
