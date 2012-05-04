@@ -9,6 +9,8 @@ class HomeController < ApplicationController
     if current_user.admin?
       @groups = Group.all
       return render 'home_admin'
+    else
+      @groups = current_user.groups
     end 
   end
 end
