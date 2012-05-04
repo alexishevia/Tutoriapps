@@ -1,56 +1,47 @@
-<div class="container">
-  <div class="row">
-    <div class="span3">
-      <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-          <li class="nav-header">Mis Grupos:</li>
-          <% for group in @groups %>
-            <li><%= link_to group.name, group %></li>
+<div class="row">
+  <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">Mis Grupos:</li>
+        <% for group in @groups %>
+          <li><%= link_to group.name, group %></li>
+        <% end %>
+        <% if can? :create, Group %>
+          <li>
+            <%= link_to I18n.t('helpers.submit.create', 
+            :model => I18n.t('activerecord.models.group')), new_group_path %>
+          </li>
+        <% end %>
+      </ul>
+      <ul class="nav nav-list members">
+        <li class="nav-header">Miembros:</li>
+        <% for user in @group.members %>
+          <li><%= user.name %></li>
+        <% end %>
+        <% if can? :manage, Group %>
+          <% for user in @group.unregistered_members %>
+            <li><%= user.email %></li>
           <% end %>
-          <% if can? :create, Group %>
-            <li>
-              <%= link_to I18n.t('helpers.submit.create', 
-              :model => I18n.t('activerecord.models.group')), new_group_path %>
-            </li>
-          <% end %>
-        </ul>
-        <ul class="nav nav-list members">
-          <li class="nav-header">Miembros:</li>
-          <% for user in @group.members %>
-            <li><%= user.name %></li>
-          <% end %>
-          <% if can? :manage, Group %>
-            <% for user in @group.unregistered_members %>
-              <li><%= user.email %></li>
+          <li>
+            <%= simple_form_for [@group, @enrollment] do |f| %>
+              <%= f.input :user_email, :label => false %>
+              <%= f.submit I18n.t('helpers.submit.add', 
+                :model => I18n.t('activerecord.models.user')) %>
             <% end %>
-            <li>
-              <%= simple_form_for [@group, @enrollment] do |f| %>
-                <%= f.input :user_email, :label => false %>
-                <%= f.submit I18n.t('helpers.submit.add', 
-                  :model => I18n.t('activerecord.models.user')) %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div><!--/.well -->
-    </div><!--/span-->
-    <div class="span9">
-      <div class="hero-unit">
-        <%= @group.name %>
-        <%= form_for [@group, @post] do |f| %>
-          <%= f.text_field :text %><%= f.submit %>
+          </li>
         <% end %>
-        <% for post in @group.posts %>
-          <div><%= post.text %></div>
-        <% end %>
-      </div>
-    </div><!--/span-->
-  </div><!--/row-->
-
-  <hr>
-
-  <footer>
-    <p>&copy; Turoriapps 2012</p>
-</footer>
-
+      </ul>
+    </div>
+  </div>
+  <div class="span9">
+    <div class="hero-unit">
+      <%= @group.name %>
+      <%= form_for [@group, @post] do |f| %>
+        <%= f.text_field :text %><%= f.submit %>
+      <% end %>
+      <% for post in @group.posts %>
+        <div><%= post.text %></div>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -6,10 +6,9 @@ class HomeController < ApplicationController
   end
 
   def home
-    if can? :manage, Group
+    if current_user.admin?
       @groups = Group.all
-    else
-      @groups = current_user.groups
+      return render 'home_admin'
     end 
   end
 end
