@@ -2,8 +2,8 @@
 # language: es
 
 Cuando /^intente crear un post en el muro de "([^\"]*)"$/ do |group_name|
-  group = Group.find_by_name(group_name)
-  visit group_path(group)
+  visit root_path
+  click_link(group_name)
   @post_attrs = attributes_for(:post)
   within '.new_post' do
     fill_in 'post_text', with: @post_attrs[:text]
@@ -18,12 +18,16 @@ Cuando /^intente crear un post en el muro de "([^\"]*)" mediante http$/ do |grou
   post group_posts_path(group), {:post => @post_attrs}
 end
 
-Entonces /^el post quedará grabado en el sistema$/ do
-  @user.posts.find_by_text(@post_attrs[:text]).should_not be_nil
+Entonces /^el post aparecerá en el muro de "([^\"]*)"$/ do |group_name|
+  visit root_path
+  click_link(group_name)
+  page.should have_content(@post_attrs[:text])
 end
 
-Entonces /^el post no quedará grabado en el sistema$/ do
-  @user.posts.find_by_text(@post_attrs[:text]).should be_nil
+Entonces /^no aparecerá en el muro de "([^\"]*)"$/ do |group_name|
+  visit root_path
+  click_link(group_name)
+  page.should_not have_content(@post_attrs[:text])
 end
 
 Dado /^que "([^\"]*)" tiene (\d+) posts en el muro$/ do |nombre, n|
@@ -88,6 +92,10 @@ Cuando /^"([^\"]*)" inicie sesión$/ do |user_email|
   visit destroy_user_session_path
   @user_attrs = @users_attrs[user_email]
   step 'intente iniciar sesión'
+end
+
+Dado /^que "([^\"]*)" ha iniciado sesión$/ do |user_email|
+  step "\"#{user_email}\" inicie sesión"
 end
 
 Entonces /^verá el post de "([^\"]*)"$/ do |user_email|
