@@ -17,7 +17,7 @@ class GroupsController < ApplicationController
 
   def create
     if @group.save
-      redirect_to @group, :notice => I18n.t('helpers.messages.created', 
+      redirect_to root_path, :notice => I18n.t('helpers.messages.created', 
         :model => I18n.t('activerecord.models.group'))
     else
       render :action => 'new'

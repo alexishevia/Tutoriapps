@@ -1,23 +1,34 @@
 <div class="row">
-  <div class="span3">
-    <div class="well sidebar-nav">
-      <ul class="nav nav-list">
-        <li class="nav-header">Mis Grupos:</li>
-        <% for group in @groups %>
-          <li><%= link_to group.name, group %></li>
-        <% end %>
-        <% if can? :create, Group %>
-          <%= link_to I18n.t('helpers.submit.create', 
-            :model => I18n.t('activerecord.models.group')), new_group_path %>
-        <% end %>
-      </ul>
-    </div><!--/.well -->
-  </div><!--/span-->
-  <div class="span9">
-    <div class="hero-unit">
-      <h1>¡Bienvenido a Tutoriapps!</h1>
-      <p>Aprende. Comparte. Enseña</p>
-      <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+
+  <div class="span3 offset1 well">
+    <div class="groups">
+      <h2>Grupos</h2>
+      <% for group in Group.all %>
+        <div class="group">
+          <%= link_to group.name, group, :class => 'name' %>
+          <div class="members">
+            <% for user in group.members %>
+              <div><%= user.name %></div>
+            <% end %>
+            <% for user in group.unregistered_members %>
+              <div><%= user.email %></div>
+            <% end %>
+            <% enrollment = group.enrollments.build() %>
+            <%= simple_form_for [group, enrollment] do |f| %>
+              <%= f.input :user_email, :label => false %>
+              <%= f.submit I18n.t('helpers.submit.add', 
+                :model => I18n.t('activerecord.models.user')) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <%= simple_form_for [@group] do |f| %>
+        <%= f.input :name, :label => false %><%= f.button :submit %>
+      <% end %>
     </div>
-  </div><!--/span-->
+  </div>
+
+  <div class="span6 well">
+    <%= render 'timeline' %>
+  </div>
 </div>

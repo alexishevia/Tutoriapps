@@ -8,11 +8,8 @@ class HomeController < ApplicationController
   def home
     @post = Post.new
     @posts = Post.order('created_at DESC')
-    if current_user.admin?
-      @groups = Group.all
-      return render 'home_admin'
-    else
-      @groups = current_user.groups
-    end 
+    @group = Group.new
+    @groups = current_user.groups
+    return render 'home_admin' if current_user.admin?
   end
 end

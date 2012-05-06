@@ -32,7 +32,7 @@ Característica: Crear Post
     Entonces recibirá el status 403
     Y el post no quedará grabado en el sistema
 
-  Escenario: Ver todos
+  Escenario: Ver todos los posts
     Dado que "Cálculo II" tiene 4 posts en el muro
     Y que "OAC" tiene 2 posts en el muro
     Y que "Programación I" tiene 1 psot en el muro

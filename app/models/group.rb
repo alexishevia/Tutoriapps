@@ -14,6 +14,8 @@ class Group < ActiveRecord::Base
   has_many :enrollments
   has_many :members, :through => :enrollments, :source => :user
 
+  validates :name, :presence => true
+
   def to_param
     "#{id}-#{name.parameterize}"
   end
