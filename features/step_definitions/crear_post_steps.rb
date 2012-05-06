@@ -24,7 +24,7 @@ Entonces /^el post aparecerá en el muro de "([^\"]*)"$/ do |group_name|
   page.should have_content(@post_attrs[:text])
 end
 
-Entonces /^no aparecerá en el muro de "([^\"]*)"$/ do |group_name|
+Entonces /^el post no aparecerá en el muro de "([^\"]*)"$/ do |group_name|
   visit root_path
   click_link(group_name)
   page.should_not have_content(@post_attrs[:text])
@@ -88,6 +88,10 @@ Dado /^que "([^\"]*)" escribió un post público$/ do |user_email|
   end
 end
 
+Dado /^que "([^\"]*)" escribió (\d+) posts públicos$/ do |user_email, n|
+  n.to_i.times { step "que \"#{user_email}\" escribió un post público"}
+end
+
 Cuando /^"([^\"]*)" inicie sesión$/ do |user_email|
   visit destroy_user_session_path
   @user_attrs = @users_attrs[user_email]
@@ -98,7 +102,31 @@ Dado /^que "([^\"]*)" ha iniciado sesión$/ do |user_email|
   step "\"#{user_email}\" inicie sesión"
 end
 
+Dado /^que "([^\"]*)" ha iniciado sesión mediante http$/ do |user_email|
+  visit destroy_user_session_path
+  @user_attrs = @users_attrs[user_email]
+  post user_session_path(:format => :json), {:user => @user_attrs}
+end
+
 Entonces /^verá el post de "([^\"]*)"$/ do |user_email|
   post = User.find_by_email(user_email).posts.last
   page.should have_content(post.text)
+end
+
+Entonces /^el post no quedará grabado en el sistema$/ do
+  @user.posts.find_by_text(@post_attrs[:text]).should be_nil
+end
+
+Dado /^que "([^\"]*)" tiene (\d+) psot en el muro$/ do |group_name, n|
+  group = Group.find_by_name(group_name)
+  n.to_i.times { create(:post, :group => group) }
+end
+
+Cuando /^visite el grupo "([^\"]*)"$/ do |group_name|
+  visit root_path
+  click_link(group_name)
+end
+
+Entonces /^verá (\d+) posts$/ do |n|
+  all('.post').count.should eq(n.to_i)
 end

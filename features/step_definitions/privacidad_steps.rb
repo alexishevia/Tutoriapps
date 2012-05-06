@@ -70,6 +70,7 @@ Dado /^que un estudiante ha sido verificado$/ do
 end
 
 Cuando /^intente iniciar sesión$/ do
+  visit destroy_user_session_path
   visit root_path
   within "form.sign_in" do
     fill_in 'user_email', with: @user_attrs[:email]

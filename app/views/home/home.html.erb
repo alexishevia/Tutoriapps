@@ -16,7 +16,7 @@
 
     <!-- Ver Posts -->
     <% for post in @posts %>
-      <div>
+      <div class="post">
         <%= post.author.name %>
         Hace <%= time_ago_in_words(post.created_at) %>
         <%= post.text %>
