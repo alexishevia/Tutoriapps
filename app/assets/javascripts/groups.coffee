@@ -1,6 +1,6 @@
 jQuery ($) ->
   $(document).ready ->
-    $('.groups .name').click(
+    $('.group .name').click(
       () -> 
         $(this).next().toggle('slow')
         return false

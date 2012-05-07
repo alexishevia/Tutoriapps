@@ -1,21 +1,29 @@
-  <!-- Elegir Grupo -->
-  <ul class="nav nav-pills">
-    <li class="active"><%= link_to 'Todos', root_path %></li>
-    <% for group in @groups %>
-      <li><%= link_to group.name, group %></li>
-    <% end %>
-  </ul>
-
-  <!-- Crear Post Nuevo -->
-  <%= simple_form_for [@post] do |f| %>
-    <%= f.input :text, :label => false %><%= f.button :submit %>
+<!-- Elegir Grupo -->
+<ul class="nav nav-pills">
+  <li class="active"><%= link_to 'Todos', root_path %></li>
+  <% for group in @groups %>
+    <li><%= link_to group.name, group %></li>
   <% end %>
+</ul>
 
-  <!-- Ver Posts -->
-  <% for post in @posts %>
-    <div class="post">
-      <%= post.author.name %>
-      Hace <%= time_ago_in_words(post.created_at) %>
-      <%= post.text %>
+<!-- Crear Post Nuevo -->
+<%= simple_form_for [@post] do |f| %>
+  <%= f.input :text, :label => false %><%= f.button :submit %>
+<% end %>
+
+<!-- Ver Posts -->
+<% for post in @posts %>
+  <div class="post">
+    <div class="row">
+      <div class="span3">
+        <strong><%= post.author.name %></strong>
+      </div>
+      <div class="span3 time">
+          <%= time_ago_in_words(post.created_at) %>
+      </div>
     </div>
-  <% end %>
+    <div class="row">
+      <div class="span6"><%= post.text %></div>
+    </div>
+  </div>
+<% end %>
