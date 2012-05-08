@@ -3,9 +3,10 @@
 Característica: Administrar Grupos
   
   Como administrador de Tutoriapps
-  Para asignar estudiantes a los grupos correctos
+  Para asignar los estudiantes a los grupos correctos
   Quiero poder administrar los grupos
 
+  @wip @javascript
   Escenario: Administrador crea un grupo
     Dado que un administrador ha iniciado sesión
     Cuando intente crear un grupo nuevo

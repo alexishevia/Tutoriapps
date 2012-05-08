@@ -5,7 +5,6 @@ Dado /^que se le han dado permisos de administrador$/ do
   @user ||= User.find_by_email(@user_attrs[:email])
   @user.admin = true
   @user.save!
-  @user.admin?.should be_true
 end
 
 Dado /^que el estudiante está matriculado en la materia "([^\"]*)"$/ do |nombre|

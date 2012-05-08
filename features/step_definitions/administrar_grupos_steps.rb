@@ -9,13 +9,15 @@ end
 
 Cuando /^intente crear un grupo nuevo$/ do
   @group_attrs = attributes_for(:group)
-  visit new_group_path
+  visit root_path
+  click_link(I18n.t('helpers.submit.add', 
+      :model => I18n.t('activerecord.models.group')))
   within "form.new_group" do
-    fill_in I18n.t('activerecord.attributes.group.name'), 
-      with: @group_attrs[:name]
+    fill_in 'group_name', with: @group_attrs[:name]
     click_button I18n.t('helpers.submit.create', 
       :model => I18n.t('activerecord.models.group'))
   end
+  find('.groups').should have_content(@group_attrs[:name])
 end
 
 Cuando /^intente crear un grupo nuevo mediante http$/ do
