@@ -18,7 +18,7 @@ Característica: Administrar Grupos
     Entonces recibirá el status 403
     Y el grupo no quedará registrado en el sistema
 
-  @javascript @wip
+  @javascript
   Escenario: Administrador agrega un estudiante existente a un grupo
     Dado que la clase "Cálculo II" ha sido creada
     Y que el estudiante "fulano@utp.ac.pa" ya está registrado
@@ -27,6 +27,7 @@ Característica: Administrar Grupos
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el estudiante "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II"
 
+  @javascript
   Escenario: Administrador agrega un estudiante no existente a un grupo
     Dado que la clase "Cálculo II" ha sido creada
     Y que el estudiante "fulano@utp.ac.pa" no está registrado

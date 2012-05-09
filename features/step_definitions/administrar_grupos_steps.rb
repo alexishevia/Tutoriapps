@@ -72,6 +72,7 @@ Entonces /^el estudiante "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |u
   within( find_link(group_name).find(:xpath,".//..") ) do
     page.should have_content(user.name)
   end
+  group.members.exists?(user).should be_true
 end
 
 Entonces /^el estudiante "([^"]*)" no aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
@@ -89,9 +90,7 @@ Dado /^que el estudiante "([^\"]*)" no está registrado$/ do |user_email|
 end
 
 Entonces /^el email "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
-  group = Group.find_by_name(group_name)
-  visit group_path(group)
-  within('.members') do
+  within( find_link(group_name).find(:xpath,".//..") ) do
     page.should have_content(user_email)
   end
 end
