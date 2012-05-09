@@ -3,38 +3,15 @@
   <div class="span3 offset1 well">
     <div class="groups">
       <h2>Grupos</h2>
-      <% for group in Group.all %>
-        <div class="group">
-          <a href="<%= group_path(group) %>" class="name">
-            <i class="icon-chevron-right"></i>
-            <%= group.name %>
-          </a>
-          <div class="members">
-            <% for user in group.members %>
-              <div><%= user.name %></div>
-            <% end %>
-            <% for user in group.unregistered_members %>
-              <div><%= user.email %></div>
-            <% end %>
-            <% enrollment = group.enrollments.build() %>
-            <%= simple_form_for [group, enrollment] do |f| %>
-              <%= f.input :user_email, :label => false %>
-              <%= f.submit I18n.t('helpers.submit.add', 
-                :model => I18n.t('activerecord.models.user')) %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
+      <%= render :partial => '/groups/group_admin', :collection => Group.all %>
       <a href="<%= new_group_path %>" class="new_group">
         <i class="icon-plus"></i>
         <%= I18n.t('helpers.submit.add', :model => I18n.t(
           'activerecord.models.group')) %>
       </a>
-      <%= form_for @group, :url => groups_path(:format => :json), 
-        :remote => true do |f| 
-      %>
-        <%= f.text_field :name, :placeholder => I18n.t('helpers.submit.add',
-          :model => I18n.t('activerecord.models.group')), :class => 'last-input' %>
+      <%= form_for @group, :remote => true, :html => {'data-type' => 'html'} do |f| %>
+        <%= f.text_field :name, :placeholder => I18n.t(
+        'activerecord.attributes.group.name'), :class => 'last-input' %>
         <%= f.submit I18n.t('helpers.submit.send'), :class => 'inline-submit
           btn-primary' %>
       <% end %>

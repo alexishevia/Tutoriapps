@@ -10,8 +10,8 @@
 
 class Group < ActiveRecord::Base
   attr_accessible :name
-  has_many :posts
-  has_many :enrollments
+  has_many :posts, :dependent => :destroy
+  has_many :enrollments, :dependent => :destroy
   has_many :members, :through => :enrollments, :source => :user
 
   validates :name, :presence => true

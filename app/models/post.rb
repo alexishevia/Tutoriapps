@@ -15,4 +15,12 @@ class Post < ActiveRecord::Base
   belongs_to :group
 
   validates :author, :text, :presence => true
+
+  def group_name
+    if group
+      return group.name
+    else
+      return I18n.t('activerecord.attributes.group.public')
+    end
+  end
 end

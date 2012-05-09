@@ -1,0 +1,29 @@
+<% group = group_admin %>
+<div class="group">
+  <a href="<%= group_path(group) %>" class="name">
+    <i class="icon-chevron-right"></i>
+    <%= group.name %>
+  </a>
+  <div class="members">
+    <% for user in group.members %>
+      <div class="member"><%= user.name %></div>
+    <% end %>
+    <% for user in group.unregistered_members %>
+      <div class="member"><%= user.email %></div>
+    <% end %>
+    <% enrollment = group.enrollments.build() %>
+    <a href="<%= group_path(group) %>" class="new_enrollment">
+      <i class="icon-plus"></i>
+      <%= I18n.t('helpers.submit.add', :model => I18n.t(
+        'activerecord.models.user')) %>
+    </a>
+    <%= form_for [group, enrollment], :url => group_enrollments_path(
+      group, :format => :json), :remote => true do |f| 
+    %>
+      <%= f.text_field :user_email, :placeholder => I18n.t(
+        'activerecord.attributes.user.email'), :class => 'last-input' %>
+      <%= f.submit I18n.t('helpers.submit.send'), 
+        :class => 'inline-submit btn-primary' %>
+    <% end %>
+  </div>
+</div>

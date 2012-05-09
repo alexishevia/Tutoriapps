@@ -14,10 +14,8 @@ Cuando /^intente crear un grupo nuevo$/ do
       :model => I18n.t('activerecord.models.group')))
   within "form.new_group" do
     fill_in 'group_name', with: @group_attrs[:name]
-    click_button I18n.t('helpers.submit.create', 
-      :model => I18n.t('activerecord.models.group'))
+    click_button I18n.t('helpers.submit.send')
   end
-  find('.groups').should have_content(@group_attrs[:name])
 end
 
 Cuando /^intente crear un grupo nuevo mediante http$/ do
@@ -26,6 +24,7 @@ Cuando /^intente crear un grupo nuevo mediante http$/ do
 end
 
 Entonces /^el grupo quedará registrado en el sistema$/ do
+  find('.groups').should have_content(@group_attrs[:name])
   Group.find_by_name(@group_attrs[:name]).should_not be_nil
 end
 

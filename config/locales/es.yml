@@ -217,6 +217,7 @@ es:
         remember_me: No cerrar sesión
       group:
         name: Nombre
+        public: Público
     errors:
       user:
         email: 

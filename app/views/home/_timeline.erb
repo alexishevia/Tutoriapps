@@ -19,7 +19,8 @@
         <strong><%= post.author.name %></strong>
       </div>
       <div class="span3 time">
-          <%= time_ago_in_words(post.created_at) %>
+        <%= post.group_name %> · 
+        <%= time_ago_in_words(post.created_at) %>
       </div>
     </div>
     <div class="row">

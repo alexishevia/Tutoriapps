@@ -39,8 +39,8 @@ class User < ActiveRecord::Base
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
   validates :name, :presence => true
 
-  has_many :posts
-  has_many :enrollments
+  has_many :posts, :dependent => :destroy
+  has_many :enrollments, :dependent => :destroy
 
   def groups
     Enrollment.where('user_email = ?', email).each do |e|

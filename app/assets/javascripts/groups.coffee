@@ -7,7 +7,7 @@ jQuery ($) ->
         $(this).next().toggle('slow')
     ).next().hide()
 
-    $('a.new_group').click(
+    $('a.new_group, a.new_enrollment').click(
       (evt) -> 
         evt.preventDefault()
         $(this).hide()
@@ -17,10 +17,21 @@ jQuery ($) ->
     ).next().hide()
 
     $('form.new_group').bind('ajax:success',
-      (evt, group, status, xhr) -> 
+      (evt, data, status, xhr) ->
         window.evt = evt
-        window.group = group
-        $(evt.target).before($(group.name))
-        $(evt.target).show
-        $(evt.target).next().hide()
+        window.data = data
+        evt.target.reset()
+        $(evt.target).hide()
+        $(evt.target).prev().show()        
+        new_group = $(data)
+        bind_group(new_group)
+        $(evt.target).prev().before(new_group)
     )
+
+  bind_group = (elem) ->
+    $(elem).find('.name').click(
+      (evt) -> 
+        evt.preventDefault()
+        $(this).find('i').toggleClass('icon-chevron-down')
+        $(this).next().toggle('slow')
+    ).next().hide()

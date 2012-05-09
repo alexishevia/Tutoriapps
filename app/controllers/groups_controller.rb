@@ -1,7 +1,6 @@
 class GroupsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
-  respond_to :html, :json
 
   def show
     if can? :manage, Group
@@ -17,7 +16,15 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.create(params[:group])
-    respond_with @group
+    if @group.save
+      if request.xhr?
+        return render :layout => false, :partial => 'groups/group_admin', :object => @group
+      else
+        redirect_to root_path, :notice => I18n.t('helpers.messages.created', 
+          :model => I18n.t('activerecord.models.group'))
+      end
+    else
+      render :action => 'new'
+    end
   end
 end
