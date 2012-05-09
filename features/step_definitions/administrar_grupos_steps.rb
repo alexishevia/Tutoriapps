@@ -47,11 +47,12 @@ end
 
 Cuando /^intente agregar al estudiante "([^"]*)" al grupo "([^"]*)"$/ do |user_email, group_name|
   group = Group.find_by_name(group_name)
-  visit group_path(group)
-  within '.new_enrollment' do
+  visit root_path
+  within( find_link(group_name).find(:xpath,".//..") ) do
+    click_link(group_name)
+    click_link(I18n.t('helpers.submit.add', :model => I18n.t('activerecord.models.user')))
     fill_in 'enrollment_user_email', :with => user_email
-    click_button I18n.t('helpers.submit.add', 
-      :model => I18n.t('activerecord.models.user'))
+    click_button I18n.t('helpers.submit.send')
   end
 end
 
@@ -66,10 +67,9 @@ Cuando /^intente agregarse al grupo "([^\"]*)" mediante http$/ do |group_name|
 end
 
 Entonces /^el estudiante "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
-  user = User.find_by_email(user_email)
   group = Group.find_by_name(group_name)
-  visit group_path(group)
-  within('.members') do
+  user = User.find_by_email(user_email)
+  within( find_link(group_name).find(:xpath,".//..") ) do
     page.should have_content(user.name)
   end
 end

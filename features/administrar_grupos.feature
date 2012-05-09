@@ -6,7 +6,7 @@ Característica: Administrar Grupos
   Para asignar los estudiantes a los grupos correctos
   Quiero poder administrar los grupos
 
-  @wip @javascript
+  @javascript
   Escenario: Administrador crea un grupo
     Dado que un administrador ha iniciado sesión
     Cuando intente crear un grupo nuevo
@@ -18,6 +18,7 @@ Característica: Administrar Grupos
     Entonces recibirá el status 403
     Y el grupo no quedará registrado en el sistema
 
+  @javascript @wip
   Escenario: Administrador agrega un estudiante existente a un grupo
     Dado que la clase "Cálculo II" ha sido creada
     Y que el estudiante "fulano@utp.ac.pa" ya está registrado

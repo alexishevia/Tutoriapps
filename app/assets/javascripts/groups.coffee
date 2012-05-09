@@ -13,11 +13,9 @@ jQuery ($) ->
 
     $('form.new_group').bind('ajax:success',
       (evt, data, status, xhr) ->
-        window.evt = evt
-        window.data = data
         evt.target.reset()
         $(evt.target).hide()
-        $(evt.target).prev().show()        
+        $(evt.target).prev().show()
         new_group = $(data)
         bind_groups(new_group)
         $(evt.target).prev().before(new_group)
@@ -39,3 +37,15 @@ jQuery ($) ->
           () -> $(this).find('input[type=text]').focus()
         )
     ).next().hide()
+
+    $(elem).find('form.new_enrollment').bind('ajax:success'
+      (evt, data, status, xhr) ->
+        evt.target.reset()
+        $(evt.target).hide()
+        $(evt.target).prev().show()
+        if data.user
+          text = data.user.name
+        else
+          text = data.user_email
+        $(evt.target).prev().before('<div class="member">' + text + '</div>')
+    )

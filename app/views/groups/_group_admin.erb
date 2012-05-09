@@ -11,12 +11,12 @@
     <% for user in group.unregistered_members %>
       <div class="member"><%= user.email %></div>
     <% end %>
-    <% enrollment = group.enrollments.build() %>
     <a href="<%= group_path(group) %>" class="new_enrollment">
       <i class="icon-plus"></i>
       <%= I18n.t('helpers.submit.add', :model => I18n.t(
         'activerecord.models.user')) %>
     </a>
+    <% enrollment = group.enrollments.build() %>
     <%= form_for [group, enrollment], :url => group_enrollments_path(
       group, :format => :json), :remote => true do |f| 
     %>
