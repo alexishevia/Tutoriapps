@@ -1,13 +1,8 @@
 jQuery ($) ->
   $(document).ready ->
-    $('.group .name').click(
-      (evt) -> 
-        evt.preventDefault()
-        $(this).find('i').toggleClass('icon-chevron-down')
-        $(this).next().toggle('slow')
-    ).next().hide()
+    bind_groups()
 
-    $('a.new_group, a.new_enrollment').click(
+    $('a.new_group').click(
       (evt) -> 
         evt.preventDefault()
         $(this).hide()
@@ -24,14 +19,23 @@ jQuery ($) ->
         $(evt.target).hide()
         $(evt.target).prev().show()        
         new_group = $(data)
-        bind_group(new_group)
+        bind_groups(new_group)
         $(evt.target).prev().before(new_group)
     )
 
-  bind_group = (elem) ->
+  bind_groups = (elem = '.groups') ->
     $(elem).find('.name').click(
       (evt) -> 
         evt.preventDefault()
         $(this).find('i').toggleClass('icon-chevron-down')
         $(this).next().toggle('slow')
+    ).next().hide()
+
+    $(elem).find('a.new_enrollment').click(
+      (evt) -> 
+        evt.preventDefault()
+        $(this).hide()
+        $(this).next().show('slow', 
+          () -> $(this).find('input[type=text]').focus()
+        )
     ).next().hide()
