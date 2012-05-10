@@ -16,6 +16,9 @@ class Enrollment < ActiveRecord::Base
 
   before_validation :search_user_email
   validates :user_id, :user_email, :uniqueness => {:scope => :group_id}
+  validates :user_email, :allow_nil => true, :format => { :with => /@utp.ac.pa$/, :message => 
+    "#{I18n.t('errors.messages.invalid')} - " + 
+    "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
 
   private
     def search_user_email

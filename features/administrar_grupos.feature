@@ -35,6 +35,13 @@ Característica: Administrar Grupos
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el email "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II"
 
+  @javascript
+  Escenario: Administrador agrega un email inválido a un grupo
+    Dado que la clase "Cálculo II" ha sido creada
+    Y que un administrador ha iniciado sesión
+    Cuando intente agregar al estudiante "foo@bar.com" al grupo "Cálculo II"
+    Entonces el email "foo@bar.com" no aparecerá dentro del grupo "Cálculo II"
+
   Escenario: Estudiante agrega a otro estudiante a un grupo mediante http
     Dado que un estudiante ha iniciado sesión mediante http
     Y que la clase "Cálculo II" ha sido creada
@@ -62,7 +69,7 @@ Característica: Administrar Grupos
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el estudiante "fulano@utp.ac.pa" aparecerá 1 vez en el grupo "Cálculo II"
 
-  @javascript @wip
+  @javascript
   Escenario: Administrador agrega un usuario no existente repetido a un grupo
     Dado que la clase "Cálculo II" ha sido creada
     Y que el estudiante "fulano@utp.ac.pa" no está registrado
@@ -70,3 +77,12 @@ Característica: Administrar Grupos
     Y que un administrador ha iniciado sesión
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el email "fulano@utp.ac.pa" aparecerá 1 vez en el grupo "Cálculo II"
+
+  Escenario: Administrador elimina un usuario de un grupo
+    Dado PENDING
+
+  Escenario: Administrador elimina un email de un grupo
+    Dado PENDING
+
+  Escenario: Estudiante elimina a otro estudiante de un grupo mediante http
+    Dado PENDING

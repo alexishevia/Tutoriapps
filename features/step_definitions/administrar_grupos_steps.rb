@@ -137,3 +137,9 @@ Entonces /^el email "([^\"]*)" aparecerá (\d+) vez en el grupo "([^\"]*)"$/ do 
     page.find('.members').text.scan(user_email).length.should eq(n.to_i)
   end
 end
+
+Entonces /^el email "([^\"]*)" no aparecerá dentro del grupo "([^\"]*)"$/ do |user_email, group_name|
+  within( find_link(group_name).find(:xpath,".//..") ) do
+    page.should_not have_content(user_email)
+  end
+end
