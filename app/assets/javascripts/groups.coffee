@@ -49,3 +49,9 @@ jQuery ($) ->
           text = data.user_email
         $(evt.target).prev().before('<div class="member">' + text + '</div>')
     )
+
+    $(elem).find('form.new_enrollment').bind('ajax:error'
+      (evt, xhr, status, error) ->
+        errors = $.parseJSON(xhr.responseText)
+        alert(errors)
+    )

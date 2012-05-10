@@ -9,6 +9,8 @@ class EnrollmentsController < ApplicationController
       format.json do
         if enrollment.save
           render :json => enrollment.to_json(:include => [:user])
+        else
+          render :json => enrollment.errors.full_messages, :status => 409
         end
       end
       format.html do

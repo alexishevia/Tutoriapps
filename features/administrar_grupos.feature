@@ -53,10 +53,11 @@ Característica: Administrar Grupos
     Entonces recibirá el status 403
     Y no aparecerá dentro del grupo "Cálculo II"
 
-  Escenario: Usuario nuevo accede a sus grupos
+  @javascript @wip
+  Escenario: Administrador agrega a un usuario repetido a un grupo
     Dado que la clase "Cálculo II" ha sido creada
-    Y que el correo "fulano@utp.ac.pa" se ha asignado a la clase "Cálculo II"
-    Pero que el estudiante "fulano@utp.ac.pa" no está registrado en el sistema
-    Cuando el estudiante "fulano@utp.ac.pa" se registre e inicie sesión
-    Y intente acceder al grupo "Cálculo II"
-    Entonces podrá ver la información del grupo "Cálculo II"
+    Y que el estudiante "fulano@utp.ac.pa" ya está registrado
+    Y que el estudiante "fulano@utp.ac.pa" está matriculado en la materia "Cálculo II"
+    Y que un administrador ha iniciado sesión
+    Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
+    Entonces el estudiante "fulano@utp.ac.pa" aparecerá 1 vez en el grupo "Cálculo II"

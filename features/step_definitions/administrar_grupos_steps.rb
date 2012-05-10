@@ -118,3 +118,10 @@ end
 Entonces /^recibirá el status (\d+)$/ do |code|
   last_response.status.should eq(code.to_i)
 end
+
+Entonces /^el estudiante "([^"]*)" aparecerá (\d+) vez en el grupo "([^\"]*)"$/ do |user_email, n, group_name|
+  user = User.find_by_email(user_email)
+  within( find_link(group_name).find(:xpath,".//..") ) do
+    page.find('.members').text.scan(user.name).length.should eq(n.to_i)
+  end
+end

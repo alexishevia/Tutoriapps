@@ -12,6 +12,12 @@ Dado /^que el estudiante está matriculado en la materia "([^\"]*)"$/ do |nombre
   group.members << @user
 end
 
+Dado /^que el estudiante "([^"]*)" está matriculado en la materia "([^"]*)"$/ do |user_email, group_name|
+  user = User.find_by_email(user_email)
+  group = Group.find_by_name(group_name)
+  group.members << user
+end
+
 Cuando /^intente acceder al grupo "([^\"]*)"$/ do |nombre|
   group = Group.find_by_name(nombre)
   visit group_path(group)
