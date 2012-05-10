@@ -220,6 +220,7 @@ es:
         public: Público
       enrollment:
         user_id: Usuario
+        user_email: Email
     errors:
       user:
         email: 

@@ -95,6 +95,12 @@ Entonces /^el email "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_e
   end
 end
 
+Dado /^que el email "([^\"]*)" se agregó al grupo "([^\"]*)"$/  do |user_email, group_name|
+  group = Group.find_by_name(group_name)
+  group.enrollments.create(:user_email => user_email)
+end
+
+
 Dado /^que el correo "([^\"]*)" se ha asignado a la clase "([^\"]*)"$/ do |user_email, group_name|
   step "que un administrador ha iniciado sesión"
   step "intente agregar al estudiante \"#{user_email}\" al grupo \"#{group_name}\""
@@ -123,5 +129,11 @@ Entonces /^el estudiante "([^"]*)" aparecerá (\d+) vez en el grupo "([^\"]*)"$/
   user = User.find_by_email(user_email)
   within( find_link(group_name).find(:xpath,".//..") ) do
     page.find('.members').text.scan(user.name).length.should eq(n.to_i)
+  end
+end
+
+Entonces /^el email "([^\"]*)" aparecerá (\d+) vez en el grupo "([^\"]*)"$/ do |user_email, n, group_name|
+  within( find_link(group_name).find(:xpath,".//..") ) do
+    page.find('.members').text.scan(user_email).length.should eq(n.to_i)
   end
 end

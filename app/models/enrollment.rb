@@ -15,7 +15,7 @@ class Enrollment < ActiveRecord::Base
   belongs_to :user
 
   before_validation :search_user_email
-  validates :user_id, :uniqueness => {:scope => :group_id}
+  validates :user_id, :user_email, :uniqueness => {:scope => :group_id}
 
   private
     def search_user_email
