@@ -55,3 +55,8 @@ jQuery ($) ->
         errors = $.parseJSON(xhr.responseText)
         alert(errors)
     )
+
+    $(elem).find('a.delete_enrollment').bind('ajax:success'
+      (evt, data, status, xhr) ->
+        $(evt.target).parent().remove()
+    )

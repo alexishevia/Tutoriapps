@@ -50,7 +50,7 @@ Característica: Administrar Grupos
     Pero que el estudiante "fulano@utp.ac.pa" no está matriculado en la materia "Cálculo II"
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II" mediante http
     Entonces recibirá el status 403
-    Y el estudiante "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
+    Y el estudiante "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II" en el sistema
 
   Escenario: Estudiante se auto-agrega a un grupo mediante http
     Dado que un estudiante ha iniciado sesión mediante http
@@ -58,7 +58,7 @@ Característica: Administrar Grupos
     Pero el estudiante no está matriculado en la materia "Cálculo II"
     Cuando intente agregarse al grupo "Cálculo II" mediante http
     Entonces recibirá el status 403
-    Y no aparecerá dentro del grupo "Cálculo II"
+    Y no aparecerá dentro del grupo "Cálculo II" en el sistema
 
   @javascript
   Escenario: Administrador agrega un usuario repetido a un grupo
@@ -78,8 +78,15 @@ Característica: Administrar Grupos
     Cuando intente agregar al estudiante "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el email "fulano@utp.ac.pa" aparecerá 1 vez en el grupo "Cálculo II"
 
-  Escenario: Administrador elimina un usuario de un grupo
-    Dado PENDING
+  @javascript
+  Escenario: Administrador saca un usuario de un grupo
+    Dado que la clase "Cálculo II" ha sido creada
+    Y que el estudiante "fulano@utp.ac.pa" ya está registrado
+    Y que el estudiante "fulano@utp.ac.pa" está matriculado en la materia "Cálculo II"
+    Y que un administrador ha iniciado sesión
+    Cuando intente sacar al usuario "fulano@utp.ac.pa" del grupo "Cálculo II"
+    Entonces el estudiante "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
+
 
   Escenario: Administrador elimina un email de un grupo
     Dado PENDING

@@ -75,14 +75,23 @@ Entonces /^el estudiante "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |u
   group.members.exists?(user).should be_true
 end
 
-Entonces /^el estudiante "([^"]*)" no aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
+Entonces /^el estudiante "([^\"]*)" no aparecerá dentro del grupo "([^\"]*)"$/ do |user_email, group_name|
+  group = Group.find_by_name(group_name)
+  user = User.find_by_email(user_email)
+  within( find_link(group_name).find(:xpath,".//..") ) do
+    page.should_not have_content(user.name)
+  end
+  group.members.exists?(user).should be_false
+end
+
+Entonces /^el estudiante "([^"]*)" no aparecerá dentro del grupo "([^"]*)" en el sistema$/ do |user_email, group_name|
   user = User.find_by_email(user_email)
   group = Group.find_by_name(group_name)
   group.members.exists?(user).should be_false
 end
 
-Entonces /^no aparecerá dentro del grupo "([^\"]*)"$/ do |group_name|
-  step "el estudiante \"#{@user.email}\" no aparecerá dentro del grupo \"#{group_name}\""
+Entonces /^no aparecerá dentro del grupo "([^\"]*)" en el sistema$/ do |group_name|
+  step "el estudiante \"#{@user.email}\" no aparecerá dentro del grupo \"#{group_name}\" en el sistema"
 end
 
 Dado /^que el estudiante "([^\"]*)" no está registrado$/ do |user_email|
@@ -142,4 +151,13 @@ Entonces /^el email "([^\"]*)" no aparecerá dentro del grupo "([^\"]*)"$/ do |u
   within( find_link(group_name).find(:xpath,".//..") ) do
     page.should_not have_content(user_email)
   end
+end
+
+Cuando /^intente sacar al usuario "([^\"]*)" del grupo "([^\"]*)"$/ do |user_email, group_name|
+  user = User.find_by_email(user_email)
+  click_link(group_name)
+  find_link(group_name).find(:xpath,".//..")
+    .find(:xpath, ".//*[contains(text(), '#{user.name}')]").find(:xpath,".//..")
+    .find(:xpath, './a[1]').click
+  page.execute_script 'window.confirm = function () { return true }'
 end

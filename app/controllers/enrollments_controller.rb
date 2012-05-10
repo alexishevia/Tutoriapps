@@ -21,4 +21,14 @@ class EnrollmentsController < ApplicationController
       end
     end
   end
+
+  def destroy
+    group = Group.find(params[:group_id])
+    authorize! :manage, group
+    @enrollment = group.enrollments.find_by_user_id(params[:id])
+    @enrollment.destroy
+    respond_to do |format|
+      format.json { render :json => @enrollment }
+    end
+  end
 end
