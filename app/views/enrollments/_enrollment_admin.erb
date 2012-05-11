@@ -1,0 +1,11 @@
+<% enrollment = enrollment_admin %>
+<div class="member">
+  <%= link_to '<i class="icon-remove-circle"></i>'.html_safe, enrollment,
+      :method => :delete, :remote => true, :class => 'delete_enrollment', 
+      :confirm => I18n.t('helpers.confirm_delete.enrollment', 
+        :user_name => enrollment.user_name, 
+        :group_name => enrollment.group.name
+      )
+  %> 
+  <span><%= enrollment.user_name %></span>
+</div>

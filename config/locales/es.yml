@@ -130,6 +130,8 @@ es:
   helpers:
     select:
       prompt: Por favor seleccione
+    confirm_delete: 
+      enrollment: ¿Está seguro que desea sacar a %{user_name} del grupo %{group_name}?
     submit:
       create: Crear %{model}
       submit: Guardar %{model}

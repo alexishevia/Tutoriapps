@@ -5,28 +5,17 @@
     <%= group.name %>
   </a>
   <div class="members">
-    <% for user in group.members %>
-      <div class="member">
-        <%= link_to '<i class="icon-remove-circle"></i>'.html_safe,
-          group_enrollment_path(group, user, :format => :json), 
-          :confirm => 'Are you sure?', :method => :delete, :remote => true, 
-          :class => 'delete_enrollment'
-        %> 
-        <span><%= user.name %></span>
-      </div>
-    <% end %>
-    <% for user in group.unregistered_members %>
-      <div class="member"><%= user.email %></div>
-    <% end %>
+    <%= render :partial => '/enrollments/enrollment_admin', 
+      :collection => group.enrollments %>
     <a href="<%= group_path(group) %>" class="new_enrollment">
       <i class="icon-plus"></i>
       <%= I18n.t('helpers.submit.add', :model => I18n.t(
         'activerecord.models.user')) %>
     </a>
-    <% enrollment = group.enrollments.build() %>
-    <%= form_for [group, enrollment], :url => group_enrollments_path(
-      group, :format => :json), :remote => true do |f| 
+    <%= form_for Enrollment.new, :remote => true, 
+      :html => {'data-type' => 'html'} do |f| 
     %>
+      <%= hidden_field_tag 'enrollment[group_id]', group.id %>
       <%= f.text_field :user_email, :placeholder => I18n.t(
         'activerecord.attributes.user.email'), :class => 'last-input' %>
       <%= f.submit I18n.t('helpers.submit.send'), 

@@ -5,7 +5,7 @@ class Ability
     if user
       can :read, Group do |group| user.groups.include? group; end
       if user.admin?
-          can :manage, Group
+          can :manage, [Group, Enrollment]
       end
     end
   end

@@ -20,6 +20,15 @@ class Enrollment < ActiveRecord::Base
     "#{I18n.t('errors.messages.invalid')} - " + 
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
 
+  def user_identifier
+    user_id || user_email
+  end
+
+  def user_name
+    return user.name if user 
+    user_email
+  end
+
   private
     def search_user_email
       return unless user_email

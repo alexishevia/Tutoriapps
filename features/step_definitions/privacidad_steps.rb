@@ -96,9 +96,3 @@ Dado /^que un estudiante ha iniciado sesión$/ do
   step 'que un estudiante ha sido verificado'
   step 'intente iniciar sesión'
 end
-
-Dado /^que un estudiante ha iniciado sesión mediante http$/ do
-  step 'que un estudiante ha sido verificado'
-  post user_session_path(:format => :json), {:user => @user_attrs}
-  last_response.status.should eq(201)
-end

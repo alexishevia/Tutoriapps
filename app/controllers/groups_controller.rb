@@ -13,15 +13,15 @@ class GroupsController < ApplicationController
   end
 
   def create
-    if @group.save
-      if request.xhr?
-        return render :layout => false, :partial => 'groups/group_admin', :object => @group
-      else
-        redirect_to root_path, :notice => I18n.t('helpers.messages.created', 
-          :model => I18n.t('activerecord.models.group'))
+    respond_to do |format|
+      format.js do
+        if @group.save
+          return render :layout => false, :partial => 'groups/group_admin', 
+            :object => @group
+        else
+          render :text => @group.errors.full_messages[0], :status => 409
+        end
       end
-    else
-      render :action => 'new'
     end
   end
 end

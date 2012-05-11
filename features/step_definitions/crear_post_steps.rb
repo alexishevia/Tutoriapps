@@ -70,8 +70,9 @@ end
 
 Dado /^que se han creado las siguientes matrículas:$/ do |table|
   for hash in table.hashes do
+    group = Group.find_by_name(hash[:materia])
     for email in hash[:estudiantes].split(', ') do
-      step "que el correo \"#{email}\" se ha asignado a la clase \"#{hash[:materia]}\""
+      group.members << User.find_by_email(email)
     end
   end 
 end
