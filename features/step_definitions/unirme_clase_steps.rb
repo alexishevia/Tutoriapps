@@ -1,7 +1,7 @@
 # coding: utf-8
 # language: es
 
-Dado /^que el usuario "([^\"]*)" ya se agregó al grupo "([^\"]*)"$/ do |user_email, group_name|
+Dado /^que el usuario "([^\"]*)" ya fue agregado al grupo "([^\"]*)"$/ do |user_email, group_name|
   user = User.find_by_email(user_email)
   group = Group.find_by_name(group_name)
   if user

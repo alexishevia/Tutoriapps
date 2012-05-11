@@ -12,11 +12,6 @@ Cuando /^intente crear un grupo nuevo$/ do
   end
 end
 
-Cuando /^intente crear un grupo nuevo mediante http$/ do
-  @group_attrs = attributes_for(:group)
-  post groups_path, @group_attrs
-end
-
 Entonces /^el grupo quedará registrado en el sistema$/ do
   find('.groups').should have_content(@group_attrs[:name])
   Group.find_by_name(@group_attrs[:name]).should_not be_nil
@@ -35,16 +30,6 @@ Cuando /^intente agregar el usuario "([^"]*)" al grupo "([^"]*)"$/ do |user_emai
     fill_in 'enrollment_user_email', :with => user_email
     click_button I18n.t('helpers.submit.send')
   end
-end
-
-Cuando /^intente agregar el usuario "([^"]*)" al grupo "([^"]*)" mediante http$/ do |user_email, group_name|
-  group = Group.find_by_name(group_name)
-  post group_enrollments_path(group), {enrollment: {user_email: user_email}}
-end
-
-Cuando /^intente agregarse al grupo "([^\"]*)" mediante http$/ do |group_name|
-  group = Group.find_by_name(group_name)
-  post group_enrollments_path(group), {enrollment: {user_email: @user.email}}
 end
 
 Entonces /^el usuario "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user_email, group_name|
