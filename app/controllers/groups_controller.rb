@@ -12,9 +12,6 @@ class GroupsController < ApplicationController
     @enrollment = @group.enrollments.build
   end
 
-  def new
-  end
-
   def create
     if @group.save
       if request.xhr?

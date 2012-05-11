@@ -159,5 +159,4 @@ Cuando /^intente sacar al usuario "([^\"]*)" del grupo "([^\"]*)"$/ do |user_ema
   find_link(group_name).find(:xpath,".//..")
     .find(:xpath, ".//*[contains(text(), '#{user.name}')]").find(:xpath,".//..")
     .find(:xpath, './a[1]').click
-  page.execute_script 'window.confirm = function () { return true }'
 end

@@ -87,7 +87,7 @@ Característica: Administrar Grupos
     Cuando intente sacar al usuario "fulano@utp.ac.pa" del grupo "Cálculo II"
     Entonces el estudiante "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
 
-
+  
   Escenario: Administrador elimina un email de un grupo
     Dado PENDING
 
