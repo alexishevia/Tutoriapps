@@ -21,10 +21,21 @@
       <div class="span3 time">
         <%= post.group_name %> · 
         <%= time_ago_in_words(post.created_at) %>
+        <button class="close">&times;</button>
       </div>
     </div>
     <div class="row">
-      <div class="span6"><%= post.text %></div>
+      <div class="span6"><%= post.text %></div></br>      
+    </div>
+    <div class="post-options">
+      <i class="icon-share-alt"></i>
+      <a href="#">Responder</a>
+      <i class="icon-trash"></i>
+      <a href="#">Eliminar</a>
+      <i class="icon-thumbs-up"></i>
+      <a href="#">0</a>
+      <i class="icon-thumbs-down"></i>
+      <a href="#">0</a>
     </div>
   </div>
 <% end %>
