@@ -64,5 +64,5 @@ Característica: Administrar Grupos
   @javascript
   Escenario: Administrador edita el nombre de un grupo
     Cuando intente cambiar el nombre del grupo "Cálculo II" a "Cálculo I"
-    Entonces el grupo "Cáclulo I" aparecerá 1 vez en la lista de grupos
-    Y el grupo "Cáclulo I" aparecerá 0 veces en la lista de grupos
+    Entonces el grupo "Cálculo I" aparecerá 1 vez en la lista de grupos
+    Y el grupo "Cálculo II" no aparecerá en la lista de grupos
