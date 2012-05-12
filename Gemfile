@@ -6,6 +6,7 @@ gem 'mysql2', '0.3.11'
 gem 'devise', '2.0.4'
 gem 'cancan', '1.6.7'
 gem 'simple_form', '2.0.1'
+gem 'best_in_place', '1.0.6'
 
 group :assets do
   gem 'sass-rails',   '3.2.5'

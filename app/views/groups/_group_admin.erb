@@ -1,9 +1,13 @@
 <% group = group_admin %>
-<div class="group">
-  <a href="<%= group_path(group) %>" class="name">
-    <i class="icon-chevron-right"></i>
-    <%= group.name %>
-  </a>
+<div class="group" data-group-id="<%= group.id %>">
+  <div class="name">
+    <a href="<%= group_path(group) %>" class="open">
+      <i class="icon-chevron-right"></i>
+      <%= best_in_place group, :name, 
+        :activator => "[.group[data-group-id=#{group.id}] .edit_group" %>
+    </a>
+    <a href="#" class="edit_group"><i class="icon-pencil"></i></a>
+  </div>
   <div class="members">
     <%= render :partial => '/enrollments/enrollment_admin', 
       :collection => group.enrollments %>

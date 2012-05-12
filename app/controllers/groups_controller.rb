@@ -24,4 +24,11 @@ class GroupsController < ApplicationController
       end
     end
   end
+
+  def update
+    success = @group.update_attributes(params[:group])
+    respond_to do |format|
+      format.json { respond_with_bip(@group) }
+    end
+  end
 end

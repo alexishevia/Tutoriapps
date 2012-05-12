@@ -27,12 +27,12 @@ jQuery ($) ->
     )
 
   bind_groups = (elem = '.groups') ->
-    $(elem).find('.name').click(
+    $(elem).find('.name .open').click(
       (evt) -> 
         evt.preventDefault()
         $(this).find('i').toggleClass('icon-chevron-down')
-        $(this).next().toggle('slow')
-    ).next().hide()
+        $(this).parent().next().toggle('slow')
+    ).parent().next().hide()
 
     $(elem).find('a.new_enrollment').click(
       (evt) -> 
@@ -42,6 +42,8 @@ jQuery ($) ->
           () -> $(this).find('input[type=text]').focus()
         )
     ).next().hide()
+
+    $(elem).find('.best_in_place').best_in_place()
 
     $(elem).find('form.new_enrollment').bind('ajax:success'
       (evt, data, status, xhr) ->

@@ -14,8 +14,8 @@ Característica: Administrar Grupos
 
   @javascript
   Escenario: Administrador crea un grupo
-    Cuando intente crear un grupo nuevo
-    Entonces el grupo quedará registrado en el sistema
+    Cuando intente crear el grupo "Física I"
+    Entonces el grupo "Física I" aparecerá 1 vez en la lista de grupos
 
   @javascript
   Escenario: Administrador agrega un usuario registrado a un grupo
@@ -30,34 +30,39 @@ Característica: Administrar Grupos
   @javascript
   Escenario: Administrador agrega un usuario inválido a un grupo
     Cuando intente agregar el usuario "foo@bar.com" al grupo "Cálculo II"
+    Y cierre el popup con el mensaje de error
     Entonces el usuario "foo@bar.com" no aparecerá dentro del grupo "Cálculo II"
 
   @javascript
   Escenario: Administrador agrega dos veces un usuario registrado a un grupo
     Dado que el usuario "fulano@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente agregar el usuario "fulano@utp.ac.pa" al grupo "Cálculo II"
+    Y cierre el popup con el mensaje de error
     Entonces el usuario "fulano@utp.ac.pa" aparecerá 1 vez en el grupo "Cálculo II"
 
   @javascript
   Escenario: Administrador agrega dos veces un usuario no registrado a un grupo
     Dado que el usuario "mengano@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente agregar el usuario "mengano@utp.ac.pa" al grupo "Cálculo II"
+    Y cierre el popup con el mensaje de error
     Entonces el usuario "mengano@utp.ac.pa" aparecerá 1 vez en el grupo "Cálculo II"
 
   @javascript
   Escenario: Administrador saca un usuario registrado de un grupo
     Dado que el usuario "fulano@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente sacar al usuario "fulano@utp.ac.pa" del grupo "Cálculo II"
-    Entonces el usuario "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
-
-  @javascript
-  Escenario: Administrador agrega y saca un usuario registrado de un grupo
-    Cuando intente agregar el usuario "fulano@utp.ac.pa" al grupo "Cálculo II"
-    Cuando intente sacar al usuario "fulano@utp.ac.pa" del grupo "Cálculo II"
+    Y confirme el popup con el mensaje de advertencia
     Entonces el usuario "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
 
   @javascript
   Escenario: Administrador saca un usuario no registrado de un grupo
     Dado que el usuario "mengano@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente sacar al usuario "mengano@utp.ac.pa" del grupo "Cálculo II"
+    Y confirme el popup con el mensaje de advertencia
     Entonces el usuario "mengano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II"
+
+  @javascript
+  Escenario: Administrador edita el nombre de un grupo
+    Cuando intente cambiar el nombre del grupo "Cálculo II" a "Cálculo I"
+    Entonces el grupo "Cáclulo I" aparecerá 1 vez en la lista de grupos
+    Y el grupo "Cáclulo I" aparecerá 0 veces en la lista de grupos
