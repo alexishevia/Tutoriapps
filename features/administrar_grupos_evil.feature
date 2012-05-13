@@ -6,40 +6,40 @@ Característica: Administrar Grupos (Evil)
   Para pasarle por alto a las restricciones de Tutoriapps
   Quiero poder modificar los grupos mediante http
 
-  Antecedentes: usuario ha iniciado sesión
+  Antecedentes: Usuario ha iniciado sesión
     Dado que el grupo "Cálculo II" ha sido creado
     Y que el usuario "fulano@utp.ac.pa" ha sido creado y confirmado
     Y que el usuario "hacker@utp.ac.pa" ha sido creado y confirmado
     Y que el usuario "hacker@utp.ac.pa" ha iniciado sesión mediante http
 
-  Escenario: usuario crea un grupo mediante http
+  Escenario: Usuario crea un grupo mediante http
     Cuando intente crear el grupo "Física I" mediante http
     Entonces recibirá el status 403
     Y el grupo "Física I" no quedará registrado en el sistema
 
-  Escenario: usuario se auto-agrega a un grupo mediante http  
+  Escenario: Usuario se auto-agrega a un grupo mediante http  
     Cuando intente agregar el usuario "hacker@utp.ac.pa" al grupo "Cálculo II" mediante http  
     Entonces recibirá el status 403
     Y el usuario "hacker@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II" en el sistema
 
-  Escenario: usuario agrega otro usuario a un grupo mediante http
+  Escenario: Usuario agrega otro usuario a un grupo mediante http
     Dado que el usuario "hacker@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente agregar el usuario "fulano@utp.ac.pa" al grupo "Cálculo II" mediante http
     Entonces recibirá el status 403
     Y el usuario "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II" en el sistema
 
-  Escenario: usuario saca a otro usuario de un grupo mediante http
+  Escenario: Usuario saca a otro usuario de un grupo mediante http
     Dado que el usuario "fulano@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente sacar al usuario "fulano@utp.ac.pa" del grupo "Cálculo II" mediante http
     Entonces recibirá el status 403
     Y el usuario "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II" en el sistema
 
-  Escenario: usuario cambia el nombre de un grupo mediante http
+  Escenario: Usuario cambia el nombre de un grupo mediante http
     Cuando intente cambiar el nombre del grupo "Cálculo II" a "Cálculo I" mediante http
     Entonces recibirá el status 403
     Y el grupo "Cálculo II" seguirá registrado en el sistema
 
-  Escenario: usuario elimina un grupo mediante http
+  Escenario: Usuario elimina un grupo mediante http
     Cuando intente eliminar el grupo "Cálculo II" mediante http
     Entonces recibirá el status 403
     Y el grupo "Cálculo II" seguirá registrado en el sistema

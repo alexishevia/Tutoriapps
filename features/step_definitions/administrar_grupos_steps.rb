@@ -1,6 +1,34 @@
 # coding: utf-8
 # language: es
 
+Dado /^que el grupo "([^\"]*)" ha sido creado$/ do |group_name|
+  create(:group, :name => group_name)
+end
+
+Dado /^que los grupos \[([^\]]*)\] han sido creados$/ do |group_names|
+  for group_name in group_names.split(', ') do
+    step "que el grupo \"#{group_name}\" ha sido creado"
+  end
+end
+
+Dado /^que el usuario "([^\"]*)" ya fue agregado al grupo "([^\"]*)"$/ do |user_email, group_name|
+  user = User.find_by_email(user_email)
+  group = Group.find_by_name(group_name)
+  if user
+    group.members << user
+  else
+    group.enrollments.create(user_email: user_email)
+  end
+end
+
+Dado /^que las siguientes matrículas han sido creadas:$/ do |table|
+  for hash in table.hashes do
+    for email in hash[:estudiantes].split(', ') do
+      step "que el usuario \"#{email}\" ya fue agregado al grupo \"#{hash[:materia]}\""
+    end
+  end 
+end
+
 Cuando /^intente crear el grupo "([^\"]*)"$/ do |group_name|
   group_attrs = attributes_for(:group, :name => group_name)
   visit root_path

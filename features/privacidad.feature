@@ -32,3 +32,9 @@ Característica: Privacidad
     Pero aún no ha sido verificado
     Cuando intente iniciar sesión
     Entonces no podrá iniciar sesión
+
+  Escenario: Ver mis grupos
+    Dado que un estudiante ha iniciado sesión
+    Y que el estudiante ya fue agregado a 3 grupos
+    Cuando visite la página de inicio
+    Entonces podrá ver los 3 grupos a los que pertenece

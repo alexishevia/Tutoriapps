@@ -96,3 +96,15 @@ Dado /^que un estudiante ha iniciado sesión$/ do
   step 'que un estudiante ha sido verificado'
   step 'intente iniciar sesión'
 end
+
+Dado /^que el estudiante ya fue agregado a (\d+) grupos$/ do |n|
+  n.to_i.times { create(:enrollment, :user => @user) }
+end
+
+Entonces /^podrá ver los (\d+) grupos a los que pertenece$/ do |n|
+  n = n.to_i
+  @user.groups.count.should eq(n)
+  for group in @user.groups
+    page.should have_link(group.name)
+  end
+end

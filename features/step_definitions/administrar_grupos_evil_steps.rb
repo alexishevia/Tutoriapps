@@ -6,7 +6,6 @@ Cuando /^intente crear el grupo "([^\"]*)" mediante http$/ do |group_name|
   post groups_path, group_attrs
 end
 
-
 Cuando /^intente agregar el usuario "([^"]*)" al grupo "([^"]*)" mediante http$/ do |user_email, group_name|
   group = Group.find_by_name(group_name)
   post enrollments_path, {enrollment: {user_email: user_email, group_id: group.id}}

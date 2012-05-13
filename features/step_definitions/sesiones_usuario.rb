@@ -8,6 +8,12 @@ Dado /^que el usuario "([^\"]*)" ha sido creado$/ do |user_email|
   User.create!(user_attrs)
 end
 
+Dado /^que los usuarios \[([^\]]*)\] han sido creados$/ do |emails|
+  for email in emails.split(', ')
+    step "que el usuario \"#{email}\" ha sido creado"
+  end
+end
+
 Dado /^que el usuario "([^\"]*)" ha sido confirmado$/ do |user_email|
   user = User.find_by_email(user_email)
   user.confirmed_at = Time.now
