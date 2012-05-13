@@ -1,24 +1,19 @@
 class PostsController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource
 
   def create
-    if params[:group_id]
-      @group = Group.find(params[:group_id])
-      authorize! :read, @group
-      @post = @group.posts.build(params[:post].merge(:author => current_user))
-      if @post.save
-        redirect_to @group
-      else
-        render '/groups/show'
+    @post.author = current_user
+    respond_to do |format|
+      format.js do
+        if @post.save
+          render :layout => false, :partial => 'posts/post', 
+            :object => @post
+        else
+          render :text => @post.errors.full_messages[0], :status => 409
+        end
       end
-    else
-      @post = Post.new(params[:post].merge(:author => current_user))
-      if @post.save
-        redirect_to root_path
-      else
-        @groups = current_user.groups
-        render '/home/home'
-      end
-    end    
+    end
   end
+
 end

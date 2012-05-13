@@ -51,4 +51,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def readable_posts
+    Post.where('group_id IN(?) OR group_id IS NULL', groups)
+  end
+
 end

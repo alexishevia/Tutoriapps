@@ -23,8 +23,8 @@ end
 
 Dado /^que las siguientes matrículas han sido creadas:$/ do |table|
   for hash in table.hashes do
-    for email in hash[:estudiantes].split(', ') do
-      step "que el usuario \"#{email}\" ya fue agregado al grupo \"#{hash[:materia]}\""
+    for email in hash[:usuarios].split(', ') do
+      step "que el usuario \"#{email}\" ya fue agregado al grupo \"#{hash[:grupo]}\""
     end
   end 
 end

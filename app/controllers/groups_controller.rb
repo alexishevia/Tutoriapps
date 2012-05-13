@@ -1,15 +1,20 @@
 class GroupsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  skip_load_and_authorize_resource :only => :show
 
   def show
-    if can? :manage, Group
-      @groups = Group.all
+    if params[:id] == "all"
+      collection = current_user.readable_posts
     else
-      @groups = current_user.groups
-    end 
-    @post = @group.posts.build
-    @enrollment = @group.enrollments.build
+      group = Group.find_by_id(params[:id])
+      authorize! :read, group
+      collection = group.posts
+    end
+    respond_to do |format|
+      format.js { render :layout => false, :partial => '/posts/post', 
+        :collection => collection }
+    end
   end
 
   def create
@@ -26,7 +31,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    success = @group.update_attributes(params[:group])
+    @group.update_attributes(params[:group])
     respond_to do |format|
       format.json { respond_with_bip(@group) }
     end

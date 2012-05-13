@@ -20,15 +20,33 @@ Dado /^que el usuario "([^\"]*)" ha sido confirmado$/ do |user_email|
   user.save!
 end
 
+Dado /^que los usuarios \[([^\]]*)\] han sido confirmados$/ do |emails|
+  for email in emails.split(', ')
+    step "que el usuario \"#{email}\" ha sido confirmado"
+  end
+end
+
 Dado /^que el usuario "([^\"]*)" ha sido concedido permisos de administrador$/ do |user_email|
   user = User.find_by_email(user_email)
   user.admin = true
   user.save!
 end
 
+Dado /^que los usuarios \[([^\]]*)\] han sido concedidos pedidos de administrador$/ do |emails|
+  for email in emails.split(', ')
+    step "que el usuario \"#{email}\" ha sido concedido permisos de administrador"
+  end
+end
+
 Dado /^que el usuario "([^\"]*)" ha sido creado y confirmado$/ do |user_email|
   step "que el usuario \"#{user_email}\" ha sido creado"
   step "que el usuario \"#{user_email}\" ha sido confirmado"
+end
+
+Dado /^que los usuarios \[([^\]]*)\] han sido creados y confirmados$/ do |emails|
+  for email in emails.split(', ')
+    step "que el usuario \"#{email}\" ha sido creado y confirmado"
+  end
 end
 
 Dado /^que el usuario "([^\"]*)" ha sido creado, confirmado y concedido permisos de administrador$/ do |user_email|
