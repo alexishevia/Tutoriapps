@@ -13,9 +13,9 @@ Característica: Administrar Grupos (Evil)
     Y que el usuario "hacker@utp.ac.pa" ha iniciado sesión mediante http
 
   Escenario: usuario crea un grupo mediante http
-    Cuando intente crear un grupo nuevo mediante http
+    Cuando intente crear el grupo "Física I" mediante http
     Entonces recibirá el status 403
-    Y el grupo no quedará registrado en el sistema
+    Y el grupo "Física I" no quedará registrado en el sistema
 
   Escenario: usuario se auto-agrega a un grupo mediante http  
     Cuando intente agregar el usuario "hacker@utp.ac.pa" al grupo "Cálculo II" mediante http  
@@ -28,8 +28,18 @@ Característica: Administrar Grupos (Evil)
     Entonces recibirá el status 403
     Y el usuario "fulano@utp.ac.pa" no aparecerá dentro del grupo "Cálculo II" en el sistema
 
-  Escenario: usuario elimina a otro usuario de un grupo mediante http
+  Escenario: usuario saca a otro usuario de un grupo mediante http
     Dado que el usuario "fulano@utp.ac.pa" ya fue agregado al grupo "Cálculo II"
     Cuando intente sacar al usuario "fulano@utp.ac.pa" del grupo "Cálculo II" mediante http
     Entonces recibirá el status 403
     Y el usuario "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II" en el sistema
+
+  Escenario: usuario cambia el nombre de un grupo mediante http
+    Cuando intente cambiar el nombre del grupo "Cálculo II" a "Cálculo I" mediante http
+    Entonces recibirá el status 403
+    Y el grupo "Cálculo II" seguirá registrado en el sistema
+
+  Escenario: usuario elimina un grupo mediante http
+    Cuando intente eliminar el grupo "Cálculo II" mediante http
+    Entonces recibirá el status 403
+    Y el grupo "Cálculo II" seguirá registrado en el sistema

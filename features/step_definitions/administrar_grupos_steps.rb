@@ -12,15 +12,6 @@ Cuando /^intente crear el grupo "([^\"]*)"$/ do |group_name|
   end
 end
 
-Entonces /^el grupo quedará registrado en el sistema$/ do
-  find('.groups').should have_content(@group_attrs[:name])
-  Group.find_by_name(@group_attrs[:name]).should_not be_nil
-end
-
-Entonces /^el grupo no quedará registrado en el sistema$/ do
-  Group.find_by_name(@group_attrs[:name]).should be_nil
-end
-
 Entonces /^el grupo "([^\"]*)" aparecerá (\d+) (vez|veces) en la lista de grupos$/ do |group_name, n, arg3|
   within ".groups" do
     page.text.scan(group_name).length.should eq(n.to_i)
