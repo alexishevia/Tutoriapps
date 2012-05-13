@@ -24,7 +24,7 @@ Característica: Crear Posts
     Pero el post no aparecerá en el muro "Cálculo II"
     Y el post no aparecerá en el muro "OAC"
 
-  @javascript @wip
+  @javascript
   Escenario: Crear un post dentro de un grupo
     Dado que el usuario "fulano@utp.ac.pa" ha iniciado sesión
     Y está viendo el muro "Cálculo II"

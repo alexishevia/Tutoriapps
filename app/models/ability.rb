@@ -6,7 +6,7 @@ class Ability
       can :read, Group do |group| user.groups.include? group; end
       can :create, Post do |post|
         if post.group
-          post.group.members.includ? user
+          post.group.members.include? user
         else
           true
         end

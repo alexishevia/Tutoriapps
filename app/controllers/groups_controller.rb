@@ -4,16 +4,21 @@ class GroupsController < ApplicationController
   skip_load_and_authorize_resource :only => :show
 
   def show
+    groups = current_user.groups
     if params[:id] == "all"
-      collection = current_user.readable_posts
+      active = 'all'
+      posts = current_user.readable_posts.order('created_at DESC')
     else
       group = Group.find_by_id(params[:id])
       authorize! :read, group
-      collection = group.posts
+      active = group
+      posts = group.posts.order('created_at DESC')
     end
     respond_to do |format|
-      format.js { render :layout => false, :partial => '/posts/post', 
-        :collection => collection }
+      format.js do 
+        render :layout => false, :partial => '/home/timeline', 
+          :locals => { :groups => groups, :active => active, :posts => posts }
+      end
     end
   end
 

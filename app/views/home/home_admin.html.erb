@@ -9,7 +9,7 @@
         <%= I18n.t('helpers.submit.add', :model => I18n.t(
           'activerecord.models.group')) %>
       </a>
-      <%= form_for @group, :remote => true, :html => {'data-type' => 'html'} do |f| %>
+      <%= form_for Group.new, :remote => true, :html => {'data-type' => 'html'} do |f| %>
         <%= f.text_field :name, :placeholder => I18n.t(
         'activerecord.attributes.group.name'), :class => 'last-input' %>
         <%= f.submit I18n.t('helpers.submit.send'), :class => 'inline-submit
@@ -19,6 +19,7 @@
   </div>
 
   <div class="span6 well">
-    <%= render 'timeline' %>
+    <%= render :partial => 'timeline', :locals => {:active => @active, 
+      :groups => @groups, :posts => @posts } %>
   </div>
 </div>
