@@ -89,3 +89,9 @@ Cuando /^intente cambiar el nombre del grupo "([^"]*)" a "([^"]*)"$/ do |group_n
   end
   page.find('body').click
 end
+
+Cuando /^intente eliminar el grupo "([^\"]*)"$/ do |group_name|
+  within find_link(group_name).find(:xpath,".//..") do
+    page.find('.delete_group').click
+  end
+end

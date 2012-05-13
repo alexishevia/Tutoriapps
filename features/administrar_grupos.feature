@@ -66,3 +66,9 @@ Característica: Administrar Grupos
     Cuando intente cambiar el nombre del grupo "Cálculo II" a "Cálculo I"
     Entonces el grupo "Cálculo I" aparecerá 1 vez en la lista de grupos
     Y el grupo "Cálculo II" no aparecerá en la lista de grupos
+
+  @javascript
+  Escenario: Administrador elimina un grupo
+    Cuando intente eliminar el grupo "Cálculo II"
+    Y confirme el popup con el mensaje de advertencia
+    Entonces el grupo "Cálculo II" no aparecerá en la lista de grupos

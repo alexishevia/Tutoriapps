@@ -132,6 +132,7 @@ es:
       prompt: Por favor seleccione
     confirm_delete: 
       enrollment: ¿Está seguro que desea sacar a %{user_name} del grupo %{group_name}?
+      group: ¿Está seguro que desea eliminar el grupo %{group_name}? Esta acción no se puede deshacer.
     submit:
       create: Crear %{model}
       submit: Guardar %{model}

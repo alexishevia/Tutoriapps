@@ -55,12 +55,16 @@ jQuery ($) ->
         $(evt.target).prev().before(new_user)
     )
 
-    bind_users(elem)
-
     $(elem).find('form.new_enrollment').bind('ajax:error'
       (evt, xhr, status, error) ->
         alert(xhr.responseText)
     )
+
+    $(elem).find('.delete_group').bind('ajax:success',
+      (evt) -> $(evt.target).closest('.group').remove()
+    )
+
+    bind_users(elem)
 
   bind_users = (elem) -> 
     $(elem).find('a.delete_enrollment').bind('ajax:success'

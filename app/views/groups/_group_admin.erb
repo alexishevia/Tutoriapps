@@ -7,6 +7,9 @@
         :activator => "[.group[data-group-id=#{group.id}] .edit_group" %>
     </a>
     <a href="#" class="edit_group"><i class="icon-pencil"></i></a>
+    <%= link_to '<i class="icon-remove"></i>'.html_safe, group, :remote => true,
+      :method => :delete, :class => 'delete_group', :confirm => I18n.t(
+      'helpers.confirm_delete.group', :group_name => group.name) %>
   </div>
   <div class="members">
     <%= render :partial => '/enrollments/enrollment_admin', 

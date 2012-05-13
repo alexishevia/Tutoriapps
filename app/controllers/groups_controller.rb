@@ -31,4 +31,13 @@ class GroupsController < ApplicationController
       format.json { respond_with_bip(@group) }
     end
   end
+
+  def destroy
+    @group.destroy
+    respond_to do |format|
+      format.js do
+        render :nothing => true if @group.destroyed?
+      end
+    end
+  end
 end
