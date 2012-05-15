@@ -1,0 +1,10 @@
+<div class="group" data-group-id="<%= @group.get('id') %>">
+  <div class="name">
+    <a href="#" class="open">
+      <i class="icon-chevron-right"></i>
+      <%= @group.get('name') %>
+    </a>
+    <a href="#" class="edit_group"><i class="icon-pencil"></i></a>
+    <a href="#" class="delete_group"><i class="icon-remove"></i></a>
+  </div>
+</div>

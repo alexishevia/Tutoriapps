@@ -2,6 +2,11 @@ class GroupsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   skip_load_and_authorize_resource :only => :show
+  respond_to :json
+
+  def index
+    respond_with Group.all
+  end
 
   def show
     groups = current_user.groups
@@ -30,6 +35,13 @@ class GroupsController < ApplicationController
             :object => @group
         else
           render :text => @group.errors.full_messages[0], :status => 409
+        end
+      end
+      format.json do
+        if @group.save
+          render :json => @group
+        else
+          render :json => @group.errors.full_messages, :status => :unprocessable_entity
         end
       end
     end

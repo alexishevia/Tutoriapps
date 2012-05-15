@@ -1,0 +1,14 @@
+<h2>Grupos</h2>
+
+<div id="groups_list">
+</div>
+
+<a href="#" class="new_group">
+  <i class="icon-plus"></i>
+  Añadir Grupo
+</a>
+
+<form id="new_group2">
+  <input type="text" name="name" placeholder="Nombre" id="new_group_name">
+  <input type="submit" value="Enviar" class="inline-submit btn-primary">
+</form>
