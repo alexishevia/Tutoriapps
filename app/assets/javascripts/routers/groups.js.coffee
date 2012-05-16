@@ -2,10 +2,9 @@ class Tutoriapps.Routers.Groups extends Backbone.Router
   routes:
     '': 'index'
        
-  initialize: ->
-     @collection = new Tutoriapps.Collections.Groups()
-     @collection.fetch()
+  initialize: (options) ->
+     @collection = options.collection
 
   index: ->
     view = new Tutoriapps.Views.GroupsIndex(collection: @collection)
-    $('.groups').append(view.render().el)
+    $('#admin_panel').append(view.render().el)

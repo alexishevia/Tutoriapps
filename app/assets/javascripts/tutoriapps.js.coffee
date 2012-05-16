@@ -3,9 +3,9 @@ window.Tutoriapps =
   Collections: {}
   Views: {}
   Routers: {}
-  init: ->
-    new Tutoriapps.Routers.Groups
-    Backbone.history.start()
-
-$(document).ready ->
-  Tutoriapps.init()
+  initialize: (data) ->
+    this.groups = new Tutoriapps.Collections.Groups(data.groups);
+    new Tutoriapps.Routers.Groups(collection: @groups)
+    if (!Backbone.history.started)
+      Backbone.history.start();
+      Backbone.history.started = true;

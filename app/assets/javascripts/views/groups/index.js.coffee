@@ -16,9 +16,9 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     @collection.each(@appendGroup)
     this
 
-  appendGroup: (group) ->
+  appendGroup: (group) =>
     view = new Tutoriapps.Views.Group(model: group)
-    $('#groups_list').append(view.render().el)
+    @$('#groups_list').append(view.render().el)
 
   createGroup: (evt) ->
     evt.preventDefault()
