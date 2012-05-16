@@ -1,6 +1,6 @@
 class Tutoriapps.Views.GroupsIndex extends Backbone.View
 
-  template: JST['groups/index']
+  template: SMT['groups/index']
 
   events:
     'submit form.new_group': 'createGroup'
@@ -11,7 +11,7 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     @collection.on('add', @appendGroup, this)
 
   render: ->
-    $(@el).html(@template(groups: @collection))
+    $(@el).html(@template())
     @$('a.new_group').next().hide()
     @collection.each(@appendGroup)
     this

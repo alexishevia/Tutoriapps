@@ -3,8 +3,7 @@
   <div class="name">
     <a href="<%= group_path(group) %>" class="open">
       <i class="icon-chevron-right"></i>
-      <%= best_in_place group, :name, 
-        :activator => "[.group[data-group-id=#{group.id}] .edit_group" %>
+      <%= group.name %>
     </a>
     <a href="#" class="edit_group"><i class="icon-pencil"></i></a>
     <%= link_to '<i class="icon-remove"></i>'.html_safe, group, :remote => true,

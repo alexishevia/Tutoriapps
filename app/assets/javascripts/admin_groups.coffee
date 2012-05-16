@@ -4,8 +4,6 @@ jQuery ($) ->
 
   bind_groups = (elem = '.groups') ->
 
-    $(elem).find('.best_in_place').best_in_place()
-
     $(elem).find('form.new_enrollment').bind('ajax:success'
       (evt, data, status, xhr) ->
         evt.target.reset()

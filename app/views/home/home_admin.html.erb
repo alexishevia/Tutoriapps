@@ -2,8 +2,11 @@
 
   <div class="span3 offset1 well">
     <div class="groups">
+      <%= render 'groups/index', :mustache => { :groups => Group.all } %>
       <h2>Grupos</h2>
-      <%= render :partial => '/groups/group_admin', :collection => Group.all %>
+      <% for group in Group.all %>
+        <%= render 'groups/group', :mustache => group.as_json %>
+      <% end %>
       <a href="<%= new_group_path %>" class="new_group">
         <i class="icon-plus"></i>
         <%= I18n.t('helpers.submit.add', :model => I18n.t(

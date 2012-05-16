@@ -1,13 +1,13 @@
 class Tutoriapps.Views.Group extends Backbone.View
 
-  template: JST['groups/group']
+  template: SMT['groups/group']
 
   events:
     'click .name .open': 'showMembers'
     'click a.new_enrollment': 'showNewEnrollmentForm'
 
   render: ->
-    $(@el).html(@template(group: @model))
+    $(@el).html(@template(@model.toJSON()))
     @$('.name .open').parent().next().hide()
     @$('a.new_enrollment').next().hide()
     this
