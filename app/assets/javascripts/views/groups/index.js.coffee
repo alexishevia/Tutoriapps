@@ -7,7 +7,6 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     'click a.new_group': 'showNewGroupForm'
 
   initialize: ->
-    @collection.on('reset', @render, this)
     @collection.on('add', @appendGroup, this)
 
   render: ->

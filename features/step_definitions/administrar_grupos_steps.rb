@@ -35,7 +35,8 @@ Cuando /^intente crear el grupo "([^\"]*)"$/ do |group_name|
   click_link(I18n.t('helpers.submit.add', 
       :model => I18n.t('activerecord.models.group')))
   within ("form.new_group") do
-    fill_in 'group_name', with: group_attrs[:name]
+    find("[placeholder='#{ I18n.t('activerecord.attributes.group.name') }']")
+      .set(group_attrs[:name])
     click_button I18n.t('helpers.submit.send')
   end
 end
@@ -59,8 +60,8 @@ Cuando /^intente agregar el usuario "([^"]*)" al grupo "([^"]*)"$/ do |user_emai
     click_link(group_name)
     click_link I18n.t('helpers.submit.add', 
       :model => I18n.t('activerecord.models.user'))
-    find('.new_enrollment')
-    fill_in 'enrollment_user_email', :with => user_email
+    find(".new_enrollment input[placeholder='#{ I18n.t(
+      'activerecord.attributes.enrollment.user_email') }']").set(user_email)
     click_button I18n.t('helpers.submit.send')
   end
 end
