@@ -7,4 +7,15 @@
     <a href="#" class="edit_group"><i class="icon-pencil"></i></a>
     <a href="#" class="delete_group"><i class="icon-remove"></i></a>
   </div>
+  <div class="members">
+    <a href="#" class="new_enrollment">
+      <i class="icon-plus"></i>
+      Añadir Usuario
+    </a>
+    <form class="new_enrollment">
+      <input type="email" name="user_email" placeholder="Email" 
+        class="new_enrolment_email last-input">
+      <input type="submit" value="Enviar" class="inline-submit btn-primary">
+    </form>
+  </div>
 </div>

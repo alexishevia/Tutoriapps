@@ -8,7 +8,8 @@
   Añadir Grupo
 </a>
 
-<form id="new_group2">
-  <input type="text" name="name" placeholder="Nombre" id="new_group_name">
+<form class="new_group">
+  <input type="text" name="name" placeholder="Nombre" class="new_group_name
+    last-input">
   <input type="submit" value="Enviar" class="inline-submit btn-primary">
 </form>

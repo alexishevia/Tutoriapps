@@ -3,7 +3,8 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
   template: JST['groups/index']
 
   events:
-    'submit #new_group2': 'createGroup'
+    'submit form.new_group': 'createGroup'
+    'click a.new_group': 'showNewGroupForm'
 
   initialize: ->
     @collection.on('reset', @render, this)
@@ -11,6 +12,7 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
 
   render: ->
     $(@el).html(@template(groups: @collection))
+    @$('a.new_group').next().hide()
     @collection.each(@appendGroup)
     this
 
@@ -20,14 +22,22 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
 
   createGroup: (evt) ->
     evt.preventDefault()
-    attrs = name: $('#new_group_name').val()
+    attrs = name: $(evt.target).find('.new_group_name').val()
     @collection.create attrs,
       wait: true
-      success: -> $('#new_group2')[0].reset()
+      success: -> 
+        evt.target.reset()
+        $(evt.target).hide()
+        $(evt.target).prev().show()
       error: @handleError
 
   handleError: (group, response) ->
     if response.status = 422
       errors = $.parseJSON(response.responseText)
-      for error in errors
-        alert error
+      alert errors[0]
+
+  showNewGroupForm: (evt) ->
+    evt.preventDefault()
+    $(evt.target).hide().next().show('slow', 
+      () -> $(this).find('input[type=text]').focus()
+    )
