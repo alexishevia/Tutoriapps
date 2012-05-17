@@ -26,4 +26,12 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def serializable_hash(options = nil)
+    options ||= {}
+    options[:include] ||= []
+    options[:include] += [:enrollments]
+    options[:include].uniq!
+    super(options)
+  end
+
 end

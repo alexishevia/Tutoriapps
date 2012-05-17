@@ -4,11 +4,11 @@ class EnrollmentsController < ApplicationController
 
   def create
     respond_to do |format|
-      format.js do
+      format.json do
         if @enrollment.save
-          render partial: '/enrollments/enrollment_admin', object: @enrollment
+          render :json => @enrollment
         else
-          render :text => @enrollment.errors.full_messages[0], :status => 409
+          render :json => @enrollment.errors.full_messages, :status => :unprocessable_entity
         end
       end
     end

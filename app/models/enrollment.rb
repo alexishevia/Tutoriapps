@@ -15,6 +15,7 @@ class Enrollment < ActiveRecord::Base
   belongs_to :user
 
   before_validation :search_user_email
+  validates :group, :presence => true
   validates :user_id, :user_email, :uniqueness => {:scope => :group_id}
   validates :user_email, :allow_nil => true, :format => { :with => /@utp.ac.pa$/, :message => 
     "#{I18n.t('errors.messages.invalid')} - " + 
@@ -27,6 +28,18 @@ class Enrollment < ActiveRecord::Base
   def user_name
     return user.name if user 
     user_email
+  end
+
+  def as_json(options = {})
+    super(options.merge(:methods => [ :user_name ]))
+  end
+
+  def serializable_hash(options = nil)
+    options ||= {}
+    options[:methods] ||= []
+    options[:methods] += [:user_name]
+    options[:methods].uniq!
+    super(options)
   end
 
   private

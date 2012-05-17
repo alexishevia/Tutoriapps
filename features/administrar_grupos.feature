@@ -17,7 +17,7 @@ Característica: Administrar Grupos
     Cuando intente crear el grupo "Física I"
     Entonces el grupo "Física I" aparecerá 1 vez en la lista de grupos
 
-  @javascript @wip
+  @javascript
   Escenario: Administrador agrega un usuario registrado a un grupo
     Cuando intente agregar el usuario "fulano@utp.ac.pa" al grupo "Cálculo II"
     Entonces el usuario "fulano@utp.ac.pa" aparecerá dentro del grupo "Cálculo II"

@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with Group.all
+    respond_with current_user.groups
   end
 
   def show
@@ -29,14 +29,6 @@ class GroupsController < ApplicationController
 
   def create
     respond_to do |format|
-      format.js do
-        if @group.save
-          return render :layout => false, :partial => 'groups/group_admin', 
-            :object => @group
-        else
-          render :text => @group.errors.full_messages[0], :status => 409
-        end
-      end
       format.json do
         if @group.save
           render :json => @group
@@ -48,9 +40,10 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group.update_attributes(params[:group])
-    respond_to do |format|
-      format.json { respond_with_bip(@group) }
+    if @group.update_attributes(params[:group])
+      render :json => @group
+    else
+      render :json => @group.errors.full_messages, :status => :unprocessable_entity
     end
   end
 

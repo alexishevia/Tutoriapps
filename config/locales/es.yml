@@ -225,6 +225,7 @@ es:
       enrollment:
         user_id: Usuario
         user_email: Email
+        group: Grupo
     errors:
       user:
         email: 
