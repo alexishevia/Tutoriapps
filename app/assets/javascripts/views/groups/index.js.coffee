@@ -19,10 +19,10 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     view = new Tutoriapps.Views.Group(model: group)
     @$('#groups_list').append(view.render().el)
 
-  createGroup: (evt) ->
+  createGroup: (evt) =>
     evt.preventDefault()
-    attrs = name: $(evt.target).find('.new_group_name').val()
-    @collection.create attrs,
+    data = Backbone.Syphon.serialize(evt.target);
+    @collection.create data,
       wait: true
       success: -> 
         evt.target.reset()

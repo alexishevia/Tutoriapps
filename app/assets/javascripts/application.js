@@ -12,9 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require underscore
 //= require backbone
-//= require twitter/bootstrap
+//= require backbone.syphon
 //= require mustache
 //= require .//tutoriapps
 //= require_tree ../../templates

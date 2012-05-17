@@ -13,6 +13,7 @@
       Añadir Usuario
     </a>
     <form class="new_enrollment">
+      <input type="hidden" name="group_id" value="{{ id }}">
       <input type="email" name="user_email" placeholder="Email" 
         class="new_enrollment_email last-input">
       <input type="submit" value="Enviar" class="inline-submit btn-primary">

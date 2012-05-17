@@ -43,6 +43,7 @@ end
 
 Entonces /^el grupo "([^\"]*)" aparecerá (\d+) (vez|veces) en la lista de grupos$/ do |group_name, n, arg3|
   within ".groups" do
+    page.should have_content(group_name)
     page.text.scan(group_name).length.should eq(n.to_i)
   end
 end

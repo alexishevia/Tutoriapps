@@ -40,10 +40,8 @@ class Tutoriapps.Views.Group extends Backbone.View
 
   createEnrollment: (evt) =>
     evt.preventDefault()
-    attrs = 
-      user_email: $(evt.target).find('.new_enrollment_email').val()
-      group_id: @model.get('id')
-    @enrollments.create attrs,
+    data = Backbone.Syphon.serialize(evt.target);
+    @enrollments.create data,
       wait: true
       success: -> 
         evt.target.reset()
