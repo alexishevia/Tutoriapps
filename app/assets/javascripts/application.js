@@ -17,6 +17,8 @@
 //= require backbone
 //= require backbone.syphon
 //= require mustache
+//= require i18n
+//= require i18n/translations
 //= require .//tutoriapps
 //= require_tree ../../templates
 //= require_tree .//models

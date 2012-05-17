@@ -10,7 +10,12 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     @collection.on('add', @appendGroup)
 
   render: ->
-    $(@el).html(@template())
+    translations = 
+      t_groups: I18n.t('activerecord.models.groups')
+      t_add_group: I18n.t('helpers.submit.add', model: I18n.t('activerecord.models.group'))
+      t_group_name: I18n.t('activerecord.attributes.group.name')
+      t_submit: I18n.t('helpers.submit.send')
+    $(@el).html(@template(translations))
     @$('a.new_group').next().hide()
     @collection.each(@appendGroup)
     this

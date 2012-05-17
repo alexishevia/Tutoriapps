@@ -15,7 +15,12 @@ class Tutoriapps.Views.Group extends Backbone.View
     @model.on('change', @render)
 
   render: =>
-    $(@el).html(@template(@model.toJSON()))
+    translations =
+      t_add_user: I18n.t('helpers.submit.add', model: I18n.t('activerecord.models.user'))
+      t_user_email: I18n.t('activerecord.attributes.enrollment.user_email')
+      t_submit: I18n.t('helpers.submit.send')
+    hash = $.extend(translations, @model.toJSON())
+    $(@el).html(@template(hash))
     @$('.name .open').parent().next().hide()
     @$('a.new_enrollment').next().hide()
     @enrollments.each(@appendEnrollment)
@@ -56,7 +61,7 @@ class Tutoriapps.Views.Group extends Backbone.View
 
   delete: (evt) =>
     evt.preventDefault()
-    if confirm("¿Desea eliminar el grupo #{@model.get('name')}?")
+    if confirm(I18n.t('helpers.confirm_delete.group', group_name: @model.get('name')))
       @model.destroy()
       $(@el).find('.group').remove();
 

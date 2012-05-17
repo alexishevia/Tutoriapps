@@ -56,5 +56,8 @@ module Tutoriapps
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Generate translations.js for i18n-js
+    config.middleware.use I18n::JS::Middleware
   end
 end

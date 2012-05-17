@@ -14,6 +14,6 @@ class Tutoriapps.Views.Enrollment extends Backbone.View
 
   delete: (evt) =>
     evt.preventDefault()
-    if confirm("¿Desea sacar al usuario #{ @model.get('user_name')} del grupo #{@group.get('name')}?")
+    if confirm(I18n.t('helpers.confirm_delete.enrollment', user_name: @model.get('user_name'), group_name: @group.get('name')))
       @model.destroy()
       $(@el).find('.member').remove();

@@ -208,6 +208,7 @@ es:
   activerecord:
     models:
       group: Grupo
+      groups: Grupos
       post: Post
       user: Usuario
     attributes:
