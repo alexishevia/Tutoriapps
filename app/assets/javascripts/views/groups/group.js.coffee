@@ -13,6 +13,7 @@ class Tutoriapps.Views.Group extends Backbone.View
     @enrollments = new Tutoriapps.Collections.Enrollments(@model.get('enrollments'))
     @enrollments.on('add', @appendEnrollment)
     @model.on('change', @render)
+    @model.on('destroy', @close);
 
   render: =>
     translations =
@@ -25,6 +26,10 @@ class Tutoriapps.Views.Group extends Backbone.View
     @$('a.new_enrollment').next().hide()
     @enrollments.each(@appendEnrollment)
     this
+
+  close: () =>
+    $(@el).unbind()
+    $(@el).remove()
 
   showMembers: (evt) ->
     evt.preventDefault()
@@ -63,7 +68,6 @@ class Tutoriapps.Views.Group extends Backbone.View
     evt.preventDefault()
     if confirm(I18n.t('helpers.confirm_delete.group', group_name: @model.get('name')))
       @model.destroy()
-      $(@el).find('.group').remove();
 
   editGroup: (evt) =>
     evt.preventDefault()
