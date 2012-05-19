@@ -1,25 +1,19 @@
-class EnrollmentsController < ApplicationController
+class Api::V1::EnrollmentsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  respond_to :json
 
   def create
-    respond_to do |format|
-      format.json do
-        if @enrollment.save
-          render :json => @enrollment
-        else
-          render :json => @enrollment.errors.full_messages, :status => :unprocessable_entity
-        end
-      end
+    if @enrollment.save
+      render 'enrollment'
+    else
+      render  :json => @enrollment.errors.full_messages, 
+              :status => :unprocessable_entity
     end
   end
 
   def destroy
     @enrollment.destroy
-    respond_to do |format|
-      format.js do
-        render :nothing => true if @enrollment.destroyed?
-      end
-    end
+    render :nothing => true if @enrollment.destroyed?
   end
 end

@@ -11,6 +11,7 @@ class Tutoriapps.Views.AdminGroup extends Backbone.View
 
   initialize: () ->
     @enrollments = new Tutoriapps.Collections.Enrollments(@model.get('enrollments'))
+    @enrollments.on('add', @appendEnrollment)
     @model.on('change', @render)
     @model.on('destroy', @close);
 
