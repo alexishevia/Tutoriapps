@@ -9,10 +9,10 @@ Tutoriapps::Application.routes.draw do
     namespace :v1 do
       resources :tokens, :only => [:create, :destroy]
       resources :posts, :only => [:index]
-      resources :groups, :only => [:index, :create, :update] do
+      resources :groups do
         resources :posts, :only => [:index]
       end
-      resources :enrollments, :only => [:create]
+      resources :enrollments, :only => [:create, :destroy]
     end
   end
 
