@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     if user
       can :read, Group do |group| user.groups.include? group; end
-      can :create, Post do |post|
+      can [:read, :create], Post do |post|
         if post.group
           post.group.members.include? user
         else

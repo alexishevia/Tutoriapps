@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, :with => :forbidden
 
   def forbidden
-    render "#{Rails.root}/public/403", :status => :forbidden
+    render :json => {:error => 'AccessDenied'}, :status => :forbidden
+  end
+
+
+  def authenticate_admin!
+    authenticate_user!
+    unless current_user.admin?
+      raise CanCan::AccessDenied
+    end
   end
 end

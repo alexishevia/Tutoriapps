@@ -1,11 +1,11 @@
-class GroupsController < ApplicationController
+class Api::V1::GroupsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   skip_load_and_authorize_resource :only => :show
   respond_to :json
 
   def index
-    respond_with current_user.groups
+    @groups = current_user.groups
   end
 
   def show
