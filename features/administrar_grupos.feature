@@ -12,7 +12,7 @@ Característica: Administrar Grupos
     Y que el usuario "admin@utp.ac.pa" ha sido creado, confirmado y concedido permisos de administrador
     Y que el usuario "admin@utp.ac.pa" ha iniciado sesión
 
-  @javascript @wip
+  @javascript
   Escenario: Administrador crea un grupo
     Cuando intente crear el grupo "Física I"
     Entonces el grupo "Física I" aparecerá 1 vez en la lista de grupos
