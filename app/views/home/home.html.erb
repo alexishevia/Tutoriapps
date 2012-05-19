@@ -1,6 +1,13 @@
+<%= content_for :javascript do %>
+  <%= javascript_tag do %>
+    Tutoriapps.initialize();
+  <% end %>
+<% end %>
+
 <div class="row">
-  <div class="span6 offset3 well">
-    <%= render :partial => 'timeline', :locals => {:active => @active, 
-      :groups => @groups, :posts => @posts } %>
+  <div class="span3 offset1 well" id="admin_panel">
+  </div>
+
+  <div class="span6 well" id="content_panel">
   </div>
 </div>

@@ -6,10 +6,11 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     'click a.new_group': 'showNewGroupForm'
     'submit form.new_group': 'createGroup'
 
-  initialize: ->
+  initialize: =>
+    @collection.on('reset', @render)
     @collection.on('add', @appendGroup)
 
-  render: ->
+  render: =>
     translations = 
       t_groups: I18n.t('activerecord.models.groups')
       t_add_group: I18n.t('helpers.submit.add', model: I18n.t('activerecord.models.group'))
