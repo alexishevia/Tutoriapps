@@ -3,8 +3,8 @@ window.Tutoriapps =
   Collections: {}
   Views: {}
   Routers: {}
-  initialize: () ->
-    new Tutoriapps.Routers.Main();
+  initialize: (options) ->
+    new Tutoriapps.Routers.Main(is_admin: options.is_admin);
     if (!Backbone.history.started)
       Backbone.history.start();
       Backbone.history.started = true;

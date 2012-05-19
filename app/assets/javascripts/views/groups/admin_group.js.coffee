@@ -1,6 +1,6 @@
-class Tutoriapps.Views.Group extends Backbone.View
+class Tutoriapps.Views.AdminGroup extends Backbone.View
 
-  template: SMT['groups/group']
+  template: SMT['groups/admin_group']
 
   events:
     'click .name .open': 'showMembers'
@@ -11,7 +11,6 @@ class Tutoriapps.Views.Group extends Backbone.View
 
   initialize: () ->
     @enrollments = new Tutoriapps.Collections.Enrollments(@model.get('enrollments'))
-    @enrollments.on('add', @appendEnrollment)
     @model.on('change', @render)
     @model.on('destroy', @close);
 
@@ -45,7 +44,7 @@ class Tutoriapps.Views.Group extends Backbone.View
     )
 
   appendEnrollment: (enrollment) =>
-    view = new Tutoriapps.Views.Enrollment(model: enrollment, group: @model)
+    view = new Tutoriapps.Views.AdminEnrollment(model: enrollment, group: @model)
     @$('.members').prepend(view.render().el)
 
   createEnrollment: (evt) =>

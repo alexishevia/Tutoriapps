@@ -1,6 +1,6 @@
-class Tutoriapps.Views.GroupsIndex extends Backbone.View
+class Tutoriapps.Views.AdminGroups extends Backbone.View
 
-  template: SMT['groups/index']
+  template: SMT['groups/admin_groups']
 
   events:
     'click a.new_group': 'showNewGroupForm'
@@ -22,8 +22,8 @@ class Tutoriapps.Views.GroupsIndex extends Backbone.View
     this
 
   appendGroup: (group) =>
-    view = new Tutoriapps.Views.Group(model: group)
-    @$('#groups_list').append(view.render().el)
+    view = new Tutoriapps.Views.AdminGroup(model: group)
+    @$('.groups_list').append(view.render().el)
 
   createGroup: (evt) =>
     evt.preventDefault()
