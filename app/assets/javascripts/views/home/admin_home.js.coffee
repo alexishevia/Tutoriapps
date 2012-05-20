@@ -1,4 +1,4 @@
-class Tutoriapps.Views.AdminHomeView extends Backbone.View
+class Tutoriapps.Views.AdminHome extends Backbone.View
   template: SMT['home/admin']
 
   initialize: (data) =>
@@ -8,5 +8,7 @@ class Tutoriapps.Views.AdminHomeView extends Backbone.View
   render: =>
     $(@el).html(@template())
     view = new Tutoriapps.Views.AdminGroups(collection: @admin_groups)
-    @$('#admin_panel').append(view.render().el)
+    @$('.admin_panel').append(view.render().el)
+    view = new Tutoriapps.Views.Timeline({groups: @user_groups})
+    @$('.content_panel').append(view.render().el)
     this
