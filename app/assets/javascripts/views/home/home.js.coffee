@@ -15,4 +15,6 @@ class Tutoriapps.Views.Home extends Backbone.View
       @$('.content_panel').addClass('offset3')
     view = new Tutoriapps.Views.GroupSelect(collection: @collection)
     @$('.content_panel').append(view.render().el)
+    view = new Tutoriapps.Views.Posts(groups: @collection)
+    @$('.content_panel').append(view.render().el)
     this
