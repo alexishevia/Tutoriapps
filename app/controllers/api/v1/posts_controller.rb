@@ -5,12 +5,12 @@ class Api::V1::PostsController < ApplicationController
   respond_to :json
 
   def index
-    if params[:group_id]
+    if params[:group_id] == 'home'
+      @posts = current_user.readable_posts.order('created_at DESC')
+    else
       group = Group.find(params[:group_id])
       authorize! :read, group
       @posts = group.posts
-    else
-      @posts = current_user.readable_posts.order('created_at DESC')
     end
   end
 

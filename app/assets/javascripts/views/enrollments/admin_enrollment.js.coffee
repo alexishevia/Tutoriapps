@@ -1,6 +1,6 @@
 class Tutoriapps.Views.AdminEnrollment extends Backbone.View
-
   template: SMT['groups/admin_enrollment']
+  className: 'member'
 
   events:
     'click .delete_enrollment': 'delete'

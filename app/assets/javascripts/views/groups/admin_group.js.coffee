@@ -1,6 +1,6 @@
 class Tutoriapps.Views.AdminGroup extends Backbone.View
-
   template: SMT['groups/admin_group']
+  className: 'group'
 
   events:
     'click .name .open': 'showMembers'

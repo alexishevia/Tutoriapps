@@ -1,6 +1,6 @@
 class Tutoriapps.Views.AdminGroups extends Backbone.View
-
   template: SMT['groups/admin_groups']
+  className: 'groups'
 
   events:
     'click a.new_group': 'showNewGroupForm'
@@ -22,8 +22,9 @@ class Tutoriapps.Views.AdminGroups extends Backbone.View
     this
 
   appendGroup: (group) =>
-    view = new Tutoriapps.Views.AdminGroup(model: group)
-    @$('.groups_list').append(view.render().el)
+    if group.get('id') != 'home'
+      view = new Tutoriapps.Views.AdminGroup(model: group)
+      @$('.groups_list').append(view.render().el)
 
   createGroup: (evt) =>
     evt.preventDefault()

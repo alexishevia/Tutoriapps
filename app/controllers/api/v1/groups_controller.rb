@@ -4,12 +4,10 @@ class Api::V1::GroupsController < ApplicationController
   respond_to :json
 
   def index
-    if params[:admin]
-      authorize! :manage, Group
-      @groups = Group.all
-      render 'admin_index'
+    if current_user.admin?
+      @groups = [Group.new(:name => 'Todos')] + Group.all
     else
-      @groups = current_user.groups
+      @groups = [Group.new(:name => 'Todos')] + current_user.groups
     end
   end
 
