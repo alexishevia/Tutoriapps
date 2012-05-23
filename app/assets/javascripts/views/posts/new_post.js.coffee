@@ -1,13 +1,16 @@
 class Tutoriapps.Views.NewPost extends Backbone.View
-  template: SMT['posts/new_post']
-
   initialize: (options) =>
     @groups = options.groups
     @groups.on('change_active', @render)
 
   render: =>
-    if group = @groups.active
-      $(@el).html(@template(group.toJSON()))
+    if @groups.active.get('id') == 'home'
+      template = SMT['posts/new_public_post']
+      @$el.html(template(groups: @groups.toJSON()))
+      @$('option[value=home]').html(I18n.t('activerecord.attributes.group.public'))
+    else
+      template = SMT['posts/new_group_post']
+      @$el.html(template(@groups.active.toJSON()))
     this
 
   
