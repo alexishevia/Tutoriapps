@@ -3,6 +3,10 @@ attributes :id, :text, :created_at
 child :author => :author do
   attributes :id, :name
 end
-child :group => :group do
-  attributes :id, :name
+node(:group) do |post|
+  if post.group
+    attributes :id => post.id, :name => post.name
+  else
+    attributes :id => 'home', :name => I18n.t('activerecord.attributes.group.public')
+  end
 end

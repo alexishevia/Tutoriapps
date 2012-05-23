@@ -17,6 +17,7 @@ class Tutoriapps.Views.Posts extends Backbone.View
     this
 
   addPost: (post) =>
-    @$el.append('<div>' + post.get('text') + '</div>')
+    view = new Tutoriapps.Views.Post(model: post)
+    @$el.append(view.render().el)
 
   

@@ -10,7 +10,7 @@ class Api::V1::PostsController < ApplicationController
     else
       group = Group.find(params[:group_id])
       authorize! :read, group
-      @posts = group.posts
+      @posts = group.posts.order('created_at DESC')
     end
   end
 

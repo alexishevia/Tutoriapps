@@ -19,6 +19,8 @@
 //= require mustache
 //= require i18n
 //= require i18n/translations
+//= require jquery.timeago
+//= require jquery.timeago.es
 //= require .//tutoriapps
 //= require_tree ../../templates
 //= require_tree .//models
