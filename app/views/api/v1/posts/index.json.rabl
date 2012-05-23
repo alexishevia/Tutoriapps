@@ -5,7 +5,7 @@ child :author => :author do
 end
 node(:group) do |post|
   if post.group
-    attributes :id => post.id, :name => post.name
+    attributes :id => post.group.id, :name => post.group.name
   else
     attributes :id => 'home', :name => I18n.t('activerecord.attributes.group.public')
   end
