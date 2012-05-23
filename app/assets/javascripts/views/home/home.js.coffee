@@ -13,8 +13,11 @@ class Tutoriapps.Views.Home extends Backbone.View
     else
       @$('.admin_panel').remove()
       @$('.content_panel').addClass('offset3')
-    view = new Tutoriapps.Views.GroupSelect(collection: @collection)
-    @$('.content_panel').append(view.render().el)
-    view = new Tutoriapps.Views.Posts(groups: @collection)
-    @$('.content_panel').append(view.render().el)
+    views = [
+      new Tutoriapps.Views.GroupSelect(collection: @collection)
+      new Tutoriapps.Views.NewPost(groups: @collection)
+      new Tutoriapps.Views.Posts(groups: @collection)
+    ]
+    for view in views
+      @$('.content_panel').append(view.el)  
     this

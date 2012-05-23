@@ -11,4 +11,4 @@ class Tutoriapps.Collections.Groups extends Backbone.Collection
 
   set_active: (group) =>
     @active = group
-    @trigger('change_group')
+    @trigger('change_active', group)

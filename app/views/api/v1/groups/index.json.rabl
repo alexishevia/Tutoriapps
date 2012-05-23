@@ -2,7 +2,7 @@ collection @groups
 attributes :name
 node(:id) do |group| 
   if group.id
-    group.id
+    group.to_param
   else
     'home'
   end

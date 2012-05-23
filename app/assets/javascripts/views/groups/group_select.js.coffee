@@ -3,9 +3,10 @@ class Tutoriapps.Views.GroupSelect extends Backbone.View
   className: 'nav nav-pills'
 
   initialize: =>
-    @collection.on('change_group', @render)
+    @collection.on('change_active', @render)
 
   render: =>
+    @$el.empty()
     @collection.each(@appendButton)
     this
 
