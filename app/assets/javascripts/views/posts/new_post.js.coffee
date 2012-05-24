@@ -1,7 +1,11 @@
 class Tutoriapps.Views.NewPost extends Backbone.View
   initialize: (options) =>
     @groups = options.groups
-    @groups.on('change_active', @render)
+    @posts = options.posts
+    @posts.on('reset', @render)
+
+  events:
+    'submit form': 'createPost'
 
   render: =>
     if @groups.active.get('id') == 'home'
@@ -13,4 +17,17 @@ class Tutoriapps.Views.NewPost extends Backbone.View
       @$el.html(template(@groups.active.toJSON()))
     this
 
+  createPost: (evt) =>
+    evt.preventDefault()
+    data = Backbone.Syphon.serialize(evt.target);
+    @posts.create data,
+      wait: true
+      success: -> 
+        evt.target.reset()
+      error: @handleError
+
+  handleError: (group, response) ->
+    if response.status = 422
+      errors = $.parseJSON(response.responseText)
+      alert errors[0]
   

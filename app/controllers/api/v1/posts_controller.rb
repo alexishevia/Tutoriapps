@@ -15,11 +15,27 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
+    if @enrollment.save
+      render 'enrollment'
+    else
+      render  :json => @enrollment.errors.full_messages, 
+              :status => :unprocessable_entity
+    end
+  end
+
+  def create
+    if params[:group_id]
+      if params[:group_id] == 'home'
+        @post.group = nil
+      else
+        @post.group = Group.find(params[:group_id])
+      end
+    end
     @post.author = current_user
     if @post.save
-      respond_with @post
+      render :json => @post
     else
-      render :text => @post.errors.full_messages[0], :status => 409
+      render :text => @post.errors.full_messages, :status => :unprocessable_entity
     end
   end
 

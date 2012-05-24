@@ -7,9 +7,11 @@ class Tutoriapps.Routers.Main extends Backbone.Router
 
   index: ->
     @groups = new Tutoriapps.Collections.Groups()
+    @posts = new Tutoriapps.Collections.Posts(groups: @groups)
     @groups.fetch()
     view = new Tutoriapps.Views.Home({
-      collection: @groups
       is_admin: @is_admin
+      groups: @groups
+      posts: @posts
     })
     $('#main_content').prepend(view.render().el)

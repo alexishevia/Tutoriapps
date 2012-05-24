@@ -2,17 +2,11 @@ class Tutoriapps.Views.Posts extends Backbone.View
   className: 'posts'
 
   initialize: (options) =>
-    @groups = options.groups
-    @groups.on('change_active', @changeGroup)
-
-  changeGroup: (group) =>
-    @posts = new Tutoriapps.Collections.Posts({group: group})
-    @posts.on('reset', @render)
-    @posts.fetch()
+    @collection.on('reset', @render)
 
   render: =>
     @$el.empty()
-    @posts.each(@addPost)
+    @collection.each(@addPost)
     this
 
   addPost: (post) =>

@@ -1,4 +1,13 @@
 class Tutoriapps.Collections.Posts extends Backbone.Collection
-  initialize: (options) =>
-    @url = 'api/v1/groups/' + options.group.id + '/posts'
   model: Tutoriapps.Models.Post
+  url: '/api/v1/posts'
+
+  initialize: (options) =>
+    @groups = options.groups
+    @groups.on('change_active', @changeGroup)
+
+  changeGroup: (group) =>
+    new_url = 'api/v1/groups/' + group.id + '/posts'
+    if @url != new_url
+      @url = new_url
+      @fetch()
