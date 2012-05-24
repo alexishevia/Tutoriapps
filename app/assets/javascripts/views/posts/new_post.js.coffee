@@ -19,7 +19,7 @@ class Tutoriapps.Views.NewPost extends Backbone.View
 
   createPost: (evt) =>
     evt.preventDefault()
-    data = Backbone.Syphon.serialize(evt.target);
+    data = Backbone.Syphon.serialize(evt.target)
     @posts.create data,
       wait: true
       success: -> 

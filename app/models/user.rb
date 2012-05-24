@@ -52,7 +52,11 @@ class User < ActiveRecord::Base
   end
 
   def readable_posts
-    Post.where('group_id IN(?) OR group_id IS NULL', groups)
+    if admin?
+      Post.where('true')
+    else
+      Post.where('group_id IN(?) OR group_id IS NULL', groups)
+    end
   end
 
 end

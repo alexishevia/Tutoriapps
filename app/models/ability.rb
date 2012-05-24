@@ -13,7 +13,7 @@ class Ability
       end
 
       if user.admin?
-          can :manage, [Group, Enrollment]
+          can :manage, [Group, Enrollment, Post]
       end
     end
   end

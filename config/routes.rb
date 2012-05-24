@@ -8,7 +8,6 @@ Tutoriapps::Application.routes.draw do
       resources :groups do
         resources :posts, :only => [:index, :create]
       end
-      resources :posts, :only => [:create]
       resources :enrollments, :only => [:create, :destroy]
     end
   end

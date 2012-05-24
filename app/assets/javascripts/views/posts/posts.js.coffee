@@ -3,14 +3,20 @@ class Tutoriapps.Views.Posts extends Backbone.View
 
   initialize: (options) =>
     @collection.on('reset', @render)
+    @collection.on('add', @prependPost)
 
   render: =>
     @$el.empty()
-    @collection.each(@addPost)
+    @collection.each(@appendPost)
     this
 
-  addPost: (post) =>
+  appendPost: (post) =>
     view = new Tutoriapps.Views.Post(model: post)
-    @$el.append(view.render().el)
+    @$el.append(view.render().el)  
+
+  prependPost: (post) =>
+    view = new Tutoriapps.Views.Post(model: post)
+    @$el.prepend(view.render().el)  
+
 
   
