@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
     if admin?
       Post.where('true')
     else
-      Post.where('group_id IN(?) OR group_id IS NULL', groups)
+      Post.where('group_id IN(?) OR group_id IS NULL OR group_id <= 0', groups)
     end
   end
 
