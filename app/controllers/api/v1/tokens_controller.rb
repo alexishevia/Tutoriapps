@@ -17,7 +17,6 @@ class Api::V1::TokensController < ApplicationController
     end
 
     @user=User.find_by_email(email.downcase)
-
     if @user.nil?
       logger.info("User #{email} failed signin, user cannot be found.")
       render :status=>401, :json=>{:message=>"Invalid email or passoword."}
