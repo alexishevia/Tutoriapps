@@ -6,6 +6,7 @@ class Tutoriapps.Views.NewPost extends Backbone.View
 
   events:
     'submit form': 'createPost'
+    'focus textarea[name=text]': 'expand'
 
   render: =>
     if @groups.active.get('id') == 'home'
@@ -30,4 +31,6 @@ class Tutoriapps.Views.NewPost extends Backbone.View
     if response.status = 422
       errors = $.parseJSON(response.responseText)
       alert errors[0]
-  
+
+  expand: (evt) =>
+   $(evt.target).animate({height: "4em"}, 500)
