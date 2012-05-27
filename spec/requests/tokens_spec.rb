@@ -14,6 +14,10 @@ describe "Tokens V1 API" do
     @headers = {'HTTP_ACCEPT' => 'application/json'}
   end
 
+  after(:all) do
+    User.destroy_all
+  end
+
   describe "POST /api/v1/tokens" do
 
     describe "on success" do
@@ -61,15 +65,28 @@ describe "Tokens V1 API" do
     end
   end
 
-  describe "DELETE /api/v1/tokens?auth_token=:token" do
-    describe "on success" do
-      it "resets access token" do
-        user = @users[:fulano]
-        user.reset_authentication_token!
-        old_token = user.authentication_token
+  describe "DELETE /api/v1/tokens/:token" do
+    before(:each) do
+      @user = @users[:fulano]
+      @user.reset_authentication_token!
+      @old_token = @user.reload.authentication_token
+    end
 
-        delete "/api/v1/tokens?auth_token=#{old_token}"
-        old_token.should_not eq(user.reload.authentication_token)
+    describe "on success" do
+      it "returns status code 200" do
+        delete "/api/v1/tokens/#{@old_token}"
+        response.status.should eq(200)
+      end
+      it "resets access token" do
+        delete "/api/v1/tokens/#{@old_token}"
+        @old_token.should_not eq(@user.reload.authentication_token)
+      end
+    end
+
+    describe "when token is not valid" do
+      it "returns status code 404" do
+        delete "/api/v1/tokens/wrong"
+        response.status.should eq(404)
       end
     end
   end
