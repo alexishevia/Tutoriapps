@@ -15,7 +15,7 @@ Característica: Crear Posts
       | OAC             | mengano@utp.ac.pa                   |
       | Programación I  | fulano@utp.ac.pa                    |
 
-  @javascript @wip
+  @javascript
   Escenario: Crear un post público
     Dado que el usuario "mengano@utp.ac.pa" ha iniciado sesión
     Y está viendo el muro "Todos"
