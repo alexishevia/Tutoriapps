@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe "Tokens V1 API" do
   before(:all) do
-    User.destroy_all
     @users_attrs = {
       :fulano => FactoryGirl.attributes_for(:user, :email => 'fulano@utp.ac.pa'),
       :mengano => FactoryGirl.attributes_for(:user, :email => 'mengano@utp.ac.pa')
@@ -15,13 +14,13 @@ describe "Tokens V1 API" do
   end
 
   after(:all) do
-    User.destroy_all
+    DatabaseCleaner.clean
   end
 
   describe "POST /api/v1/tokens" do
 
     describe "on success" do
-      it "returns status code 200" do
+      it "returns status code 200 (OK)" do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => @users_attrs[:fulano][:password]}, @headers
         response.status.should eq(200)
@@ -35,7 +34,7 @@ describe "Tokens V1 API" do
     end
 
     describe "when request format is not set to JSON" do
-      it "returns status code 406" do
+      it "returns status code 406 (Not Acceptable)" do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => @users_attrs[:fulano][:password]}, nil
         response.status.should eq(406)
@@ -43,7 +42,7 @@ describe "Tokens V1 API" do
     end
 
     describe "when email or password is not sent" do
-      it "returns status code 400" do
+      it "returns status code 400 (Bad Request)" do
         post '/api/v1/tokens', {:email => nil, 
           :password => @users_attrs[:fulano][:password]}, @headers
         response.status.should eq(400)
@@ -54,7 +53,7 @@ describe "Tokens V1 API" do
     end
 
     describe "when email and password don't match" do
-      it "returns status code 401" do
+      it "returns status code 401 (Unauthorized)" do
         post '/api/v1/tokens', {:email => 'wrong@utp.ac.pa', 
           :password => @users_attrs[:fulano][:password]}, @headers
         response.status.should eq(401)
@@ -73,7 +72,7 @@ describe "Tokens V1 API" do
     end
 
     describe "on success" do
-      it "returns status code 200" do
+      it "returns status code 200 (OK)" do
         delete "/api/v1/tokens/#{@old_token}"
         response.status.should eq(200)
       end
@@ -84,7 +83,7 @@ describe "Tokens V1 API" do
     end
 
     describe "when token is not valid" do
-      it "returns status code 404" do
+      it "returns status code 404 (Not Found)" do
         delete "/api/v1/tokens/wrong"
         response.status.should eq(404)
       end

@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
     render :json => {:error => 'AccessDenied'}, :status => :forbidden
   end
 
-
   def authenticate_admin!
     authenticate_user!
     unless current_user.admin?
