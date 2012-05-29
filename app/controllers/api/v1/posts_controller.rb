@@ -17,8 +17,13 @@ class Api::V1::PostsController < ApplicationController
 
   def create
     @post.author = current_user
+    if params[:group_id] != 'home'
+      group = Group.find(params[:group_id])
+      authorize! :read, group
+      @post.group = group
+    end
     if @post.save
-      render 'post'
+      render 'post', :status => :created
     else
       render :text => @post.errors.full_messages, :status => :unprocessable_entity
     end

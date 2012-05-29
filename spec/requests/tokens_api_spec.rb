@@ -41,9 +41,13 @@ describe "Tokens V1 API" do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => @users_attrs[:fulano][:password]}, headers
         @status = response.status
+        @data = JSON.parse(response.body)
       end
       it "returns status code 406 (Not Acceptable)" do
         @status.should eq(406)
+      end
+      it "does not return the token" do
+        @data['token'].should be_false
       end
     end
 
@@ -52,9 +56,13 @@ describe "Tokens V1 API" do
         post '/api/v1/tokens', {:email => nil, 
           :password => @users_attrs[:fulano][:password]}, @headers
         @status = response.status
+        @data = JSON.parse(response.body)
       end
       it "returns status code 400 (Bad Request)" do
         @status.should eq(400)
+      end
+      it "does not return the token" do
+        @data['token'].should be_false
       end
     end
 
@@ -63,9 +71,13 @@ describe "Tokens V1 API" do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => nil}, @headers
         @status = response.status
+        @data = JSON.parse(response.body)
       end
       it "returns status code 400 (Bad Request)" do
         @status.should eq(400)
+      end
+      it "does not return the token" do
+        @data['token'].should be_false
       end
     end
 
@@ -74,13 +86,19 @@ describe "Tokens V1 API" do
         post '/api/v1/tokens', {:email => 'wrong@utp.ac.pa', 
           :password => @users_attrs[:fulano][:password]}, @headers
         @status1 = response.status
+        @data1 = JSON.parse(response.body)
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => 'wrong'}, @headers
         @status2 = response.status
+        @data2 = JSON.parse(response.body)
       end
       it "returns status code 401 (Unauthorized)" do        
         @status1.should eq(401)
         @status2.should eq(401)
+      end
+      it "does not return the token" do
+        @data1['token'].should be_false
+        @data2['token'].should be_false
       end
     end
   end
@@ -114,6 +132,9 @@ describe "Tokens V1 API" do
       end
       it "returns status code 406 (Not Acceptable)" do
         @status.should eq(406)
+      end
+      it "access token is not changed" do
+        @old_token.should eq(@user.reload.authentication_token)
       end
     end
 
