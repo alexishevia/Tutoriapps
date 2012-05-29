@@ -33,4 +33,19 @@ class Tutoriapps.Views.NewPost extends Backbone.View
       alert errors[0]
 
   expand: (evt) =>
-   $(evt.target).animate({height: "4em"}, 500)
+    evt.preventDefault()
+    textarea = evt.target
+    button_container = $(textarea).next()
+    $(textarea).animate({height: "5em"}, 200)
+    $(button_container).toggle('slow',
+      () =>
+        $(document).on('mouseup'
+          (evt) =>
+            $(document).off('mouseup')
+            evt.preventDefault()
+            $(button_container).toggle()
+            $(textarea).animate({height: "1.5em"}, 200)            
+        )
+    )
+
+    

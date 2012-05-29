@@ -1,10 +1,12 @@
 <form class="new_post">
-  <textarea name="text"  rows="1" cols="30"></textarea>
-  <label for="post_group_id">Group</label>
-  <select id="post_group_id" name="group_id">
-    {{#groups}}
-      <option value="{{id}}">{{name}}</option>
-    {{/groups}}
-  </select>
-  <input class="btn" name="commit" type="submit" value="Crear Post">
+  <textarea name="text" class="estilotextarea"> Escribe tu post </textarea>
+  <div class="hidden">
+    <label for="post_group_id">Group</label>
+    <select id="post_group_id" name="group_id">
+      {{#groups}}
+        <option value="{{id}}">{{name}}</option>
+      {{/groups}}
+    </select>
+    <input class="btn" name="commit" type="submit" value="Crear Post">
+  </div>
 </form>
