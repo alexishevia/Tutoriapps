@@ -48,5 +48,3 @@ class Tutoriapps.Views.NewPost extends Backbone.View
               $(textarea).animate({height: "1.5em"}, 200)            
         )
     )
-
-    
