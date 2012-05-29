@@ -51,20 +51,20 @@ describe "Posts V1 API" do
           @groups[:fisica].posts.find(post["id"]).should be_true
         end
       end
-      it "returns the post id, text, and created_at" do
+      it "returns the post's id, text, and created_at" do
         for post in @data
           post["id"].should be_true
           post["text"].should be_true
           post["created_at"].should be_true
         end
       end
-      it "returns the post group as an object with id and name" do
+      it "returns the post's group as an object with id and name" do
         for post in @data
           post["group"]["id"].should be_true
           post["group"]["name"].should be_true
         end
       end
-      it "returns the post author as an object with id and name" do
+      it "returns the post's author as an object with id and name" do
         for post in @data
           post["author"]["id"].should be_true
           post["author"]["name"].should be_true
@@ -75,11 +75,11 @@ describe "Posts V1 API" do
     
     describe "when auth token is not valid or was not sent" do
       before(:all) do
-        url1 = "/api/v1/groups/#{@groups[:fisica].id}/posts?auth_token=wrong"
-        get url1, nil, @headers
+        url = "/api/v1/groups/#{@groups[:fisica].id}/posts?auth_token=wrong"
+        get url, nil, @headers
         @status1 = response.status
-        url2 = "/api/v1/groups/#{@groups[:fisica].id}/posts"
-        get url2, nil, @headers
+        url = "/api/v1/groups/#{@groups[:fisica].id}/posts"
+        get url, nil, @headers
         @status2 = response.status
       end
       it "returns status code 401 (Unauthorized)" do
@@ -89,20 +89,62 @@ describe "Posts V1 API" do
     end
 
     describe "when user is not member of the group" do
-      it "returns status code 401 (Unauthorized)"
+      before(:all) do
+        group = @groups[:calculo]
+        user = @users[:mengano]
+        group.members.exists?(user).should be_false
+        token = user.authentication_token
+        url = "/api/v1/groups/#{group.id}/posts?auth_token=#{token}"
+        get url, nil, @headers
+        @status = response.status
+      end
+      it "returns status code 403 (Forbidden)" do
+        @status.should eq(403)
+      end
     end
 
-    describe "when group does not exit" do
-      it "returns status code 404 (Not Found)"
+    describe "when the group doesn't exist" do
+      before(:all) do
+        token = @users[:fulano].authentication_token
+        url = "/api/v1/groups/unexistent/posts?auth_token=#{token}"
+        get url, nil, @headers
+        @status = response.status
+      end
+      it "returns status code 404 (Not Found)" do
+        @status.should eq(404)
+      end
     end
     
     describe "when group has no posts" do
-      it "returns status code 200"
-      it "returns a JSON empty array"
+      before(:all) do
+        group = @groups[:calculo]
+        group.posts.count.should eq(0)
+        token = @users[:fulano].authentication_token
+        url = "/api/v1/groups/#{group.id}/posts?auth_token=#{token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON empty array" do
+        @data.should eq([])
+      end
     end
     
     describe "when request format is not set to JSON" do
-      it "returns status code 406 (Not Acceptable)"
+      before(:all) do
+        headers = @headers.clone
+        headers['HTTP_ACCEPT'] = 'text/html'
+        token = @users[:fulano].authentication_token
+        url = "/api/v1/groups/#{@groups[:fisica].id}/posts?auth_token=#{token}"
+        get url, nil, headers
+        @status = response.status
+      end
+      it "returns status code 406 (Not Acceptable)" do
+        @status.should eq(406)
+      end
     end
   end
 

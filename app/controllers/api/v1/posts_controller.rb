@@ -1,5 +1,6 @@
 class Api::V1::PostsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :check_format
   load_and_authorize_resource
   skip_load_and_authorize_resource :only => :index
   respond_to :json

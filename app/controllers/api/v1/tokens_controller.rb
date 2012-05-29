@@ -1,14 +1,11 @@
 class Api::V1::TokensController < ApplicationController
+  before_filter :check_format
   skip_before_filter :verify_authenticity_token
   respond_to :json
 
   def create
     email = params[:email]
     password = params[:password]
-    if request.format != :json
-      render :status=>406, :json=>{:message=>"The request must be json"}
-      return
-    end
 
     if email.nil? or password.nil?
       render :status=>400,

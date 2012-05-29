@@ -20,46 +20,67 @@ describe "Tokens V1 API" do
   describe "POST /api/v1/tokens" do
 
     describe "on success" do
-      it "returns status code 200 (OK)" do
+      before(:all) do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => @users_attrs[:fulano][:password]}, @headers
-        response.status.should eq(200)
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
       end
       it "returns a JSON object with the token" do
-        post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
-          :password => @users_attrs[:fulano][:password]}, @headers
-        data = JSON.parse(response.body)
-        data['token'].should eq(@users[:fulano].reload.authentication_token)
+        @data['token'].should eq(@users[:fulano].reload.authentication_token)
       end
     end
 
     describe "when request format is not set to JSON" do
-      it "returns status code 406 (Not Acceptable)" do
+      before(:all) do
+        headers = @headers.clone
+        headers['HTTP_ACCEPT'] = 'text/html'
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
-          :password => @users_attrs[:fulano][:password]}, nil
-        response.status.should eq(406)
+          :password => @users_attrs[:fulano][:password]}, headers
+        @status = response.status
+      end
+      it "returns status code 406 (Not Acceptable)" do
+        @status.should eq(406)
       end
     end
 
-    describe "when email or password is not sent" do
-      it "returns status code 400 (Bad Request)" do
+    describe "when email is not sent" do
+      before(:all) do
         post '/api/v1/tokens', {:email => nil, 
           :password => @users_attrs[:fulano][:password]}, @headers
-        response.status.should eq(400)
+        @status = response.status
+      end
+      it "returns status code 400 (Bad Request)" do
+        @status.should eq(400)
+      end
+    end
+
+    describe "when password is not sent" do
+      before(:all) do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => nil}, @headers
-        response.status.should eq(400)
+        @status = response.status
+      end
+      it "returns status code 400 (Bad Request)" do
+        @status.should eq(400)
       end
     end
 
     describe "when email and password don't match" do
-      it "returns status code 401 (Unauthorized)" do
+      before(:all) do
         post '/api/v1/tokens', {:email => 'wrong@utp.ac.pa', 
           :password => @users_attrs[:fulano][:password]}, @headers
-        response.status.should eq(401)
+        @status1 = response.status
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => 'wrong'}, @headers
-        response.status.should eq(401)
+        @status2 = response.status
+      end
+      it "returns status code 401 (Unauthorized)" do        
+        @status1.should eq(401)
+        @status2.should eq(401)
       end
     end
   end
@@ -72,20 +93,40 @@ describe "Tokens V1 API" do
     end
 
     describe "on success" do
-      it "returns status code 200 (OK)" do
-        delete "/api/v1/tokens/#{@old_token}"
-        response.status.should eq(200)
+      before(:each) do
+        delete "/api/v1/tokens/#{@old_token}", nil, @headers
+        @status = response.status
+      end
+      it "returns status code 200 (OK)" do        
+        @status.should eq(200)
       end
       it "resets access token" do
-        delete "/api/v1/tokens/#{@old_token}"
         @old_token.should_not eq(@user.reload.authentication_token)
       end
     end
 
+    describe "when request format is not set to JSON" do
+      before(:each) do
+        headers = @headers.clone
+        headers['HTTP_ACCEPT'] = 'text/html'
+        delete "/api/v1/tokens/#{@old_token}", nil, headers
+        @status = response.status
+      end
+      it "returns status code 406 (Not Acceptable)" do
+        @status.should eq(406)
+      end
+    end
+
     describe "when token is not valid" do
-      it "returns status code 404 (Not Found)" do
-        delete "/api/v1/tokens/wrong"
-        response.status.should eq(404)
+      before(:each) do
+        delete "/api/v1/tokens/wrong", nil, @headers
+        @status = response.status
+      end
+      it "returns status code 404 (Not Found)" do        
+        @status.should eq(404)
+      end
+      it "access token is not changed" do
+        @old_token.should eq(@user.reload.authentication_token)
       end
     end
   end
