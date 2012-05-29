@@ -35,16 +35,17 @@ class Tutoriapps.Views.NewPost extends Backbone.View
   expand: (evt) =>
     evt.preventDefault()
     textarea = evt.target
-    button_container = $(textarea).next()
+    button_container = $(textarea).siblings(".hidden")
     $(textarea).animate({height: "5em"}, 200)
-    $(button_container).toggle('slow',
+    $(button_container).show('slow',
       () =>
-        $(document).on('mouseup'
+        $("body").on('mouseup'
           (evt) =>
-            $(document).off('mouseup')
-            evt.preventDefault()
-            $(button_container).toggle()
-            $(textarea).animate({height: "1.5em"}, 200)            
+            if $(evt.target).parents('.new_post').length <= 0
+              $("body").off('mouseup')
+              evt.preventDefault()
+              $(button_container).hide()
+              $(textarea).animate({height: "1.5em"}, 200)            
         )
     )
 
