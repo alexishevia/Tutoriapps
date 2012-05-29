@@ -46,7 +46,7 @@ describe "Posts V1 API" do
       it "returns status code 200" do
         @status.should eq(200)
       end
-      it "returns a JSON array with group posts" do
+      it "returns a JSON array with group's posts" do
         for post in @data
           @groups[:fisica].posts.find(post["id"]).should be_true
         end
@@ -149,5 +149,7 @@ describe "Posts V1 API" do
   end
 
   describe "POST /api/v1/groups/:group_id/posts" do
+    
   end
+
 end
