@@ -37,7 +37,7 @@ class Tutoriapps.Views.NewPost extends Backbone.View
     textarea = evt.target
     button_container = $(textarea).siblings(".hidden")
     $(textarea).animate({height: "5em"}, 200)
-    $(button_container).show('slow',
+    $(button_container).show(
       () =>
         $("body").on('mouseup'
           (evt) =>
