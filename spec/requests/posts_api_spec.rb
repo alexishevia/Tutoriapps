@@ -171,13 +171,15 @@ describe "Posts V1 API" do
         data = {:post => FactoryGirl.attributes_for(:post)}
         post url, data, @headers
         @status = response.status
-        @data = JSON.parse(response.body)
       end
       it "returns status code 201 (Created)" do
         @status.should eq(201)
       end
       it "creates a new post in the group" do
         @group.posts(false).count.should be > @group_post_count
+      end
+      it "post is assigned to token user" do
+        @group.posts.last.author.should eq(@user)
       end
     end
 
@@ -191,7 +193,6 @@ describe "Posts V1 API" do
         data = {:post => FactoryGirl.attributes_for(:post)}
         post url, data, @headers
         @status = response.status
-        @data = JSON.parse(response.body)
       end
       it "returns status code 403 (Forbidden)" do
         @status.should eq(403)
@@ -209,7 +210,6 @@ describe "Posts V1 API" do
         data = {:post => FactoryGirl.attributes_for(:post)}
         post url, data, @headers
         @status = response.status
-        @data = JSON.parse(response.body)
       end
       it "returns status code 404 (Not Found)" do
         @status.should eq(404)
@@ -220,22 +220,98 @@ describe "Posts V1 API" do
     end
 
     describe "when group id is 'home'" do
-      it "returns status code 201 (created)"
-      it "creates a new public post"
+      before(:all) do
+        user = @users[:fulano]
+        @global_post_count = Post.count
+        url = "/api/v1/groups/home/posts?auth_token=#{user.authentication_token}"
+        data = {:post => FactoryGirl.attributes_for(:post)}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 201 (created)" do
+        @status.should eq(201)
+      end
+      it "creates a new public post" do
+        Post.count.should be > @global_post_count
+        Post.last.group.should be_false
+      end
     end
 
     describe "when request format is not set to JSON" do
-      it "returns status code 406 (Not Acceptable)"
-      it "does not create a new post"
+      before(:all) do
+        headers = @headers.clone
+        headers['HTTP_ACCEPT'] = 'text/html'
+        user = @users[:fulano]
+        group = @groups[:fisica]
+        @global_post_count = Post.count
+        url = "/api/v1/groups/#{group.id}/posts?auth_token=#{user.authentication_token}"
+        data = {:post => FactoryGirl.attributes_for(:post)}
+        post url, data, headers
+        @status = response.status
+      end
+      it "returns status code 406 (Not Acceptable)" do
+        @status.should eq(406)
+      end
+      it "does not create a new post" do
+        Post.count.should eq(@global_post_count)
+      end
     end
 
     describe "when post text is sent blank" do
-      it "returns status code 422 (Unprocessable Entity)"
-      it "does not create a new post"
+      before(:all) do
+        user = @users[:fulano]
+        group = @groups[:fisica]
+        @global_post_count = Post.count
+        url = "/api/v1/groups/#{group.id}/posts?auth_token=#{user.authentication_token}"
+        data = {:post => FactoryGirl.attributes_for(:post).merge({:text => ''})}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new post" do
+        Post.count.should eq(@global_post_count)
+      end
     end
 
-    describe "when post[group_id] is set to another group"
-    describe "when post[user] is set to another user"
+    describe "when post[group_id] is set to another group" do
+      before(:all) do
+        user = @users[:fulano]
+        @group = @groups[:fisica]
+        other_group = @groups[:calculo]
+        @group_post_count = @group.posts.count
+        url = "/api/v1/groups/#{@group.id}/posts?auth_token=#{user.authentication_token}"
+        data = {:post => FactoryGirl.attributes_for(:post)
+          .merge({:group_id => other_group.id})}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 201 (Created)" do
+        @status.should eq(201)
+      end
+      it "creates the post with group from url" do
+        @group.posts.count.should be > @group_post_count
+        @group.posts.last.group.should eq(@group) 
+      end
+    end
+    describe "when post[user] is set to another user" do
+      before(:all) do
+        @user = @users[:fulano]
+        other_user = @users[:mengano]
+        @group = @groups[:fisica]
+        @group_post_count = @group.posts.count
+        url = "/api/v1/groups/#{@group.id}/posts?auth_token=#{@user.authentication_token}"
+        data = {:post => FactoryGirl.attributes_for(:post)
+          .merge({:user_id => other_user.id})}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "creates the post with author set to current_user" do
+        @group.posts.count.should be > @group_post_count
+        @group.posts.last.author.should eq(@user) 
+      end
+    end
   end
 
 end
