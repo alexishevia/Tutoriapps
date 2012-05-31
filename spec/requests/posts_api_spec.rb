@@ -4,12 +4,12 @@ require 'spec_helper'
 describe "Posts V1 API" do
   before(:all) do
     @users = {
-      :fulano => FactoryGirl.create(:user, :email => 'fulano@utp.ac.pa'),
-      :mengano => FactoryGirl.create(:user, :email => 'mengano@utp.ac.pa')
+      :fulano => FactoryGirl.create(:user),
+      :mengano => FactoryGirl.create(:user)
     }
     @users.each do |index, user| 
       user.confirmed_at = Time.now
-      user.save
+      user.save!
       user.reset_authentication_token!
       user.reload
     end
@@ -33,7 +33,7 @@ describe "Posts V1 API" do
     DatabaseCleaner.clean
   end
   
-  describe "GET /api/v1/groups/:group_id/posts?auth_token=:token" do
+  describe "GET /api/v1/groups/:group_id/posts" do
 
     describe "on success" do
       before(:all) do
@@ -161,7 +161,7 @@ describe "Posts V1 API" do
     end
   end
 
-  describe "POST /api/v1/groups/:group_id/posts?auth_token=:token" do
+  describe "POST /api/v1/groups/:group_id/posts" do
     describe "on success" do
       before(:all) do
         @user = @users[:fulano]
