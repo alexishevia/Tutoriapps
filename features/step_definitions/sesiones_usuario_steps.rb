@@ -66,12 +66,6 @@ Dado /^que el usuario "([^\"]*)" ha iniciado sesión$/ do |user_email|
   page.should have_content( I18n.t 'devise.sessions.signed_in')
 end
 
-Dado /^que el usuario "([^\"]*)" ha iniciado sesión mediante http$/ do |user_email|
-  user_attrs = @users_attrs[user_email]
-  post user_session_path(:format => :json), {:user => user_attrs}
-  last_response.status.should eq(201)
-end
-
 Dado /^cerrar sesión$/ do
   visit('/users/sign_out')
 end

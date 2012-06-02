@@ -38,6 +38,10 @@ Spork.prefork do
       DatabaseCleaner.clean_with :truncation      
     end
 
+    config.after(:all) do 
+      DatabaseCleaner.clean_with :truncation      
+    end
+
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
