@@ -24,3 +24,4 @@ class Tutoriapps.Views.Home extends Backbone.View
       @$('.content_panel').append(view.el)  
     this
     
+    
