@@ -34,6 +34,7 @@ Cuando /^intente crear el grupo "([^\"]*)"$/ do |group_name|
   visit root_path
   click_link(I18n.t('helpers.submit.add', 
       :model => I18n.t('activerecord.models.group')))
+  find("form.new_group")
   within ("form.new_group") do
     find("[placeholder='#{ I18n.t('activerecord.attributes.group.name') }']")
       .set(group_attrs[:name])
