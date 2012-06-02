@@ -13,9 +13,7 @@ Cuando /^escriba un post$/ do
   within "form.new_post" do
     find('textarea')
     fill_in "text", :with => @post_attrs[:text]
-    find('input[type="submit"]')
-    click_button I18n.t('helpers.submit.create', :model => 
-      I18n.t('activerecord.models.post'))
+    find('input[type="submit"]').click
   end
 end
 
