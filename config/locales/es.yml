@@ -128,6 +128,7 @@ es:
         one: No se pudo guardar este/a %{model} porque se encontró 1 error
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
   helpers:
+    suggestions: Sugerencias
     select:
       prompt: Por favor seleccione
     confirm_delete: 
@@ -142,6 +143,8 @@ es:
     messages:
       created: "%{model} creado exitosamente."
       added: "%{model} añadido exitosamente."
+      feedback_sent: Sugerencia enviada. Gracias por tu aporte.
+      feedback_error: El mensaje no pudo ser enviado. Por favor intente nuevamente.
   number:
     currency:
       format:

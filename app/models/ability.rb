@@ -3,6 +3,7 @@ class Ability
 
   def initialize(user)
     if user
+      can :create, Feedback
       can :read, Group do |group| user.groups.include? group; end
       can [:read, :create], Post do |post|
         if post.group
@@ -13,7 +14,7 @@ class Ability
       end
 
       if user.admin?
-          can :manage, [Group, Enrollment, Post]
+        can :manage, :all
       end
     end
   end

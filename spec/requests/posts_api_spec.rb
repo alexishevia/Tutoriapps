@@ -28,10 +28,6 @@ describe "Posts V1 API" do
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
   end
-
-  after(:all) do
-    DatabaseCleaner.clean
-  end
   
   describe "GET /api/v1/groups/:group_id/posts" do
 

@@ -9,6 +9,7 @@ Tutoriapps::Application.routes.draw do
         resources :posts, :only => [:index, :create]
       end
       resources :enrollments, :only => [:create, :destroy]
+      resources :feedbacks, :only => [:create]
     end
   end
 
