@@ -25,7 +25,7 @@ describe "Feedbacks V1 API" do
       before(:all) do
         user = @users[:fulano]
         url = "/api/v1/feedbacks?auth_token=#{user.authentication_token}"
-        @data = {:group => FactoryGirl.attributes_for(:feedback)}
+        @data = {:feedback => FactoryGirl.attributes_for(:feedback)}
         post url, @data, @headers
         @status = response.status
       end
