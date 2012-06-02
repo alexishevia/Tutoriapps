@@ -31,11 +31,11 @@ Spork.prefork do
     config.use_transactional_fixtures = false
 
     config.before(:suite) do
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :transaction
     end
 
-    config.before(:each) do
-      DatabaseCleaner.start
+    config.before(:all) do 
+      DatabaseCleaner.clean_with :truncation      
     end
 
     # If true, the base class of anonymous controllers will be inferred

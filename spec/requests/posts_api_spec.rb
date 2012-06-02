@@ -49,7 +49,7 @@ describe "Posts V1 API" do
       it "returns a JSON array with group's posts" do
         @data.class.should eq(Array)
         for post in @data
-          @groups[:fisica].posts.find(post["id"]).should be_true
+          @groups[:fisica].posts.where(:id => post["id"]).count.should eq(1)
         end
       end
       it "returns each post's id, text, and created_at" do

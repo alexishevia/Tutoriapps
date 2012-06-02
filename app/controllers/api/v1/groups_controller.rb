@@ -1,5 +1,6 @@
 class Api::V1::GroupsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :check_format
   load_and_authorize_resource
   respond_to :json
 
@@ -13,7 +14,7 @@ class Api::V1::GroupsController < ApplicationController
 
   def create
     if @group.save
-      render :json => @group
+      render :json => @group, :status => :created
     else
       render :json => @group.errors.full_messages, :status => :unprocessable_entity
     end

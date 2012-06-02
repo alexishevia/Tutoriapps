@@ -41,15 +41,7 @@ class User < ActiveRecord::Base
 
   has_many :posts, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
-
-  def groups
-    Enrollment.where('user_email = ?', email).each do |e|
-      e.update_attributes(:user_id => id, :user_email => nil)
-    end
-    Enrollment.where('user_id = ?', id).collect do |e|
-      Group.find(e.group_id)
-    end
-  end
+  has_many :groups, :through => :enrollments
 
   def readable_posts
     if admin?
