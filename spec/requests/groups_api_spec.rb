@@ -290,8 +290,20 @@ describe "Groups V1 API" do
       end
     end
     describe "when user is not admin" do
-      it "returns status code 403 (Forbidden)"
-      it "does not delete group"
+      before(:all) do
+        user = @users[:fulano]
+        @group = @groups[:calculo]
+        @group_id = @group.id
+        url = "/api/v1/groups/#{@group.id}?auth_token=#{user.authentication_token}"
+        delete url, nil, @headers
+        @status = response.status
+      end
+      it "returns status code 403 (Forbidden)" do
+        @status.should eq(403)
+      end
+      it "does not delete group" do
+        Group.find_by_id(@group_id).should be_true
+      end
     end
   end
 end

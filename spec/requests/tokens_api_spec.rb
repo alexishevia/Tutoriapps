@@ -13,13 +13,11 @@ describe "Tokens V1 API" do
     @headers = {'HTTP_ACCEPT' => 'application/json'}
   end
 
-  after(:all) do
-    DatabaseCleaner.clean
-  end
-
   describe "POST /api/v1/tokens" do
 
     describe "on success" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
       before(:all) do
         post '/api/v1/tokens', {:email => @users_attrs[:fulano][:email], 
           :password => @users_attrs[:fulano][:password]}, @headers
@@ -104,14 +102,16 @@ describe "Tokens V1 API" do
   end
 
   describe "DELETE /api/v1/tokens/:token" do
-    before(:each) do
+    before(:all) do
       @user = @users[:fulano]
       @user.reset_authentication_token!
       @old_token = @user.reload.authentication_token
     end
 
     describe "on success" do
-      before(:each) do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
+      before(:all) do
         delete "/api/v1/tokens/#{@old_token}", nil, @headers
         @status = response.status
       end
@@ -124,7 +124,7 @@ describe "Tokens V1 API" do
     end
 
     describe "when request format is not set to JSON" do
-      before(:each) do
+      before(:all) do
         headers = @headers.clone
         headers['HTTP_ACCEPT'] = 'text/html'
         delete "/api/v1/tokens/#{@old_token}", nil, headers
@@ -139,7 +139,7 @@ describe "Tokens V1 API" do
     end
 
     describe "when token is not valid" do
-      before(:each) do
+      before(:all) do
         delete "/api/v1/tokens/wrong", nil, @headers
         @status = response.status
       end

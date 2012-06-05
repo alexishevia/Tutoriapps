@@ -159,6 +159,8 @@ describe "Posts V1 API" do
 
   describe "POST /api/v1/groups/:group_id/posts" do
     describe "on success" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
       before(:all) do
         @user = @users[:fulano]
         @group = @groups[:fisica]
@@ -216,6 +218,8 @@ describe "Posts V1 API" do
     end
 
     describe "when group id is 'home'" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
       before(:all) do
         user = @users[:fulano]
         @global_post_count = Post.count
@@ -272,6 +276,8 @@ describe "Posts V1 API" do
     end
 
     describe "when post[group_id] is set to another group" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
       before(:all) do
         user = @users[:fulano]
         @group = @groups[:fisica]
@@ -292,6 +298,8 @@ describe "Posts V1 API" do
       end
     end
     describe "when post[user] is set to another user" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
       before(:all) do
         @user = @users[:fulano]
         other_user = @users[:mengano]
