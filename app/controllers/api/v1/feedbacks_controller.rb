@@ -5,6 +5,7 @@ class Api::V1::FeedbacksController < ApplicationController
   def create
     authorize! :create, Feedback
     @feedback = Feedback.new(params[:feedback])
+    @feedback.user = current_user
     if @feedback.save
       render :json => @feedback, :status => :created
     else
