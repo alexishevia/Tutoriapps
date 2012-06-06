@@ -9,9 +9,8 @@ end
 
 Cuando /^escriba un post$/ do
   @post_attrs = attributes_for(:post)
-  find('form.new_post').click
+  find('form.new_post textarea').click
   within "form.new_post" do
-    find('textarea')
     fill_in "text", :with => @post_attrs[:text]
     find('input[type="submit"]').click
   end
