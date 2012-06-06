@@ -17,9 +17,11 @@ class Enrollment < ActiveRecord::Base
   before_validation :search_user_email
   validates :group, :presence => true
   validates :user_id, :user_email, :uniqueness => {:scope => :group_id}
+  validates :user_id, :presence => {:unless => :user_email}
   validates :user_email, :allow_nil => true, :format => { :with => /@utp.ac.pa$/, :message => 
     "#{I18n.t('errors.messages.invalid')} - " + 
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
+  validates :user_id, :existence => { :allow_nil => true }
 
   def user_identifier
     user_id || user_email
@@ -44,7 +46,7 @@ class Enrollment < ActiveRecord::Base
 
   private
     def search_user_email
-      return unless user_email
+      return unless !user and user_email
       user = User.find_by_email(user_email)
       if user
         self.user_email = nil

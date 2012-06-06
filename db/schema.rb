@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120605013957) do
+ActiveRecord::Schema.define(:version => 20120605042828) do
 
   create_table "enrollments", :force => true do |t|
     t.string   "user_email"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(:version => 20120605013957) do
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
   end
+
+  add_index "enrollments", ["group_id"], :name => "enrollments_group_id_fk"
+  add_index "enrollments", ["user_id"], :name => "enrollments_user_id_fk"
 
   create_table "feedbacks", :force => true do |t|
     t.text     "text"
@@ -73,5 +76,8 @@ ActiveRecord::Schema.define(:version => 20120605013957) do
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  add_foreign_key "enrollments", "groups", :name => "enrollments_group_id_fk"
+  add_foreign_key "enrollments", "users", :name => "enrollments_user_id_fk"
 
 end
