@@ -4,7 +4,7 @@ class Api::V1::RepliesController < ApplicationController
 
   def index
     @post = Post.find(params[:post_id])
-    authorize! :read, @post.group
+    authorize! :read, @post
     @replies = @post.replies
   end
 

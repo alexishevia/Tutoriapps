@@ -24,6 +24,10 @@ describe "Replies V1 API" do
         FactoryGirl.create(:reply, :post => post)
       end
     end
+    @public_post = FactoryGirl.create(:post, :group => nil)
+    3.times do
+      FactoryGirl.create(:reply, :post => @public_post)
+    end
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
   end
@@ -108,6 +112,46 @@ describe "Replies V1 API" do
       end
       it "does not return the post's replies" do
         @data.class.should_not eq(Array)
+      end
+    end
+    describe "when post belongs to 'home' group" do
+      before(:all) do
+        @user = @users[:fulano]
+        @post = @public_post
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON array with post's replies" do
+        @data.class.should eq(Array)
+        @data.length.should eq(@post.replies.count)
+        for reply in @data
+          @post.replies.where(:id => reply["id"]).count.should eq(1)
+        end
+      end
+      it "returns each reply's id, text, and created_at" do
+        for reply in @data
+          reply["id"].should be_true
+          reply["text"].should be_true
+          reply["created_at"].should be_true
+        end
+      end
+      it "returns each reply's author as an object with id and name" do
+        for reply in @data
+          reply["author"]["id"].should be_true
+          reply["author"]["name"].should be_true
+        end
+      end
+      it "returns the array ordered by created_at, with the oldest first" do
+        created_at = @data.first["created_at"]
+        for reply in @data
+          reply["created_at"].should be >= created_at
+          created_at = reply["created_at"]
+        end
       end
     end
     describe "when the post doesn't exist" do
