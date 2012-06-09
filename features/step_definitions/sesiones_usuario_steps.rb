@@ -59,9 +59,9 @@ Dado /^que el usuario "([^\"]*)" ha iniciado sesión$/ do |user_email|
   user_attrs = @users_attrs[user_email]
   visit root_path
   within "form.sign_in" do
-    fill_in 'user_email', with: user_attrs[:email]
-    fill_in 'user_password', with: user_attrs[:password]
-    click_button I18n.t('devise.sign_in')
+    page.fill_in 'user_email', with: user_attrs[:email]
+    page.fill_in 'user_password', with: user_attrs[:password]
+    page.click_button I18n.t('devise.sign_in')
   end
   page.should have_content( I18n.t 'devise.sessions.signed_in')
 end

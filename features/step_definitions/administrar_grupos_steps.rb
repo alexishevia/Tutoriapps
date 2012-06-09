@@ -36,9 +36,9 @@ Cuando /^intente crear el grupo "([^\"]*)"$/ do |group_name|
       :model => I18n.t('activerecord.models.group')))
   find("form.new_group")
   within ("form.new_group") do
-    find("[placeholder='#{ I18n.t('activerecord.attributes.group.name') }']")
+    page.find("[placeholder='#{ I18n.t('activerecord.attributes.group.name') }']")
       .set(group_attrs[:name])
-    click_button I18n.t('helpers.submit.send')
+    page.click_button I18n.t('helpers.submit.send')
   end
 end
 
@@ -46,12 +46,12 @@ Cuando /^intente agregar el usuario "([^"]*)" al grupo "([^"]*)"$/ do |user_emai
   group = Group.find_by_name(group_name)
   visit root_path
   within find_link(group_name).find(:xpath,".//ancestor::*[contains(@class, 'group')]") do
-    click_link(group_name)
-    click_link I18n.t('helpers.submit.add', 
+    page.click_link(group_name)
+    page.click_link I18n.t('helpers.submit.add', 
       :model => I18n.t('activerecord.models.user'))
-    find(".new_enrollment input[placeholder='#{ I18n.t(
+    page.find(".new_enrollment input[placeholder='#{ I18n.t(
       'activerecord.attributes.enrollment.user_email') }']").set(user_email)
-    click_button I18n.t('helpers.submit.send')
+    page.click_button I18n.t('helpers.submit.send')
   end
 end
 
@@ -67,7 +67,7 @@ end
 Cuando /^intente cambiar el nombre del grupo "([^"]*)" a "([^"]*)"$/ do |group_name, new_group_name|
   within find_link(group_name).find(:xpath,".//..") do
     page.find('.edit_group').click
-    fill_in 'name', with: new_group_name
+    page.fill_in 'name', with: new_group_name
   end
   page.find('body').click
 end
@@ -108,7 +108,7 @@ Entonces /^el usuario "([^"]*)" aparecerá dentro del grupo "([^"]*)"$/ do |user
   end
   visit root_path
   within find_link(group_name).find(:xpath,".//ancestor::*[contains(@class, 'group')]") do
-    click_link(group_name)
+    page.click_link(group_name)
     page.should have_content(user.name)
   end
 end
@@ -121,7 +121,7 @@ Entonces /^el usuario "([^\"]*)" no aparecerá dentro del grupo "([^\"]*)"$/ do 
   end
   visit root_path
   within find_link(group_name).find(:xpath,".//ancestor::*[contains(@class, 'group')]") do
-    click_link(group_name)
+    page.click_link(group_name)
     page.should_not have_content(user.name)
   end
 end
@@ -137,7 +137,7 @@ Entonces /^el usuario "([^"]*)" aparecerá (\d+) vez en el grupo "([^\"]*)"$/ do
   end
   visit root_path
   within find_link(group_name).find(:xpath,".//ancestor::*[contains(@class, 'group')]") do
-    click_link(group_name)
+    page.click_link(group_name)
     page.find('.members').text.scan(user.name).length.should eq(n.to_i)
   end
 end

@@ -34,11 +34,11 @@ end
 Cuando /^llene y envíe el formulario de registro$/ do
   visit root_path
   within "form.sign_up" do
-    fill_in 'user_name', with: @user_attrs[:name]
-    fill_in 'user_email', with: @user_attrs[:email]
-    fill_in 'user_password', with: @user_attrs[:password]
-    fill_in 'user_password_confirmation', with: @user_attrs[:password]
-    click_button I18n.t('devise.sign_up')
+    page.fill_in 'user_name', with: @user_attrs[:name]
+    page.fill_in 'user_email', with: @user_attrs[:email]
+    page.fill_in 'user_password', with: @user_attrs[:password]
+    page.fill_in 'user_password_confirmation', with: @user_attrs[:password]
+    page.click_button I18n.t('devise.sign_up')
   end
 end
 
@@ -61,9 +61,9 @@ Cuando /^intente iniciar sesión$/ do
   visit destroy_user_session_path
   visit root_path
   within "form.sign_in" do
-    fill_in 'user_email', with: @user_attrs[:email]
-    fill_in 'user_password', with: @user_attrs[:password]
-    click_button I18n.t('devise.sign_in')
+    page.fill_in 'user_email', with: @user_attrs[:email]
+    page.fill_in 'user_password', with: @user_attrs[:password]
+    page.click_button I18n.t('devise.sign_in')
   end
 end
 
