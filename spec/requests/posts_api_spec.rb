@@ -263,7 +263,7 @@ describe "Posts V1 API" do
         group = @groups[:fisica]
         @global_post_count = Post.count
         url = "/api/v1/groups/#{group.id}/posts?auth_token=#{user.authentication_token}"
-        data = {:post => FactoryGirl.attributes_for(:post).merge({:text => ''})}
+        data = {:post => FactoryGirl.attributes_for(:post, :text => '')}
         post url, data, @headers
         @status = response.status
       end
