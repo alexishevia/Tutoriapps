@@ -44,6 +44,7 @@ describe "Posts V1 API" do
       end
       it "returns a JSON array with group's posts" do
         @data.class.should eq(Array)
+        @data.length.should eq(@groups[:fisica].posts.count)
         for post in @data
           @groups[:fisica].posts.where(:id => post["id"]).count.should eq(1)
         end

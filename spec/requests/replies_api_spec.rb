@@ -19,7 +19,10 @@ describe "Replies V1 API" do
     @groups[:fisica].members << @users[:fulano]
 
     3.times do
-      FactoryGirl.create(:post, :group => @groups[:fisica])
+      post = FactoryGirl.create(:post, :group => @groups[:fisica])
+      3.times do
+        FactoryGirl.create(:reply, :post => post)
+      end
     end
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
@@ -27,30 +30,136 @@ describe "Replies V1 API" do
 
   describe "GET /api/v1/posts/:post_id/replies" do
     describe "on success" do
-      it "returns status code 200 (OK)"
-      it "returns a JSON array with post's replies"
-      it "returns each reply's id, text, and created_at"
-      it "returns each relpy's author as an object with id and name"
-      it "returns the array ordered by created_at, with the oldest first"
+      before(:all) do
+        @user = @users[:fulano]
+        @group = @groups[:fisica]
+        @post = @group.posts.last
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON array with post's replies" do
+        @data.class.should eq(Array)
+        @data.length.should eq(@post.replies.count)
+        for reply in @data
+          @post.replies.where(:id => reply["id"]).count.should eq(1)
+        end
+      end
+      it "returns each reply's id, text, and created_at" do
+        for reply in @data
+          reply["id"].should be_true
+          reply["text"].should be_true
+          reply["created_at"].should be_true
+        end
+      end
+      it "returns each reply's author as an object with id and name" do
+        for reply in @data
+          reply["author"]["id"].should be_true
+          reply["author"]["name"].should be_true
+        end
+      end
+      it "returns the array ordered by created_at, with the oldest first" do
+        created_at = @data.first["created_at"]
+        for reply in @data
+          reply["created_at"].should be >= created_at
+          created_at = reply["created_at"]
+        end
+      end
     end
     describe "when auth token is not valid or was not sent" do
-      it "returns status code 401 (Unauthorized)"
-      it "does not return the group's posts"
+      before(:all) do
+        @user = @users[:fulano]
+        @group = @groups[:fisica]
+        @post = @group.posts.last
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=invalid"
+        get url, nil, @headers
+        @status1 = response.status
+        @data1 = JSON.parse(response.body)
+        url = "/api/v1/posts/#{@post.id}/replies"
+        get url, nil, @headers
+        @status2 = response.status
+        @data2 = JSON.parse(response.body)
+      end
+      it "returns status code 401 (Unauthorized)" do
+        @status1.should eq(401)
+        @status2.should eq(401)
+      end
+      it "does not return the post's replies" do
+        @data1.class.should_not eq(Array)
+        @data2.class.should_not eq(Array)
+      end
     end
     describe "when user is not member of the post's group" do
-      it "returns status code 403 (Forbidden)" 
-      it "does not return the post's replies" 
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @post = @group.posts.last
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 403 (Forbidden)" do
+        @status.should eq(403)
+      end
+      it "does not return the post's replies" do
+        @data.class.should_not eq(Array)
+      end
     end
     describe "when the post doesn't exist" do
-      it "returns status code 404 (Not Found)"
+      before(:all) do
+        @user = @users[:fulano]
+        url = "/api/v1/posts/999/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 404 (Not Found)" do
+        @status.should eq(404)
+      end
     end
     describe "when the post has no replies" do
-      it "returns status code 200 (OK)"
-      it "returns a JSON empty array"
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
+      before(:all) do
+        @user = @users[:fulano]
+        @group = @groups[:fisica]
+        @post = @group.posts.last
+        @post.replies.destroy_all
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON empty array" do
+        @data.should eq([])
+      end
     end
     describe "when request format is not set to JSON" do
-      it "returns status code 406 (Not Acceptable)"
-      it "does not return the group's posts" 
+      before(:all) do
+        headers = @headers.clone
+        headers['HTTP_ACCEPT'] = 'text/html'
+        @user = @users[:fulano]
+        @group = @groups[:fisica]
+        @post = @group.posts.last
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 406 (Not Acceptable)" do
+        @status.should eq(406)
+      end
+      it "does not return the post's replies" do
+        @data.class.should_not eq(Array)
+      end
     end
   end
 
