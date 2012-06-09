@@ -1,9 +1,6 @@
 class Api::V1::PostsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :check_format
-  load_and_authorize_resource
-  skip_load_and_authorize_resource :only => :index
-  respond_to :json
 
   def index
     if params[:group_id] == 'home'
@@ -16,12 +13,13 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-    @post.author = current_user
+    @post = Post.new(params[:post])
     if params[:group_id] != 'home'
       group = Group.find(params[:group_id])
       authorize! :read, group
       @post.group = group
     end
+    @post.author = current_user
     if @post.save
       render 'post', :status => :created
     else
