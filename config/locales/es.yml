@@ -129,6 +129,8 @@ es:
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
   helpers:
     suggestions: Sugerencias
+    reply: Responder
+    delete: Eliminar
     select:
       prompt: Por favor seleccione
     confirm_delete: 
@@ -145,6 +147,8 @@ es:
       added: "%{model} añadido exitosamente."
       feedback_sent: Sugerencia enviada. Gracias por tu aporte.
       feedback_error: El mensaje no pudo ser enviado. Por favor intente nuevamente.
+      reply_sent: Tu respuesta ha sido enviada.
+      reply_error: Tu respuesta no pudo ser enviada. Por favor intente nuevamente.
   number:
     currency:
       format:
