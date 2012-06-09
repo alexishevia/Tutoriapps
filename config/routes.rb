@@ -11,7 +11,7 @@ Tutoriapps::Application.routes.draw do
       resources :enrollments, :only => [:create, :destroy]
       resources :feedbacks, :only => [:create]
       resources :posts, :only => [] do
-        resources :replies, :only => [:create]
+        resources :replies, :only => [:index, :create]
       end
     end
   end

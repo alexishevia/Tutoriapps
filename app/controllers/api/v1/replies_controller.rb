@@ -2,6 +2,12 @@ class Api::V1::RepliesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :check_format
 
+  def index
+    @post = Post.find(params[:post_id])
+    authorize! :read, @post.group
+    @replies = @post.replies
+  end
+
   def create
     @post = Post.find(params[:post_id])
     authorize! :read, @post.group
