@@ -116,7 +116,7 @@ describe "Replies V1 API" do
     end
     describe "when post belongs to 'home' group" do
       before(:all) do
-        @user = @users[:fulano]
+        @user = @users[:mengano]
         @post = @public_post
         url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
         get url, nil, @headers
@@ -275,6 +275,31 @@ describe "Replies V1 API" do
       end
       it "does not create a new post" do
         Reply.count.should eq(@replies_count)
+      end
+    end
+
+    describe "when post belongs to 'home' group" do
+      before(:all) do
+        @user = @users[:mengano]
+        @post = @public_post
+        @replies_count = Reply.count
+        @post_replies_count = @post.replies.count
+        url = "/api/v1/posts/#{@post.id}/replies?auth_token=#{@user.authentication_token}"
+        data = {:reply => FactoryGirl.attributes_for(:reply)}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 201 (Created)" do
+        @status.should eq(201)
+      end
+      it "creates a new reply" do
+        Reply.count.should be > @replies_count
+      end
+      it "reply is assigned to correct post" do
+        @post.replies(false).count.should be > @post_replies_count
+      end
+      it "reply is assigned to token user" do
+        @post.replies.last.author.should eq(@user)
       end
     end
 

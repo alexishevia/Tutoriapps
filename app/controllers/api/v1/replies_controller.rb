@@ -10,7 +10,7 @@ class Api::V1::RepliesController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
-    authorize! :read, @post.group
+    authorize! :read, @post
     @reply = @post.replies.build(params[:reply])
     @reply.author = current_user
     if @reply.save
