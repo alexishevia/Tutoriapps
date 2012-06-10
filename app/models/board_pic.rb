@@ -9,8 +9,12 @@
 #  image_updated_at   :datetime
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
+#  user_id            :integer(4)
+#  group_id           :integer(4)
 #
 
 class BoardPic < ActiveRecord::Base
+  belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
+  belongs_to :group
   has_attached_file :image
 end
