@@ -12,6 +12,8 @@ gem 'i18n-js', '3.0.0.rc2'
 gem 'rabl', '0.6.12'
 gem 'validates_existence', '0.7.1'
 gem 'foreigner', '1.1.6'
+gem 'paperclip', '3.0.4'
+gem 'multipart_body', '0.2.1'
 
 group :assets do
   gem 'sass-rails', '3.2.5'

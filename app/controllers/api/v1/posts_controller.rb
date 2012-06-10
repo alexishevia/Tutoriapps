@@ -23,7 +23,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.save
       render 'post', :status => :created
     else
-      render :text => @post.errors.full_messages, :status => :unprocessable_entity
+      render :json => @post.errors.full_messages, :status => :unprocessable_entity
     end
   end
 

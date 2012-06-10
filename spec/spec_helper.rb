@@ -9,6 +9,8 @@ Spork.prefork do
   require 'email_spec'
   require 'rspec/autorun'
   require 'ruby-debug'
+  require 'paperclip/matchers'
+  require 'multipart_body'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
@@ -49,6 +51,7 @@ Spork.prefork do
 
     config.include(EmailSpec::Helpers)
     config.include(EmailSpec::Matchers)
+    config.include(Paperclip::Shoulda::Matchers)
   end
 end
 
