@@ -169,13 +169,77 @@ describe "Board Pics V1 API" do
     end
 
     describe "when board_pic image is sent blank" do
-      it "pending"
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @board_pics_count = BoardPic.count
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        data = {:board_pic => {:image => nil}}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new board_pic" do
+        BoardPic.count.should eq(@board_pics_count)
+      end
     end
     describe "when board_pic[group_id] is set to another group" do
-      it "pending"
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @board_pics_count = BoardPic.count
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[group_id]' => @groups[:calculo].id
+        )
+        headers = @headers.clone
+        headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
+        data = multipart.to_s
+        post url, data, headers
+        @status = response.status
+      end
+      it "returns status code 201 (Created)" do
+        @status.should eq(201)
+      end
+      it "creates a new board_pic" do
+        BoardPic.count.should be > @board_pics_count
+      end
+      it "assigns the board_pic to group specified in url" do
+        BoardPic.last.group.should eq(@group)
+      end
     end
-    describe "when board_pic[user] is set to another user" do
-      it "pending"
+    describe "when board_pic[user_id] is set to another user" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @board_pics_count = BoardPic.count
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[user_id]' => @users[:fulano].id
+        )
+        headers = @headers.clone
+        headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
+        data = multipart.to_s
+        post url, data, headers
+        @status = response.status
+      end
+      it "returns status code 201 (Created)" do
+        @status.should eq(201)
+      end
+      it "creates a new board_pic" do
+        BoardPic.count.should be > @board_pics_count
+      end
+      it "creates the board_pic with author set to token owner" do
+        BoardPic.last.author.should eq(@user)
+      end
     end
   end
 end

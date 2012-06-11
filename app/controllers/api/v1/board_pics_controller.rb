@@ -9,12 +9,13 @@ class Api::V1::BoardPicsController < ApplicationController
     end
     group = Group.find(params[:group_id])
     authorize! :read, group
-    @board_pic = group.board_pics.build(params[:board_pic])
+    @board_pic = BoardPic.new(params[:board_pic])
     @board_pic.author = current_user
+    @board_pic.group = group
     if @board_pic.save
       render :json => @board_pic, :status => :created
     else
-      render :json => @post.errors.full_messages, :status => :unprocessable_entity
+      render :json => @board_pic.errors.full_messages, :status => :unprocessable_entity
     end
   end
 end

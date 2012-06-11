@@ -17,4 +17,5 @@ class BoardPic < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
   has_attached_file :image
+  validates :image, :attachment_presence => true
 end

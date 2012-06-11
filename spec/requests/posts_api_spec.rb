@@ -312,7 +312,7 @@ describe "Posts V1 API" do
         post url, data, @headers
         @status = response.status
       end
-      it "creates the post with author set to current_user" do
+      it "creates the post with author set to token owner" do
         @group.posts.count.should be > @group_post_count
         @group.posts.last.author.should eq(@user) 
       end
