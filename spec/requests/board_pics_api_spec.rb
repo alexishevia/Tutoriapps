@@ -22,7 +22,150 @@ describe "Board Pics V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
+    3.times do
+      FactoryGirl.create(:board_pic, :group => @groups[:fisica])
+      FactoryGirl.create(:board_pic, :group => @groups[:calculo])
+    end
+
     @headers = {'HTTP_ACCEPT'  => 'application/json'}
+  end
+
+  describe "GET /api/v1/groups/:group_id/board_pics" do
+
+    describe "on success" do
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON array with group's board_pics" do
+        @data.class.should eq(Array)
+        @data.length.should eq(@group.board_pics.count)
+        for board_pic in @data
+          @group.board_pics.where(:id => board_pic["id"]).count.should eq(1)
+        end
+      end
+      it "returns each board_pic's id and created_at" do
+        for board_pic in @data
+          board_pic["id"].should be_true
+          board_pic["image"].should be_true
+          board_pic["created_at"].should be_true
+        end
+      end
+      it "returns each board_pic's image as an object with url, size and content_type" do
+        for board_pic in @data
+          board_pic["image"]["url"].should be_true
+          board_pic["image"]["size"].should be_true
+          board_pic["image"]["content_type"].should be_true
+        end
+      end
+      it "returns each board_pic's author as an object with id and name" do
+        for board_pic in @data
+          board_pic["author"]["id"].should be_true
+          board_pic["author"]["name"].should be_true
+          board_pic["author"]["name"].should be_true
+        end
+      end
+    end
+
+    describe "when auth token is not valid or was not sent" do
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=invalid"
+        get url, nil, @headers
+        @status1 = response.status
+        @data1 = JSON.parse(response.body)
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=invalid"
+        get url, nil, @headers
+        @status2 = response.status
+        @data2 = JSON.parse(response.body)
+      end
+      it "returns status code 401 (Unauthorized)" do
+        @status1.should eq(401)
+        @status2.should eq(401)
+      end
+      it "does not return the group's board_pics" do
+        @data1.class.should_not eq(Array)
+        @data2.class.should_not eq(Array)
+      end
+    end
+
+    describe "when user is not member of the group" do
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:calculo]
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 403 (Forbidden)" do
+        @status.should eq(403)
+      end
+      it "does not return the group's board_pics" do
+        @data.class.should_not eq(Array)
+      end
+    end
+
+    describe "when the group doesn't exist" do
+      before(:all) do
+        @user = @users[:mengano]
+        url = "/api/v1/groups/999/board_pics?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 404 (Not Found)" do
+        @status.should eq(404)
+      end
+    end
+
+    describe "when group has no board_pics" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @group.board_pics.destroy_all
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON empty array" do
+        @data.should eq([])
+      end
+    end
+
+    describe "when request format is not set to JSON" do
+      before(:all) do
+        headers = @headers.clone
+        headers['HTTP_ACCEPT'] = 'text/html'
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        get url, nil, headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 406 (Not Acceptable)" do
+        @status.should eq(406)
+      end
+      it "does not return the group's board_pics" do
+        @data.class.should_not eq(Array)
+      end
+    end
+
   end
 
   describe "POST /api/v1/groups/:group_id/board_pics" do
