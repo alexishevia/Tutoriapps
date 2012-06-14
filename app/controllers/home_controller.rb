@@ -6,4 +6,7 @@ class HomeController < ApplicationController
       render 'index'
     end
   end
+
+  def fileupload
+  end
 end

@@ -5,7 +5,6 @@ class Tutoriapps.Views.GroupSelect extends Backbone.View
   initialize: =>
     @collection.on('change_active', @render)
 
-
   render: =>
     @$el.empty()
     @collection.each(@appendButton)

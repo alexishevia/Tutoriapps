@@ -4,14 +4,16 @@ class Tutoriapps.Views.FilterSelect extends Backbone.View
   className: 'nav nav-tabs'
 
   events:
-    'click a': 'activate'
+    'click .filter': 'activate'
 
-  initialize: =>
-    @render()
+  initialize: (options)=>
+    @collection.on('change_filter', @render)
 
   render: =>
+    console.log(@collection.active_filter)
     $(@el).html(@template())
     this
 
   activate: (evt) =>
-    console.log(evt)
+    evt.preventDefault()
+    @collection.set_filter($(evt.target).attr('href'))

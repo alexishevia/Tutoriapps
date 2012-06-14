@@ -1,0 +1,11 @@
+<form id="uploadform" method="post" action="/api/v1/groups/1/board_pics.json" enctype="multipart/form-data">
+  <input type="file" name="board_pic[image]" />
+  <input type="submit" class="btn btn-primary">
+</form>
+<script type="text/javascript">
+  $('#uploadform').on('submit', function(e) {
+    e.preventDefault(); // prevent native submit
+    console.log('submit');
+    $(this).ajaxSubmit();
+  });
+</script>

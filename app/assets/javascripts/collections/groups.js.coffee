@@ -4,8 +4,6 @@ class Tutoriapps.Collections.Groups extends Backbone.Collection
   
   initialize: () =>
     @on('reset', @reset_active)
-
-  initialize_filter: () =>
     @on('reset', @reset_filter)
 
   reset_active: =>
@@ -13,13 +11,13 @@ class Tutoriapps.Collections.Groups extends Backbone.Collection
       @set_active(first)
 
   reset_filter: =>
-    if !@filter and first = @first()
-      @set_filter(first)
+    if !@active_filter
+      @set_filter('home')
 
   set_active: (group) =>
     @active = group
     @trigger('change_active', group)
 
-  set_filter: (group) =>
-    @filter = filter
+  set_filter: (filter) =>
+    @active_filter = filter
     @trigger('change_filter', filter)

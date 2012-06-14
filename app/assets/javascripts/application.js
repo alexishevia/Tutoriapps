@@ -21,6 +21,7 @@
 //= require i18n/translations
 //= require jquery.timeago
 //= require jquery.timeago.es
+//= require jquery.form.js
 //= require .//tutoriapps
 //= require_tree ../../templates
 //= require_tree .//models
