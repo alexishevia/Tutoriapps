@@ -24,7 +24,6 @@ class Tutoriapps.Views.Home extends Backbone.View
       new Tutoriapps.Views.FilterSelect(collection: @groups)
       new Tutoriapps.Views.NewPost(groups: @groups, posts: @posts)
       new Tutoriapps.Views.Posts(collection: @posts)
-      new Tutoriapps.Views.ReplyModal(posts: @posts)
     ]
     for view in views
       @$('.content_panel').append(view.el)  

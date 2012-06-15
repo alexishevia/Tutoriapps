@@ -12,6 +12,11 @@ class Api::V1::PostsController < ApplicationController
     end
   end
 
+  def show
+    @post = Post.find(params[:id])
+    render 'post'
+  end
+
   def create
     @post = Post.new(params[:post])
     if params[:group_id] != 'home'

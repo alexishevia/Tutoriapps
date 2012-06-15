@@ -49,6 +49,13 @@ describe "Posts V1 API" do
           @groups[:fisica].posts.where(:id => post["id"]).count.should eq(1)
         end
       end
+      it "group's posts are ordered by creation date, with last created appearing first" do
+        last_created_at = @data.first['created_at']
+        for post in @data
+          post['created_at'].should be <= last_created_at
+          last_created_at = post['created_at']
+        end
+      end
       it "returns each post's id, text, and created_at" do
         for post in @data
           post["id"].should be_true
@@ -67,6 +74,16 @@ describe "Posts V1 API" do
           post["author"]["id"].should be_true
           post["author"]["name"].should be_true
           post["author"]["name"].should be_true
+        end
+      end
+      it "returns each post's last replies as objects with id, author and text" do
+        for post in @data
+          post["last_replies"].class.should eq(Array)
+          for reply in post["last_replies"]
+            reply["id"].should be_true
+            reply["author"].should be_true
+            reply["text"].should be_true
+          end
         end
       end
     end

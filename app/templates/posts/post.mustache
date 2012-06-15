@@ -24,3 +24,13 @@
   <i class="icon-thumbs-down"></i>
   <a href="#">0</a>
 </div>
+<div class="replies">
+  <a href="#" class="see_all">{{t_see_all}}</a>
+  {{#last_replies}}
+    <div class="reply">{{text}}</div>
+  {{/last_replies}}
+  <form class="new_reply">
+    <textarea placeholder="t_write_comment" name="text"></textarea>
+    <input type="submit" class="btn btn-primary disabled" />
+  </form>
+</div>
