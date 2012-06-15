@@ -9,13 +9,17 @@ class Tutoriapps.Views.NewPost extends Backbone.View
     'focus textarea[name=text]': 'expand'
 
   render: =>
+    translations =
+      t_write_post: I18n.t('helpers.posts.write')
     if @groups.active.get('id') == 'home'
       template = SMT['posts/new_public_post']
-      @$el.html(template(groups: @groups.toJSON()))
+      hash = $.extend(translations, {groups: @groups.toJSON()})
+      $(@el).html(template(hash))
       @$('option[value=home]').html(I18n.t('activerecord.attributes.group.public'))
     else
       template = SMT['posts/new_group_post']
-      @$el.html(template(@groups.active.toJSON()))
+      hash = $.extend(translations, @groups.active.toJSON())
+      @$el.html(template(hash))
     this
 
   createPost: (evt) =>

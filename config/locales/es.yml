@@ -149,9 +149,11 @@ es:
       feedback_error: El mensaje no pudo ser enviado. Por favor intente nuevamente.
       reply_sent: Tu respuesta ha sido enviada.
       reply_error: Tu respuesta no pudo ser enviada. Por favor intente nuevamente.
+    posts:
+      write: Escribe tu post...
     comments:
       see_all: Ver todos los comentarios
-      write: Escribe un comentario
+      write: Escribe tu respuesta o comentario...
   number:
     currency:
       format:

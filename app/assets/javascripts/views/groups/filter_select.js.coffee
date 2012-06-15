@@ -10,7 +10,6 @@ class Tutoriapps.Views.FilterSelect extends Backbone.View
     @collection.on('change_filter', @render)
 
   render: =>
-    console.log(@collection.active_filter)
     $(@el).html(@template())
     this
 

@@ -31,7 +31,7 @@ class Tutoriapps.Views.Replies extends Backbone.View
 
   appendReply: (reply) =>
     view = new Tutoriapps.Views.Reply(model: reply)
-    @$el.append(view.render().el)
+    @$('.replies_container').append(view.render().el)
 
   showReplyForm: (evt)=>
     evt.preventDefault()
