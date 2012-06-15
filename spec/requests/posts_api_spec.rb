@@ -76,14 +76,9 @@ describe "Posts V1 API" do
           post["author"]["name"].should be_true
         end
       end
-      it "returns each post's last replies as objects with id, author and text" do
+      it "returns each post's reply count" do
         for post in @data
-          post["last_replies"].class.should eq(Array)
-          for reply in post["last_replies"]
-            reply["id"].should be_true
-            reply["author"].should be_true
-            reply["text"].should be_true
-          end
+          post["reply_count"].should be_true
         end
       end
     end

@@ -18,7 +18,14 @@ end
 
 Dado /^que el post ha recibido (\d+) comentarios$/ do |n|
   @post = @group.posts.first
-  n.to_i.times { FactoryGirl.create(:reply, :post => @post) }
+  timestamp = Time.now
+  without_timestamping_of Reply do
+    n.to_i.times do 
+      FactoryGirl.create(:reply, :post => @post, 
+        :created_at => timestamp, :updated_at => timestamp)
+      timestamp += 1.seconds
+    end
+  end
   @post.replies.count.should eq(n.to_i)
 end
 
@@ -46,7 +53,6 @@ Cuando /^intente agregar un comentario$/ do
   end
 end
 
-
 Entonces /^se podrá observar que aún no tiene comentarios$/ do
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
     page.should_not have_css('.replies .reply')
@@ -60,13 +66,23 @@ Entonces /^se podrá leer el comentario$/ do
 end
 
 Entonces /^se podrán leer los últimos (\d+) comentarios$/ do |n|
-  last_two = @post.replies.order('replies.created_at DESC').limit(2)
+  last_replies = @post.replies.order('replies.created_at DESC').limit(n)
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
-    for reply in last_two
+    for reply in last_replies
       page.should have_content(reply.text)
     end
   end
 end
+
+Entonces /^no se podrán leer los primeros (\d+) comentarios$/ do |n|
+  first_replies = @post.replies.order('replies.created_at ASC').limit(n)
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    for reply in first_replies
+      page.should_not have_content(reply.text)
+    end
+  end
+end
+
 
 Entonces /^aparecerá la opción de ver todos los comentarios$/ do
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do

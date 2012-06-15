@@ -37,6 +37,7 @@ Característica: Responder a un post
     Cuando el post aparezca en el muro
     Entonces se podrán leer los últimos 2 comentarios
     Y aparecerá la opción de ver todos los comentarios
+    Pero no se podrán leer los primeros 3 comentarios
 
   @javascript
   Escenario: Responder a un post que no tiene comentarios
