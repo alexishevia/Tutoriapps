@@ -27,10 +27,16 @@
 <div class="replies">
   <a href="#" class="see_all">{{t_see_all}}</a>
   {{#last_replies}}
-    <div class="reply">{{text}}</div>
+    <div class="reply">
+      <strong>{{author.name}}</strong>
+      {{text}} </br>
+      <div class="time-reply">
+        <span class="timeago" title="{{created_at}}"></span>
+      </div>
+    </div>
   {{/last_replies}}
   <form class="new_reply">
-    <textarea placeholder="t_write_comment" name="text"></textarea>
+    <textarea name="text" placeholder="Escribe tu respuesta o comentario..." class="estilotextarea"></textarea>
     <input type="submit" class="btn btn-primary disabled" />
   </form>
 </div>
