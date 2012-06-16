@@ -22,6 +22,7 @@ Característica: Responder a un post
     Dado que el post no ha recibido comentarios
     Cuando el post aparezca en el muro
     Entonces se podrá observar que aún no tiene comentarios
+    Y aparecerá la opción de responder
     Y no aparecerá la opción de ver todos los comentarios
 
   @javascript
@@ -29,6 +30,7 @@ Característica: Responder a un post
     Dado que el post ha recibido 1 comentario
     Cuando el post aparezca en el muro
     Entonces se podrá leer el comentario
+    Pero no aparecerá la opción de responder
     Y no aparecerá la opción de ver todos los comentarios
 
   @javascript
@@ -36,6 +38,7 @@ Característica: Responder a un post
     Dado que el post ha recibido 5 comentarios
     Cuando el post aparezca en el muro
     Entonces se podrán leer los últimos 2 comentarios
+    Y no aparecerá la opción de responder
     Y aparecerá la opción de ver todos los comentarios
     Pero no se podrán leer los primeros 3 comentarios
 
@@ -52,7 +55,13 @@ Característica: Responder a un post
     Entonces el comentario quedará publicado
 
   @javascript
-  Escenario: Responder mensaje en blanco
+  Escenario: Responder mensaje en blanco a un post que no tiene comentarios
+    Dado que el post no ha recibido comentarios
+    Cuando intente agregar el primer comentario en blanco
+    Entonces el post seguirá sin comentarios
+
+  @javascript
+  Escenario: Responder mensaje en blanco a un post que tiene comentarios
     Dado que el post ha recibido 2 comentarios
     Cuando intente agregar un comentario en blanco
-    Entonces no podrá enviar la respuesta
+    Entonces el post seguirá con 2 comentarios

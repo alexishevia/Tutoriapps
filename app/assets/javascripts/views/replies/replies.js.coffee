@@ -8,12 +8,10 @@ class Tutoriapps.Views.Replies extends Backbone.View
     @collection.on('add', @appendReply)
 
   events:
-    'click .reply_link': 'showReplyForm'
     'submit form.new_reply': 'createReply'
 
   render: =>
     translations =
-      t_reply: I18n.t('helpers.reply')
       t_see_all: I18n.t('helpers.comments.see_all')
       t_write_comment: I18n.t('helpers.comments.write')
     @$el.html(@template(translations))
@@ -32,10 +30,6 @@ class Tutoriapps.Views.Replies extends Backbone.View
   appendReply: (reply) =>
     view = new Tutoriapps.Views.Reply(model: reply)
     @$('.replies_container').append(view.render().el)
-
-  showReplyForm: (evt)=>
-    evt.preventDefault()
-    @$('form').show()
 
   createReply: (evt) =>
     evt.preventDefault()

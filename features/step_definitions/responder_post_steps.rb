@@ -53,6 +53,21 @@ Cuando /^intente agregar un comentario$/ do
   end
 end
 
+Cuando /^intente agregar el primer comentario en blanco$/ do
+  step 'el post aparezca en el muro'
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.click_link(I18n.t('helpers.reply'))
+  end
+  step 'intente agregar un comentario en blanco'
+end
+
+Cuando /^intente agregar un comentario en blanco$/ do
+  step 'el post aparezca en el muro'
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.find('.btn-primary').click
+  end
+end
+
 Entonces /^se podrá observar que aún no tiene comentarios$/ do
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
     page.should_not have_css('.replies .reply')
@@ -83,7 +98,6 @@ Entonces /^no se podrán leer los primeros (\d+) comentarios$/ do |n|
   end
 end
 
-
 Entonces /^aparecerá la opción de ver todos los comentarios$/ do
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
     page.should have_content(I18n.t('helpers.comments.see_all'))
@@ -102,34 +116,24 @@ Entonces /^el comentario quedará publicado$/ do
   end
 end
 
-=begin
-Cuando /^intente responder un post$/ do
-  @reply_attrs = attributes_for(:reply)
-  within '.post:first' do
-    page.click_link(I18n.t('helpers.reply'))
-  end
-  within '#replyModal' do
-    page.fill_in "text", :with => @reply_attrs[:text]
-    page.find('.btn-primary').click
+Entonces /^aparecerá la opción de responder$/ do
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.should have_content(I18n.t('helpers.reply'))
   end
 end
 
-Cuando /^intente responder con un mensaje en blanco$/ do
-  @reply_attrs = attributes_for(:reply)
-  within '.post:first' do
-    page.click_link(I18n.t('helpers.reply'))
-  end
-  within '#replyModal' do
-    page.find('.btn-primary').click
+Entonces /^no aparecerá la opción de responder$/ do
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.should_not have_content(I18n.t('helpers.reply'))
   end
 end
 
-Entonces /^la respuesta será enviada$/ do
-  page.should have_content(I18n.t('helpers.messages.reply_sent'))
+Entonces /^el post seguirá sin comentarios$/ do
+  step 'se podrá observar que aún no tiene comentarios'
 end
 
-Entonces /^no podrá enviar la respuesta$/ do
-  page.should_not have_content(I18n.t('helpers.messages.reply_sent'))
-  find('#replyModal')
+Entonces /^el post seguirá con (\d+) comentarios$/ do |n|
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.all('.reply').count.should eq(n.to_i)
+  end
 end
-=end
