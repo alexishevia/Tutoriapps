@@ -16,6 +16,8 @@ Característica: Compartir Información Tablero
       | Programación I  | fulano@utp.ac.pa                    |
     Y que el usuario "fulano@utp.ac.pa" ha iniciado sesión
 
+  @javascript @wip
   Escenario: Compartir foto
-    Cuando intente compartir una foto dentro del grupo "Cálculo II"
+    Dado que está viendo el muro "Cálculo II"
+    Cuando intente compartir una foto
     Entonces la foto será compartida

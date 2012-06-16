@@ -142,6 +142,7 @@ es:
       update: Actualizar %{model}
       add: Añadir %{model}
       send: Enviar
+      share: Compartir %{model}
     messages:
       created: "%{model} creado exitosamente."
       added: "%{model} añadido exitosamente."
@@ -223,6 +224,7 @@ es:
       groups: Grupos
       post: Post
       user: Usuario
+      board_pic: Pizarra
     attributes:
       user:
         name: Nombre

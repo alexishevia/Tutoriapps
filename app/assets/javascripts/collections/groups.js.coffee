@@ -12,7 +12,7 @@ class Tutoriapps.Collections.Groups extends Backbone.Collection
 
   reset_filter: =>
     if !@active_filter
-      @set_filter('home')
+      @set_filter('all')
 
   set_active: (group) =>
     @active = group

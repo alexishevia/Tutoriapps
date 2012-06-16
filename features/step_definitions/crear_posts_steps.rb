@@ -1,7 +1,7 @@
 # coding: utf-8
 # language: es
 
-Dado /^está viendo el muro "([^\"]*)"$/ do |wall_name|
+Dado /^que está viendo el muro "([^\"]*)"$/ do |wall_name|
   within ".content_panel" do
     page.click_link wall_name
   end

@@ -1,6 +1,5 @@
 Tutoriapps::Application.routes.draw do
   root :to => 'home#index'
-  match 'fileupload', :to => 'home#fileupload'
   devise_for :users
 
   namespace :api do

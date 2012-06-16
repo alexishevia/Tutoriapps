@@ -18,7 +18,7 @@ Característica: Crear Posts
   @javascript
   Escenario: Crear un post público
     Dado que el usuario "mengano@utp.ac.pa" ha iniciado sesión
-    Y está viendo el muro "Todos"
+    Y que está viendo el muro "Todos"
     Cuando escriba un post
     Entonces el post aparecerá en el muro "Todos"
     Pero el post no aparecerá en el muro "Cálculo II"
@@ -27,7 +27,7 @@ Característica: Crear Posts
   @javascript
   Escenario: Crear un post dentro de un grupo
     Dado que el usuario "fulano@utp.ac.pa" ha iniciado sesión
-    Y está viendo el muro "Cálculo II"
+    Y que está viendo el muro "Cálculo II"
     Cuando escriba un post
     Entonces el post aparecerá en el muro "Cálculo II"
     Y el post aparecerá en el muro "Todos"
