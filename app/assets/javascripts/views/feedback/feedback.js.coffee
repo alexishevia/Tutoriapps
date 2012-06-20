@@ -1,30 +1,13 @@
-class Tutoriapps.Views.Home extends Backbone.View
-  template: SMT['home/home']
-  className: 'row'
+class Tutoriapps.Views.Feedback extends Backbone.View
+  template: SMT['feedback/feedback']
+  className: 'group'
 
-  events: 
+  events: =>
     'submit form.new_feedback': 'createFeedback'
     'keyup textarea': 'toggleSubmitFeedbackButton'
 
-  initialize: (options) =>
-    @is_admin = options.is_admin
-    @groups = options.groups
-    @posts = options.posts
-
   render: =>
     $(@el).html(@template())
-    if @is_admin
-      view = new Tutoriapps.Views.AdminGroups(collection: @groups)
-      @$('.admin_panel').append(view.render().el)
-    view = new Tutoriapps.Views.GroupSelect(collection: @groups)
-    @$('.admin_panel').append(view.render().el)
-    views = [
-      new Tutoriapps.Views.FilterSelect(collection: @groups)
-      new Tutoriapps.Views.NewPost(groups: @groups, posts: @posts)
-      new Tutoriapps.Views.Posts(collection: @posts)
-    ]
-    for view in views
-      @$('.content_panel').append(view.el)  
     this
 
   createFeedback: (evt) =>
@@ -60,4 +43,4 @@ class Tutoriapps.Views.Home extends Backbone.View
       # textarea is empty or contains only white-space
       $(submit_button).addClass('disabled')
     else
-      $(submit_button).removeClass('disabled')   
+      $(submit_button).removeClass('disabled')  

@@ -11,12 +11,10 @@ class Tutoriapps.Views.Posts extends Backbone.View
     this
 
   appendPost: (post) =>
-    view = new Tutoriapps.Views.Post(model: post)
-    @$el.append(view.render().el)  
+    if post.id
+      view = new Tutoriapps.Views.Post(model: post)
+      @$el.append(view.render().el)  
 
   prependPost: (post) =>
     view = new Tutoriapps.Views.Post(model: post)
-    @$el.prepend(view.render().el)  
-
-
-  
+    @$el.prepend(view.render().el)

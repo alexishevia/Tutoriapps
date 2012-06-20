@@ -4,20 +4,12 @@ class Tutoriapps.Collections.Groups extends Backbone.Collection
   
   initialize: () =>
     @on('reset', @reset_active)
-    @on('reset', @reset_filter)
 
   reset_active: =>
     if !@active and first = @first()
-      @set_active(first)
+      @set_active(first, 'all')
 
-  reset_filter: =>
-    if !@active_filter
-      @set_filter('all')
-
-  set_active: (group) =>
-    @active = group
-    @trigger('change_active', group)
-
-  set_filter: (filter) =>
+  set_active: (group, filter) =>
+    @active_group = group
     @active_filter = filter
-    @trigger('change_filter', filter)
+    @trigger('change_active', group, filter)

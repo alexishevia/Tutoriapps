@@ -3,17 +3,13 @@ class Tutoriapps.Views.FilterSelect extends Backbone.View
   tagName: 'ul'
   className: 'nav nav-tabs'
 
-  events:
-    'click .filter': 'activate'
-
   initialize: (options)=>
-    @collection.on('change_filter', @render)
+    @collection.on('change_active', @render)
 
   render: =>
-    @$el.html(@template())
-    @$('a[href="' + @collection.active_filter + '"]').parents('li').addClass('active')
+    current_group = @collection.active_group
+    if !current_group
+      return this
+    @$el.html(@template({url: '#groups/'+  current_group.id}))
+    @$('li.' + @collection.active_filter).addClass('active')
     this
-
-  activate: (evt) =>
-    evt.preventDefault()
-    @collection.set_filter($(evt.target).attr('href'))

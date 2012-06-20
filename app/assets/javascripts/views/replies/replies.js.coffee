@@ -8,6 +8,7 @@ class Tutoriapps.Views.Replies extends Backbone.View
     @collection.on('add', @appendReply)
 
   events:
+    'keyup textarea': 'toggleSubmitFeedbackButton'
     'submit form.new_reply': 'createReply'
 
   render: =>
@@ -40,3 +41,12 @@ class Tutoriapps.Views.Replies extends Backbone.View
       wait: true
       success: => 
         evt.target.reset()
+
+  toggleSubmitFeedbackButton: (evt) =>
+    textarea = evt.target
+    submit_button = $(evt.target).parents('form').find('input[type="submit"]')
+    if (!$.trim($(textarea).val()))
+      # textarea is empty or contains only white-space
+      $(submit_button).addClass('disabled')
+    else
+      $(submit_button).removeClass('disabled')  

@@ -30,8 +30,10 @@ Dado /^que el post ha recibido (\d+) comentarios$/ do |n|
 end
 
 Cuando /^el post aparezca en el muro$/ do
-  within ".content_panel" do
+  within "#groups_panel" do
     page.click_link @post.group.name
+  end
+  within "#content .posts" do
     page.should have_content(@post.text)
   end
 end
