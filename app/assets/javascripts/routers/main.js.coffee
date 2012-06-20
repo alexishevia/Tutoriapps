@@ -35,10 +35,13 @@ class Tutoriapps.Routers.Main extends Backbone.Router
           @groups.set_active(@groups.get(group_id), filter)
       )
 
-    views = [ 
-      new Tutoriapps.Views.NewPost(groups: @groups, posts: @posts)
+    views = [
       new Tutoriapps.Views.Posts(collection: @posts)
     ]
     $('#content').empty()
     for view in views
       $('#content').append(view.render().el)
+
+    $('#groups_panel .newPostView'). remove()
+    view = new Tutoriapps.Views.NewPost(groups: @groups, posts: @posts)
+    $('#groups_panel').prepend(view.render().el)

@@ -1,4 +1,6 @@
 class Tutoriapps.Views.NewPost extends Backbone.View
+  className: 'newPostView'
+    
   initialize: (options) =>
     @groups = options.groups
     @posts = options.posts
@@ -13,15 +15,10 @@ class Tutoriapps.Views.NewPost extends Backbone.View
       return this
     translations =
       t_write_post: I18n.t('helpers.posts.write')
-    if @groups.active_group.get('id') == 'home'
-      template = SMT['posts/new_public_post']
-      hash = $.extend(translations, {groups: @groups.toJSON()})
-      $(@el).html(template(hash))
-      @$('option[value=home]').html(I18n.t('activerecord.attributes.group.public'))
-    else
-      template = SMT['posts/new_group_post']
-      hash = $.extend(translations, @groups.active_group.toJSON())
-      @$el.html(template(hash))
+    template = SMT['posts/new_post']
+    hash = $.extend(translations, {groups: @groups.toJSON()})
+    $(@el).html(template(hash))
+    @$('option[value=home]').html(I18n.t('activerecord.attributes.group.public'))
     this
 
   createPost: (evt) =>
