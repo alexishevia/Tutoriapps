@@ -18,4 +18,4 @@ Característica: Feedback
   @javascript
   Escenario: Enviar mensaje en blanco
     Cuando intente mandar un mensaje de feedback en blanco
-    Entonces no podrá mandar el mensaje
+    Entonces no podrá mandar el mensajegit 

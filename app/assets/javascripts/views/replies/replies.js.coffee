@@ -10,6 +10,7 @@ class Tutoriapps.Views.Replies extends Backbone.View
   events:
     'keyup textarea': 'toggleSubmitFeedbackButton'
     'submit form.new_reply': 'createReply'
+    'click .see_all': 'showAll'
 
   render: =>
     translations =
@@ -26,6 +27,7 @@ class Tutoriapps.Views.Replies extends Backbone.View
       $(@collection.last(2)).each( (index, reply) => @appendReply(reply) )
     else if @show == 'all'
       @collection.each(@appendReply)
+      @$('.see_all').remove()
     this
 
   appendReply: (reply) =>
@@ -41,6 +43,11 @@ class Tutoriapps.Views.Replies extends Backbone.View
       wait: true
       success: => 
         evt.target.reset()
+
+  showAll: (evt) =>
+    evt.preventDefault()
+    @show = 'all'
+    @render()
 
   toggleSubmitFeedbackButton: (evt) =>
     textarea = evt.target

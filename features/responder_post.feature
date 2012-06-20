@@ -17,30 +17,32 @@ Característica: Responder a un post
     Y que se ha creado 1 post en el grupo "Cálculo II"
     Y que el usuario "mengano@utp.ac.pa" ha iniciado sesión
 
-  @javascript
+  @javascript 
   Escenario: Ver post sin comentarios
     Dado que el post no ha recibido comentarios
     Cuando el post aparezca en el muro
     Entonces se podrá observar que aún no tiene comentarios
-    Y aparecerá la opción de responder
-    Y no aparecerá la opción de ver todos los comentarios
 
   @javascript
   Escenario: Ver post con 1 o 2 comentarios
     Dado que el post ha recibido 1 comentario
     Cuando el post aparezca en el muro
     Entonces se podrá leer el comentario
-    Pero no aparecerá la opción de responder
-    Y no aparecerá la opción de ver todos los comentarios
+    Y se podrá observar que no hay comentarios adicionales
 
   @javascript
   Escenario: Ver post con más de 2 comentarios
     Dado que el post ha recibido 5 comentarios
     Cuando el post aparezca en el muro
     Entonces se podrán leer los últimos 2 comentarios
-    Y no aparecerá la opción de responder
-    Y aparecerá la opción de ver todos los comentarios
     Pero no se podrán leer los primeros 3 comentarios
+
+  @javascript
+  Escenario: Expandir comentarios
+    Dado que el post ha recibido 5 comentarios
+    Cuando el post aparezca en el muro
+    Y el usuario decida expandir los comentarios
+    Entonces se podrán leer los primeros 3 comentarios
 
   @javascript
   Escenario: Responder a un post que no tiene comentarios

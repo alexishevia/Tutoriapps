@@ -17,7 +17,6 @@ class Tutoriapps.Routers.Main extends Backbone.Router
     $('#filter_selector').html(view.render().el)
 
     view = new Tutoriapps.Views.Feedback()
-    console.log(view.render)
     $('body').append(view.render().el)
 
   routes:

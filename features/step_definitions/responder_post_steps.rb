@@ -70,10 +70,18 @@ Cuando /^intente agregar un comentario en blanco$/ do
   end
 end
 
+Cuando /^el usuario decida expandir los comentarios$/ do
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.click_link(I18n.t('helpers.comments.see_all'))
+  end
+end
+
 Entonces /^se podrá observar que aún no tiene comentarios$/ do
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
     page.should_not have_css('.replies .reply')
   end
+  step 'aparecerá la opción de responder'
+  step 'no aparecerá la opción de ver todos los comentarios'
 end
 
 Entonces /^se podrá leer el comentario$/ do
@@ -82,10 +90,25 @@ Entonces /^se podrá leer el comentario$/ do
   end
 end
 
+Entonces /^se podrá observar que no hay comentarios adicionales$/ do
+  step 'no aparecerá la opción de responder'
+  step 'no aparecerá la opción de ver todos los comentarios'
+end
+
 Entonces /^se podrán leer los últimos (\d+) comentarios$/ do |n|
   last_replies = @post.replies.order('replies.created_at DESC').limit(n)
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
     for reply in last_replies
+      page.should have_content(reply.text)
+    end
+  end
+  step 'no aparecerá la opción de responder'
+end
+
+Entonces /^se podrán leer los primeros (\d+) comentarios$/ do |n|
+  first_replies = @post.replies.order('replies.created_at ASC').limit(n)
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    for reply in first_replies
       page.should have_content(reply.text)
     end
   end
