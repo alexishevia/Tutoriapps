@@ -2,7 +2,6 @@ class Tutoriapps.Routers.Main extends Backbone.Router
   initialize: (options) =>
     @is_admin = options.is_admin
     @groups = new Tutoriapps.Collections.Groups()
-    @posts = new Tutoriapps.Collections.Posts(groups: @groups)
 
     if @is_admin
       view = new Tutoriapps.Views.AdminGroups(collection: @groups)
@@ -26,22 +25,30 @@ class Tutoriapps.Routers.Main extends Backbone.Router
   index: ->
     this.navigate('groups/home/all', {trigger: true})
 
-  showGroup: (group_id, filter) ->
+  showGroup: (group_id, filter, tried_before = false) ->
     if group = @groups.get(group_id)
       @groups.set_active(group, filter)
+      @showGroupContent(group, filter)
     else
-      @groups.fetch(
-        success: =>
-          @groups.set_active(@groups.get(group_id), filter)
-      )
+      if tried_before
+        console.log('Error. Group Id "' + group_id + '" not found inside @groups.')
+      else
+        @groups.fetch( success: => @showGroup(group_id, filter, true) )
 
-    views = [
-      new Tutoriapps.Views.Posts(collection: @posts)
-    ]
+  showGroupContent: (group, filter)=>
     $('#content').empty()
-    for view in views
-      $('#content').append(view.render().el)
-
     $('#groups_panel .newPostView'). remove()
-    view = new Tutoriapps.Views.NewPost(groups: @groups, posts: @posts)
-    $('#groups_panel').prepend(view.render().el)
+    switch filter
+      when 'all'
+        posts = new Tutoriapps.Collections.Posts(group: group)
+        view = new Tutoriapps.Views.NewPost(collection: posts)
+        $('#groups_panel').prepend(view.render().el)
+        view = new Tutoriapps.Views.Posts(collection: posts)
+        $('#content').append(view.render().el)
+
+      when 'board_pics'
+        board_pics = new Tutoriapps.Collections.BoardPics(group: group)
+        view = new Tutoriapps.Views.NewBoardPic(collection: board_pics)
+        $('#content').append(view.render().el)
+        view = new Tutoriapps.Views.BoardPics(collection: board_pics)
+        $('#content').append(view.render().el)

@@ -1,30 +1,24 @@
 class Tutoriapps.Views.NewPost extends Backbone.View
   className: 'newPostView'
+  template: SMT['posts/new_post']
     
   initialize: (options) =>
-    @groups = options.groups
-    @posts = options.posts
-    @posts.on('reset', @render)
+    @collection.on('reset', @render)
 
   events:
     'submit form': 'createPost'
     'focus textarea[name=text]': 'expand'
 
   render: =>
-    if !@groups.active_group
-      return this
     translations =
       t_write_post: I18n.t('helpers.posts.write')
-    template = SMT['posts/new_post']
-    hash = $.extend(translations, {groups: @groups.toJSON()})
-    $(@el).html(template(hash))
-    @$('option[value=home]').html(I18n.t('activerecord.attributes.group.public'))
+    $(@el).html(@template(translations))
     this
 
   createPost: (evt) =>
     evt.preventDefault()
     data = Backbone.Syphon.serialize(evt.target)
-    @posts.create data,
+    @collection.create data,
       wait: true
       success: -> 
         evt.target.reset()

@@ -19,5 +19,6 @@ Característica: Compartir Información Tablero
   @javascript @wip
   Escenario: Compartir foto
     Dado que está viendo el muro "Cálculo II"
+    Y eligió la opción de mostrar solo "Pizarra"
     Cuando intente compartir una foto
     Entonces la foto será compartida

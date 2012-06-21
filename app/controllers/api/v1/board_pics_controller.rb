@@ -19,7 +19,7 @@ class Api::V1::BoardPicsController < ApplicationController
     @board_pic.author = current_user
     @board_pic.group = group
     if @board_pic.save
-      render :json => @board_pic, :status => :created
+      render 'board_pic', :status => :created
     else
       render :json => @board_pic.errors.full_messages, :status => :unprocessable_entity
     end
