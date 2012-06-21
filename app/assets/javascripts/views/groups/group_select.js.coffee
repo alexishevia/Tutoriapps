@@ -5,7 +5,7 @@ class Tutoriapps.Views.GroupSelect extends Backbone.View
     @collection.on('change_active', @render)
 
   render: =>
-    @$el.empty()
+    @$el.html("<h2>" + I18n.t('activerecord.models.groups') + "</h2>")
     @collection.each(@appendButton)
     this
 

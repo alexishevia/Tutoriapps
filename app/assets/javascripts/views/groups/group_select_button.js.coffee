@@ -3,7 +3,7 @@ class Tutoriapps.Views.GroupSelectButton extends Backbone.View
   tagName: 'li'
 
   render: =>
-    if @model.collection.active == @model
+    if @model.collection.active_group == @model
       $(@el).addClass('active')
     $(@el).html(@template(@model.toJSON()))
     this
