@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610200605) do
+ActiveRecord::Schema.define(:version => 20120622014603) do
 
   create_table "board_pics", :force => true do |t|
     t.string   "image_file_name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120610200605) do
     t.datetime "updated_at",         :null => false
     t.integer  "user_id"
     t.integer  "group_id"
+    t.date     "class_date"
   end
 
   create_table "enrollments", :force => true do |t|

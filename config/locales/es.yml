@@ -244,6 +244,8 @@ es:
       post:
         text: Texto
     errors:
+      messages:
+        record_invalid: Récord inválido
       user:
         email: 
           only_utp: Solo se permiten correos de la UTP (@utp.ac.pa)

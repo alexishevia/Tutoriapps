@@ -16,7 +16,7 @@ Característica: Compartir Información Tablero
       | Programación I  | fulano@utp.ac.pa                    |
     Y que el usuario "fulano@utp.ac.pa" ha iniciado sesión
 
-  @javascript @wip
+  @javascript
   Escenario: Compartir foto
     Dado que está viendo el muro "Cálculo II"
     Y eligió la opción de mostrar solo "Pizarra"

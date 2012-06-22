@@ -10,6 +10,7 @@ Cuando /^intente compartir una foto$/ do
     :model => I18n.t('activerecord.models.board_pic')))
   within('form#new_board_pic') do
     page.attach_file('board_pic[image]', File.expand_path("#{Rails.root}/spec/support/rails.png"))
+    page.fill_in "board_pic[class_date]", :with => '2012-04-05'
     page.find('input[type="submit"]').click
   end
 end

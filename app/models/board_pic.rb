@@ -11,11 +11,13 @@
 #  updated_at         :datetime        not null
 #  user_id            :integer(4)
 #  group_id           :integer(4)
+#  class_date         :date
 #
 
 class BoardPic < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
   has_attached_file :image
+  validates :class_date, :presence => true
   validates :image, :attachment_presence => true
 end

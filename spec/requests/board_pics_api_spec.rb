@@ -51,10 +51,17 @@ describe "Board Pics V1 API" do
           @group.board_pics.where(:id => board_pic["id"]).count.should eq(1)
         end
       end
-      it "returns each board_pic's id and created_at" do
+      it "group's board_pics are ordered by class_date, with newest date appearing first" do
+        last_class_date = @data.first['class_date']
+        for board_pic in @data
+          board_pic['class_date'].should be <= last_class_date
+          last_class_date = board_pic['class_date']
+        end
+      end
+      it "returns each board_pic's id, class_date, and created_at" do
         for board_pic in @data
           board_pic["id"].should be_true
-          board_pic["image"].should be_true
+          board_pic["class_date"].should be_true
           board_pic["created_at"].should be_true
         end
       end
@@ -178,7 +185,10 @@ describe "Board Pics V1 API" do
         @group = @groups[:fisica]
         @board_pics_count = BoardPic.count
         url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
-        multipart = MultipartBody.new('board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"))
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-01'
+        )
         headers = @headers.clone
         headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
         data = multipart.to_s
@@ -208,7 +218,10 @@ describe "Board Pics V1 API" do
         @user = @users[:mengano]
         @group = @groups[:fisica]
         @board_pics_count = BoardPic.count
-        multipart = MultipartBody.new('board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"))
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-01'
+        )
         headers = @headers.clone
         headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
         data = multipart.to_s
@@ -234,7 +247,10 @@ describe "Board Pics V1 API" do
         @group = @groups[:calculo]
         @board_pics_count = BoardPic.count
         url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
-        multipart = MultipartBody.new('board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"))
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-01'
+        )
         headers = @headers.clone
         headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
         data = multipart.to_s
@@ -254,7 +270,10 @@ describe "Board Pics V1 API" do
         @user = @users[:mengano]
         @board_pics_count = BoardPic.count
         url = "/api/v1/groups/999/board_pics?auth_token=#{@user.authentication_token}"
-        multipart = MultipartBody.new('board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"))
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-01'
+        )
         headers = @headers.clone
         headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
         data = multipart.to_s
@@ -274,7 +293,10 @@ describe "Board Pics V1 API" do
         @user = @users[:mengano]
         @board_pics_count = BoardPic.count
         url = "/api/v1/groups/home/board_pics?auth_token=#{@user.authentication_token}"
-        multipart = MultipartBody.new('board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"))
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-01'
+        )
         headers = @headers.clone
         headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
         data = multipart.to_s
@@ -295,7 +317,10 @@ describe "Board Pics V1 API" do
         @group = @groups[:fisica]
         @board_pics_count = BoardPic.count
         url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
-        multipart = MultipartBody.new('board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"))
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-01'
+        )
         headers = @headers.clone
         headers['HTTP_ACCEPT'] = 'text/html'
         headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
@@ -311,14 +336,19 @@ describe "Board Pics V1 API" do
       end
     end
 
-    describe "when board_pic image is sent blank" do
+    describe "when board_pic[image] is not sent" do
       before(:all) do
         @user = @users[:mengano]
         @group = @groups[:fisica]
         @board_pics_count = BoardPic.count
         url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
-        data = {:board_pic => {:image => nil}}
-        post url, data, @headers
+        multipart = MultipartBody.new(
+          'board_pic[class_date]' => '2012-06-01'
+        )
+        headers = @headers.clone
+        headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
+        data = multipart.to_s
+        post url, data, headers
         @status = response.status
       end
       it "returns status code 422 (Unprocessable Entity)" do
@@ -328,6 +358,54 @@ describe "Board Pics V1 API" do
         BoardPic.count.should eq(@board_pics_count)
       end
     end
+
+    describe "when board_pic[class_date] is not sent" do
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @board_pics_count = BoardPic.count
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png")
+        )
+        headers = @headers.clone
+        headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
+        data = multipart.to_s
+        post url, data, headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new board_pic" do
+        BoardPic.count.should eq(@board_pics_count)
+      end
+    end
+
+    describe "when board_pic[class_date] is not valid" do
+      before(:all) do
+        @user = @users[:mengano]
+        @group = @groups[:fisica]
+        @board_pics_count = BoardPic.count
+        url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
+        multipart = MultipartBody.new(
+          'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-32'
+        )
+        headers = @headers.clone
+        headers['CONTENT_TYPE'] = "multipart/form-data; boundary=#{multipart.boundary}"
+        data = multipart.to_s
+        post url, data, headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new board_pic" do
+        BoardPic.count.should eq(@board_pics_count)
+      end
+    end
+
     describe "when board_pic[group_id] is set to another group" do
       before(:all) { DatabaseCleaner.start }
       after(:all) { DatabaseCleaner.clean }
@@ -338,6 +416,7 @@ describe "Board Pics V1 API" do
         url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
         multipart = MultipartBody.new(
           'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-1',
           'board_pic[group_id]' => @groups[:calculo].id
         )
         headers = @headers.clone
@@ -366,6 +445,7 @@ describe "Board Pics V1 API" do
         url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{@user.authentication_token}"
         multipart = MultipartBody.new(
           'board_pic[image]' => File.open("#{Rails.root}/spec/support/rails.png"),
+          'board_pic[class_date]' => '2012-06-1',
           'board_pic[user_id]' => @users[:fulano].id
         )
         headers = @headers.clone

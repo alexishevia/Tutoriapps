@@ -5,7 +5,7 @@ class Api::V1::BoardPicsController < ApplicationController
   def index
     group = Group.find(params[:group_id])
     authorize! :read, group
-    @board_pics = group.board_pics
+    @board_pics = group.board_pics.order('class_date DESC')
   end
 
   def create
