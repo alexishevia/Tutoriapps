@@ -6,7 +6,7 @@ Tutoriapps::Application.routes.draw do
     namespace :v1 do
       resources :tokens, :only => [:create, :destroy]
       resources :groups, :only => [:index, :create, :update, :destroy] do
-        resources :posts, :only => [:index, :create, :show]
+        resources :posts, :books, :only => [:index, :create, :show]
         resources :board_pics, :only => [:index, :create]
       end
       resources :enrollments, :only => [:create, :destroy]

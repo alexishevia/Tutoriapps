@@ -12,6 +12,7 @@ class Group < ActiveRecord::Base
   attr_accessible :name
   has_many :posts, :dependent => :destroy
   has_many :board_pics, :dependent => :destroy
+  has_many :books, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   has_many :members, :through => :enrollments, :source => :user
 
