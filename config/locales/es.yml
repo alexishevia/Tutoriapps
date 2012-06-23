@@ -244,6 +244,12 @@ es:
       post:
         text: Texto
       book:
+        title: Título
+        author: Autor
+        publisher: Editorial
+        additional_info: Información Adicional
+        contact_info: Información de Contacto
+        price: Precio
         offer_type: Disponible como
         offer_types:
           gift: Regalo

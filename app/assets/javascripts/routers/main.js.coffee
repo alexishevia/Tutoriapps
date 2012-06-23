@@ -52,3 +52,10 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         $('#content').append(view.render().el)
         view = new Tutoriapps.Views.BoardPics(collection: board_pics)
         $('#content').append(view.render().el)
+
+      when 'books'
+        books = new Tutoriapps.Collections.Books(group: group)
+        view = new Tutoriapps.Views.NewBook(collection: books)
+        $('#content').prepend(view.render().el)
+        view = new Tutoriapps.Views.Books(collection: books)
+        $('#content').append(view.render().el)

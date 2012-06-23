@@ -56,10 +56,11 @@ describe "Books V1 API" do
           last_created_at = book['created_at']
         end
       end
-      it "returns each book's id, author, publisher, additional_info, contact_info,
+      it "returns each book's id, title, author, publisher, additional_info, contact_info,
       offer_type, and created_at" do
         for book in @data
           book["id"].should be_true
+          book["title"].should be_true
           book["author"].should be_true
           book["publisher"].should be_true
           book["additional_info"].should be_true

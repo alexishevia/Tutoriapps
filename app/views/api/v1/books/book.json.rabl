@@ -1,5 +1,5 @@
 object @book
-attributes :id, :author, :publisher, :additional_info, :contact_info, :offer_type, :created_at
+attributes :id, :title, :author, :publisher, :additional_info, :contact_info, :offer_type, :created_at
 child :owner => :owner do
   attributes :id, :name
 end
