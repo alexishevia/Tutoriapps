@@ -13,12 +13,31 @@
 #  contact_info    :text
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
+#  offer_type      :string(255)
+#  price           :decimal(5, 2)
 #
 
 class Book < ActiveRecord::Base
+  OFFER_TYPES = %w[gift loan sale]
+
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
   has_many :replies, :as => :post
 
-  validates :title, :author, :publisher, :presence => true
+  validates :title, :author, :publisher, :offer_type, :presence => true
+  validates :offer_type, :inclusion => {:in => OFFER_TYPES}
+  validates :price, :numericality => { :greater_than => 0 }, :allow_blank => true
+  validate :price_if_sale
+
+  def offer_type_name
+    I18n.t("activerecord.attributes.books.offer_types.#{status}")
+  end
+
+  private
+
+    def price_if_sale
+      if offer_type == 'sale'
+        errors.add(:price, I18n.t('activerecord.errors.messages.blank')) unless price
+      end
+    end
 end

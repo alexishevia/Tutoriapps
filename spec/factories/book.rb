@@ -11,6 +11,7 @@ FactoryGirl.define do
     sequence :contact_info do |n|
       Forgery::LoremIpsum.sentence(:random => n)
     end
+    offer_type 'gift'
     owner :factory => :user
     group
   end

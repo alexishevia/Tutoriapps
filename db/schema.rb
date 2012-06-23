@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120623182949) do
+ActiveRecord::Schema.define(:version => 20120623193246) do
 
   create_table "board_pics", :force => true do |t|
     t.string   "image_file_name"
@@ -31,11 +31,13 @@ ActiveRecord::Schema.define(:version => 20120623182949) do
     t.string   "title"
     t.string   "author"
     t.string   "publisher"
-    t.boolean  "available",       :default => true, :null => false
+    t.boolean  "available",                                     :default => true, :null => false
     t.text     "additional_info"
     t.text     "contact_info"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.string   "offer_type"
+    t.decimal  "price",           :precision => 5, :scale => 2
   end
 
   create_table "enrollments", :force => true do |t|

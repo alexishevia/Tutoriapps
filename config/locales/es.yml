@@ -12,7 +12,7 @@ es:
     - vie
     - sáb
     abbr_month_names:
-    - 
+    -
     - ene
     - feb
     - mar
@@ -38,7 +38,7 @@ es:
       long: ! '%d de %B de %Y'
       short: ! '%d de %b'
     month_names:
-    - 
+    -
     - enero
     - febrero
     - marzo
@@ -133,7 +133,7 @@ es:
     delete: Eliminar
     select:
       prompt: Por favor seleccione
-    confirm_delete: 
+    confirm_delete:
       enrollment: ¿Está seguro que desea sacar a %{user_name} del grupo %{group_name}?
       group: ¿Está seguro que desea eliminar el grupo %{group_name}? Esta acción no se puede deshacer.
     submit:
@@ -243,9 +243,15 @@ es:
         group: Grupo
       post:
         text: Texto
+      book:
+        offer_type: Disponible como
+        offer_types:
+          gift: Regalo
+          loan: Préstamo
+          sale: Venta
     errors:
       messages:
         record_invalid: Récord inválido
       user:
-        email: 
+        email:
           only_utp: Solo se permiten correos de la UTP (@utp.ac.pa)

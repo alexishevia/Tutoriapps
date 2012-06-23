@@ -56,13 +56,15 @@ describe "Books V1 API" do
           last_created_at = book['created_at']
         end
       end
-      it "returns each book's id, author, publisher, additional_info, contact_info, and created_at" do
+      it "returns each book's id, author, publisher, additional_info, contact_info,
+      offer_type, and created_at" do
         for book in @data
           book["id"].should be_true
           book["author"].should be_true
           book["publisher"].should be_true
           book["additional_info"].should be_true
           book["contact_info"].should be_true
+          book["offer_type"].should be_true
           book["created_at"].should be_true
         end
       end
@@ -315,6 +317,60 @@ describe "Books V1 API" do
         @global_book_count = Book.count
         url = "/api/v1/groups/#{group.id}/books?auth_token=#{user.authentication_token}"
         data = {:book => FactoryGirl.attributes_for(:book, :publisher => '')}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new book" do
+        Book.count.should eq(@global_book_count)
+      end
+    end
+
+    describe "when book offer_type is sent blank" do
+      before(:all) do
+        user = @users[:fulano]
+        group = @groups[:fisica]
+        @global_book_count = Book.count
+        url = "/api/v1/groups/#{group.id}/books?auth_token=#{user.authentication_token}"
+        data = {:book => FactoryGirl.attributes_for(:book, :offer_type => '')}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new book" do
+        Book.count.should eq(@global_book_count)
+      end
+    end
+
+    describe "when book offer_type is not valid" do
+      before(:all) do
+        user = @users[:fulano]
+        group = @groups[:fisica]
+        @global_book_count = Book.count
+        url = "/api/v1/groups/#{group.id}/books?auth_token=#{user.authentication_token}"
+        data = {:book => FactoryGirl.attributes_for(:book, :offer_type => 'invalid')}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 422 (Unprocessable Entity)" do
+        @status.should eq(422)
+      end
+      it "does not create a new book" do
+        Book.count.should eq(@global_book_count)
+      end
+    end
+
+    describe "when book has offer_type 'sale' but no price" do
+      before(:all) do
+        user = @users[:fulano]
+        group = @groups[:fisica]
+        @global_book_count = Book.count
+        url = "/api/v1/groups/#{group.id}/books?auth_token=#{user.authentication_token}"
+        data = {:book => FactoryGirl.attributes_for(:book, :offer_type => 'sale', :price => nil)}
         post url, data, @headers
         @status = response.status
       end
