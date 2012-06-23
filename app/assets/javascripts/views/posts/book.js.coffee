@@ -4,11 +4,24 @@ class Tutoriapps.Views.Book extends Backbone.View
 
   initialize: ->
     @model.on('change', @render)
+    @replies = new Tutoriapps.Collections.Replies({book: @model})
+    @replies.fetch()
+
+  events: =>
+    'click .reply_link': 'showReplyForm'
 
   render: =>
     translations =
       t_reply: I18n.t('helpers.reply')
-    console.log(@model)
     hash = $.extend(translations, @model.toJSON())
     $(@el).html(@template(hash))
+    if @model.get('reply_count') > 0
+      @$('.post-options').remove()
+    @$(".timeago").timeago()
+    view = new Tutoriapps.Views.Replies(collection: @replies)
+    $(@el).append(view.render().el)
     this
+
+  showReplyForm: (evt)=>
+    evt.preventDefault()
+    @$('form').show()
