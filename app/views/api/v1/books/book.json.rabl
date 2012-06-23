@@ -10,3 +10,6 @@ node(:group) do |book|
     attributes :id => 'home', :name => I18n.t('activerecord.attributes.group.public')
   end
 end
+node :reply_count do |post|
+  post.replies.count
+end

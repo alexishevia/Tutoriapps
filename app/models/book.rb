@@ -18,5 +18,7 @@
 class Book < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
+  has_many :replies, :as => :post
+
   validates :title, :author, :publisher, :presence => true
 end

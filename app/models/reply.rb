@@ -8,10 +8,11 @@
 #  text       :text
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  post_type  :string(255)
 #
 
 class Reply < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
-  belongs_to :post
+  belongs_to :post, :polymorphic => true
   validates :post, :author, :text, :presence => true
 end

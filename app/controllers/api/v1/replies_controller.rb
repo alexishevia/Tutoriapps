@@ -3,13 +3,21 @@ class Api::V1::RepliesController < ApplicationController
   before_filter :check_format
 
   def index
-    @post = Post.find(params[:post_id])
+    if post_type == 'post'
+      @post = Post.find(params[:post_id])
+    elsif post_type == 'book'
+      @post = Book.find(params[:book_id])
+    end
     authorize! :read, @post
     @replies = @post.replies
   end
 
   def create
-    @post = Post.find(params[:post_id])
+    if post_type == 'post'
+      @post = Post.find(params[:post_id])
+    elsif post_type == 'book'
+      @post = Book.find(params[:book_id])
+    end
     authorize! :read, @post
     @reply = @post.replies.build(params[:reply])
     @reply.author = current_user
@@ -19,5 +27,15 @@ class Api::V1::RepliesController < ApplicationController
       render :text => @reply.errors.full_messages, :status => :unprocessable_entity
     end
   end
+
+  private
+
+    def post_type
+      if request.fullpath.index('posts')
+        return 'post'
+      else
+        return 'book'
+      end
+    end
 
 end

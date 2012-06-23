@@ -11,7 +11,7 @@ Tutoriapps::Application.routes.draw do
       end
       resources :enrollments, :only => [:create, :destroy]
       resources :feedbacks, :only => [:create]
-      resources :posts, :only => [] do
+      resources :posts, :books, :only => [] do
         resources :replies, :only => [:index, :create]
       end
       get 'system_time.json', :to => 'system_info#time'

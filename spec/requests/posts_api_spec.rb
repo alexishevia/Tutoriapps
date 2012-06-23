@@ -7,7 +7,7 @@ describe "Posts V1 API" do
       :fulano => FactoryGirl.create(:user),
       :mengano => FactoryGirl.create(:user)
     }
-    @users.each do |index, user| 
+    @users.each do |index, user|
       user.confirmed_at = Time.now
       user.save!
       user.reset_authentication_token!
@@ -17,7 +17,7 @@ describe "Posts V1 API" do
       :fisica => FactoryGirl.create(:group, :name => 'Física'),
       :calculo => FactoryGirl.create(:group, :name => 'Cálculo')
     }
-    
+
     @groups[:fisica].members << @users[:fulano]
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
@@ -28,7 +28,7 @@ describe "Posts V1 API" do
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
   end
-  
+
   describe "GET /api/v1/groups/:group_id/posts" do
 
     describe "on success" do
@@ -82,7 +82,7 @@ describe "Posts V1 API" do
         end
       end
     end
-    
+
     describe "when auth token is not valid or was not sent" do
       before(:all) do
         url = "/api/v1/groups/#{@groups[:fisica].id}/posts?auth_token=wrong"
@@ -133,7 +133,7 @@ describe "Posts V1 API" do
         @status.should eq(404)
       end
     end
-    
+
     describe "when group has no posts" do
       before(:all) do
         group = @groups[:calculo]
@@ -151,7 +151,7 @@ describe "Posts V1 API" do
         @data.should eq([])
       end
     end
-    
+
     describe "when request format is not set to JSON" do
       before(:all) do
         headers = @headers.clone
@@ -288,7 +288,7 @@ describe "Posts V1 API" do
       end
     end
 
-    describe "when post[group_id] is set to another group" do
+    describe "when post group_id is set to another group" do
       before(:all) { DatabaseCleaner.start }
       after(:all) { DatabaseCleaner.clean }
       before(:all) do
@@ -307,10 +307,10 @@ describe "Posts V1 API" do
       end
       it "creates the post with group from url" do
         @group.posts.count.should be > @group_post_count
-        @group.posts.last.group.should eq(@group) 
+        @group.posts.last.group.should eq(@group)
       end
     end
-    describe "when post[user] is set to another user" do
+    describe "when post user is set to another user" do
       before(:all) { DatabaseCleaner.start }
       after(:all) { DatabaseCleaner.clean }
       before(:all) do
@@ -326,7 +326,7 @@ describe "Posts V1 API" do
       end
       it "creates the post with author set to token owner" do
         @group.posts.count.should be > @group_post_count
-        @group.posts.last.author.should eq(@user) 
+        @group.posts.last.author.should eq(@user)
       end
     end
   end

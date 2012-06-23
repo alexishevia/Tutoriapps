@@ -337,7 +337,7 @@ describe "Board Pics V1 API" do
       end
     end
 
-    describe "when board_pic[image] is not sent" do
+    describe "when board_pic image is not sent" do
       before(:all) do
         @user = @users[:mengano]
         @group = @groups[:fisica]
@@ -360,7 +360,7 @@ describe "Board Pics V1 API" do
       end
     end
 
-    describe "when board_pic[class_date] is not sent" do
+    describe "when board_pic class_date is not sent" do
       before(:all) do
         @user = @users[:mengano]
         @group = @groups[:fisica]
@@ -383,7 +383,7 @@ describe "Board Pics V1 API" do
       end
     end
 
-    describe "when board_pic[class_date] is not valid" do
+    describe "when board_pic class_date is not valid" do
       before(:all) do
         @user = @users[:mengano]
         @group = @groups[:fisica]
@@ -407,7 +407,7 @@ describe "Board Pics V1 API" do
       end
     end
 
-    describe "when board_pic[group_id] is set to another group" do
+    describe "when board_pic group_id is set to another group" do
       before(:all) { DatabaseCleaner.start }
       after(:all) { DatabaseCleaner.clean }
       before(:all) do
@@ -436,7 +436,7 @@ describe "Board Pics V1 API" do
         BoardPic.last.group.should eq(@group)
       end
     end
-    describe "when board_pic[user_id] is set to another user" do
+    describe "when board_pic user_id is set to another user" do
       before(:all) { DatabaseCleaner.start }
       after(:all) { DatabaseCleaner.clean }
       before(:all) do

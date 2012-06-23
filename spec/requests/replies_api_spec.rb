@@ -7,7 +7,7 @@ describe "Replies V1 API" do
       :fulano => FactoryGirl.create(:user),
       :mengano => FactoryGirl.create(:user)
     }
-    @users.each do |index, user| 
+    @users.each do |index, user|
       user.confirmed_at = Time.now
       user.save!
       user.reset_authentication_token!
@@ -22,6 +22,10 @@ describe "Replies V1 API" do
       post = FactoryGirl.create(:post, :group => @groups[:fisica])
       3.times do
         FactoryGirl.create(:reply, :post => post)
+      end
+      book = FactoryGirl.create(:book, :group => @groups[:fisica])
+      2.times do
+        FactoryGirl.create(:reply, :post => book)
       end
     end
     @public_post = FactoryGirl.create(:post, :group => nil)
@@ -207,6 +211,50 @@ describe "Replies V1 API" do
     end
   end
 
+  describe "GET /api/v1/books/:book_id/replies" do
+    describe "on success" do
+      before(:all) do
+        @user = @users[:fulano]
+        @group = @groups[:fisica]
+        @book = @group.books.last
+        url = "/api/v1/books/#{@book.id}/replies?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON array with book's replies" do
+        @data.class.should eq(Array)
+        @data.length.should eq(@book.replies.count)
+        for reply in @data
+          @book.replies.where(:id => reply["id"]).count.should eq(1)
+        end
+      end
+      it "returns each reply's id, text, and created_at" do
+        for reply in @data
+          reply["id"].should be_true
+          reply["text"].should be_true
+          reply["created_at"].should be_true
+        end
+      end
+      it "returns each reply's author as an object with id and name" do
+        for reply in @data
+          reply["author"]["id"].should be_true
+          reply["author"]["name"].should be_true
+        end
+      end
+      it "returns the array ordered by created_at, with the oldest first" do
+        created_at = @data.first["created_at"]
+        for reply in @data
+          reply["created_at"].should be >= created_at
+          created_at = reply["created_at"]
+        end
+      end
+    end
+  end
+
   describe "POST /api/v1/posts/:post_id/replies" do
 
     describe "on success" do
@@ -359,4 +407,36 @@ describe "Replies V1 API" do
       end
     end
   end
+
+  describe "POST /api/v1/books/:book_id/replies" do
+
+    describe "on success" do
+      before(:all) { DatabaseCleaner.start }
+      after(:all) { DatabaseCleaner.clean }
+      before(:all) do
+        @user = @users[:fulano]
+        @group = @groups[:fisica]
+        @book = @group.books.first
+        @replies_count = Reply.count
+        @book_replies_count = @book.replies.count
+        url = "/api/v1/books/#{@book.id}/replies?auth_token=#{@user.authentication_token}"
+        data = {:reply => FactoryGirl.attributes_for(:reply)}
+        post url, data, @headers
+        @status = response.status
+      end
+      it "returns status code 201 (Created)" do
+        @status.should eq(201)
+      end
+      it "creates a new reply" do
+        Reply.count.should be > @replies_count
+      end
+      it "reply is assigned to correct book" do
+        @book.replies(false).count.should be > @book_replies_count
+      end
+      it "reply is assigned to token user" do
+        @book.replies.last.author.should eq(@user)
+      end
+    end
+  end
+
 end

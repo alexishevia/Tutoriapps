@@ -5,7 +5,7 @@ class Ability
     if user
       can :create, Feedback
       can :read, Group do |group| user.groups.include? group; end
-      can [:read, :create], Post do |post|
+      can [:read, :create], [Post, Book] do |post|
         if post.group
           post.group.members.include? user
         else
