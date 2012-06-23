@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
+//= require load-image
+//= require bootstrap-image-gallery
 //= require underscore
 //= require backbone
 //= require backbone.syphon

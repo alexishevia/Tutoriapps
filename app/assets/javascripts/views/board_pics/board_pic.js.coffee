@@ -6,5 +6,5 @@ class Tutoriapps.Views.BoardPic extends Backbone.View
     @model.on('change', @render)
 
   render: =>
-    $(@el).html(@template(@model.toJSON()))
+    @$el.html(@template(@model.toJSON()))
     this

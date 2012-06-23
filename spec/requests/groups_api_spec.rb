@@ -2,13 +2,13 @@
 require 'spec_helper'
 
 describe "Groups V1 API" do
-  before(:all) do 
+  before(:all) do
     @users = {
       :fulano => FactoryGirl.create(:user),
       :mengano => FactoryGirl.create(:user),
       :admin => FactoryGirl.create(:user)
     }
-    @users.each do |key, user| 
+    @users.each do |key, user|
       user.confirmed_at = Time.now
       user.admin = (key == :admin)
       user.save!
@@ -23,7 +23,7 @@ describe "Groups V1 API" do
     @groups[:fisica].members << @users[:fulano]
     @groups[:calculo].members << @users[:fulano]
 
-    @headers = {'HTTP_ACCEPT' => 'application/json'}  
+    @headers = {'HTTP_ACCEPT' => 'application/json'}
   end
 
   describe "GET /api/v1/groups" do
@@ -51,7 +51,7 @@ describe "Groups V1 API" do
       it "returns each group's name and id" do
         for group in @data
           group["name"].should be_true
-          group["id"].should be_true          
+          group["id"].should be_true
         end
       end
       it "returns each group's enrollments as an array" do

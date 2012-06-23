@@ -7,7 +7,7 @@ describe "Board Pics V1 API" do
       :fulano => FactoryGirl.create(:user),
       :mengano => FactoryGirl.create(:user)
     }
-    @users.each do |index, user| 
+    @users.each do |index, user|
       user.confirmed_at = Time.now
       user.save!
       user.reset_authentication_token!
@@ -17,7 +17,7 @@ describe "Board Pics V1 API" do
       :fisica => FactoryGirl.create(:group, :name => 'Física'),
       :calculo => FactoryGirl.create(:group, :name => 'Cálculo')
     }
-    
+
     @groups[:fisica].members << @users[:fulano]
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
@@ -65,9 +65,10 @@ describe "Board Pics V1 API" do
           board_pic["created_at"].should be_true
         end
       end
-      it "returns each board_pic's image as an object with url, size and content_type" do
+      it "returns each board_pic's image as an object with url, thumbnail_url, size and content_type" do
         for board_pic in @data
           board_pic["image"]["url"].should be_true
+          board_pic["image"]["thumbnail_url"].should be_true
           board_pic["image"]["size"].should be_true
           board_pic["image"]["content_type"].should be_true
         end

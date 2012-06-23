@@ -17,7 +17,8 @@
 class BoardPic < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
-  has_attached_file :image
+  has_attached_file :image, :styles => { :thumb => "100x100>" }
+
   validates :class_date, :presence => true
   validates :image, :attachment_presence => true
 end

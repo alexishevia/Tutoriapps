@@ -14,6 +14,7 @@ Tutoriapps::Application.routes.draw do
       resources :posts, :only => [] do
         resources :replies, :only => [:index, :create]
       end
+      get 'system_time.json', :to => 'system_info#time'
     end
   end
 
