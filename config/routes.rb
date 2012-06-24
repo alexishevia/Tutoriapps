@@ -8,6 +8,7 @@ Tutoriapps::Application.routes.draw do
       resources :groups, :only => [:index, :create, :update, :destroy] do
         resources :posts, :books, :only => [:index, :create, :show]
         resources :board_pics, :only => [:index, :create]
+        get 'all', :to => 'feeds#group_all'
       end
       resources :enrollments, :only => [:create, :destroy]
       resources :feedbacks, :only => [:create]

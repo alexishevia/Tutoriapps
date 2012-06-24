@@ -28,4 +28,8 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def content
+    posts + board_pics + books
+  end
+
 end
