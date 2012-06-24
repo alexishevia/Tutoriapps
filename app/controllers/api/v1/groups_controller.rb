@@ -3,10 +3,11 @@ class Api::V1::GroupsController < ApplicationController
   before_filter :check_format
 
   def index
+    home_name = I18n.t('activerecord.attributes.group.all')
     if current_user.admin?
-      @groups = [Group.new(:name => 'Todos')] + Group.all
+      @groups = [Group.new(:name => home_name)] + Group.all
     else
-      @groups = [Group.new(:name => 'Todos')] + current_user.groups
+      @groups = [Group.new(:name => home_name)] + current_user.groups
     end
   end
 
