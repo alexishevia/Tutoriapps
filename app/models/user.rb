@@ -28,14 +28,14 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :encryptable, :lockable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :timeoutable,
-         :recoverable, :rememberable, :trackable, :validatable, 
+         :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 
-  validates :email, :format => { :with => /@utp.ac.pa$/, :message => 
-    "#{I18n.t('errors.messages.invalid')} - " + 
+  validates :email, :format => { :with => /@utp.ac.pa$/, :message =>
+    "#{I18n.t('errors.messages.invalid')} - " +
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
   validates :name, :presence => true
 
@@ -43,11 +43,12 @@ class User < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
   has_many :groups, :through => :enrollments
 
-  def readable_posts
+  def readable(klass)
+    klass = klass.to_s.singularize.camelcase.constantize
     if admin?
-      Post.where('true')
+      klass.where('true')
     else
-      Post.where('group_id IN(?) OR group_id IS NULL OR group_id <= 0', groups)
+      klass.where('group_id IN(?) OR group_id IS NULL OR group_id <= 0', groups)
     end
   end
 

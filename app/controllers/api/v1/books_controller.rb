@@ -3,9 +3,13 @@ class Api::V1::BooksController < ApplicationController
   before_filter :check_format
 
   def index
-    group = Group.find(params[:group_id])
-    authorize! :read, group
-    @books = group.books.order('created_at DESC')
+    if params[:group_id] == 'home'
+      @books = current_user.readable(:books).order('created_at DESC')
+    else
+      group = Group.find(params[:group_id])
+      authorize! :read, group
+      @books = group.books.order('created_at DESC')
+    end
   end
 
   def create
