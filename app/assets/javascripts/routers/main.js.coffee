@@ -42,12 +42,28 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         posts = new Tutoriapps.Collections.Posts(group: group)
         view = new Tutoriapps.Views.NewPost(collection: posts)
         $('#content').append(view.render().el)
+
+        board_pics = new Tutoriapps.Collections.BoardPics(group: group)
+        view = new Tutoriapps.Views.NewBoardPic(collection: board_pics)
+        $('#content').append(view.render().el)
+
+        books = new Tutoriapps.Collections.Books(group: group)
+        view = new Tutoriapps.Views.NewBook(collection: books)
+        $('#content').prepend(view.render().el)
+
         items = new Tutoriapps.Collections.Items(group: group)
-        view = new Tutoriapps.Views.Items(collection: items)
+        items.fetch()
+        view = new Tutoriapps.Views.Items(
+          collection: items
+          posts: posts
+          board_pics: board_pics
+          books: books
+        )
         $('#content').append(view.render().el)
 
       when 'board_pics'
         board_pics = new Tutoriapps.Collections.BoardPics(group: group)
+        board_pics.fetch()
         view = new Tutoriapps.Views.NewBoardPic(collection: board_pics)
         $('#content').append(view.render().el)
         view = new Tutoriapps.Views.BoardPics(collection: board_pics)
@@ -55,6 +71,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
 
       when 'books'
         books = new Tutoriapps.Collections.Books(group: group)
+        books.fetch()
         view = new Tutoriapps.Views.NewBook(collection: books)
         $('#content').prepend(view.render().el)
         view = new Tutoriapps.Views.Books(collection: books)

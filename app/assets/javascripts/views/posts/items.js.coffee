@@ -3,11 +3,26 @@ class Tutoriapps.Views.Items extends Backbone.View
 
   initialize: (options) =>
     @collection.on('reset', @render)
+    options.posts.on('add', @prependPost)
+    options.board_pics.on('add', @prependBoardPic)
+    options.books.on('add', @prependBook)
 
   render: =>
     @$el.empty()
     @collection.each(@appendItem)
     this
+
+  prependPost: (post) =>
+    view = new Tutoriapps.Views.Post(model: post)
+    @$el.prepend(view.render().el)
+
+  prependBoardPic:(board_pic) =>
+    view = new Tutoriapps.Views.BoardPicInFeed(model: board_pic)
+    @$el.prepend(view.render().el)
+
+  prependBook: (book) =>
+    view = new Tutoriapps.Views.Book(model: book)
+    @$el.prepend(view.render().el)
 
   appendItem: (item) =>
     type = item.get('type')

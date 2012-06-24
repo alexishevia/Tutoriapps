@@ -3,4 +3,3 @@ class Tutoriapps.Collections.Books extends Backbone.Collection
 
   initialize: (options) =>
     @url = 'api/v1/groups/' + options.group.id + '/books'
-    @fetch()
