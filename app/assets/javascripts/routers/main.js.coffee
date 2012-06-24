@@ -37,13 +37,13 @@ class Tutoriapps.Routers.Main extends Backbone.Router
 
   showGroupContent: (group, filter)=>
     $('#content').empty()
-    $('#groups_panel .newPostView'). remove()
     switch filter
       when 'all'
         posts = new Tutoriapps.Collections.Posts(group: group)
         view = new Tutoriapps.Views.NewPost(collection: posts)
-        $('#groups_panel').prepend(view.render().el)
-        view = new Tutoriapps.Views.Posts(collection: posts)
+        $('#content').append(view.render().el)
+        items = new Tutoriapps.Collections.Items(group: group)
+        view = new Tutoriapps.Views.Items(collection: items)
         $('#content').append(view.render().el)
 
       when 'board_pics'
