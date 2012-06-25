@@ -4,7 +4,7 @@ class Api::V1::PostsController < ApplicationController
 
   def index
     if params[:group_id] == 'home'
-      @posts = current_user.readable_posts.order('created_at DESC')
+      @posts = current_user.readable(:posts).order('created_at DESC')
     else
       group = Group.find(params[:group_id])
       authorize! :read, group

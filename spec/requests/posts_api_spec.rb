@@ -83,6 +83,24 @@ describe "Posts V1 API" do
       end
     end
 
+    describe "when group id is 'home'" do
+      before(:all) do
+        token = @users[:fulano].authentication_token
+        url = "/api/v1/groups/home/posts?auth_token=#{token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
+      end
+      it "returns a JSON array with all posts the user can read" do
+        @data.class.should eq(Array)
+        @data.length.should eq(@groups[:fisica].posts.count +
+          @groups[:calculo].posts.count)
+      end
+    end
+
     describe "when auth token is not valid or was not sent" do
       before(:all) do
         url = "/api/v1/groups/#{@groups[:fisica].id}/posts?auth_token=wrong"
