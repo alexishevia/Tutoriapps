@@ -44,7 +44,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         books = new Tutoriapps.Collections.Books(group: group)
         items = new Tutoriapps.Collections.Items(group: group)
         items.fetch()
-        view = new Tutoriapps.Views.MultipleForm({
+        view = new Tutoriapps.Views.FormSelect({
           group: group
           posts: posts
           board_pics: board_pics

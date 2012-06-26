@@ -1,5 +1,6 @@
-class Tutoriapps.Views.MultipleForm extends Backbone.View
-  template: SMT['home/multiple_form']
+class Tutoriapps.Views.FormSelect extends Backbone.View
+  template: SMT['home/form_select']
+  className: 'form_select'
 
   initialize: (options) =>
     @group = options.group
@@ -13,6 +14,8 @@ class Tutoriapps.Views.MultipleForm extends Backbone.View
 
   render: =>
     @$el.html(@template())
+    if @group.get('id') == 'home'
+      @$('.board_pics').remove()
     switch @active_form
       when 'posts'
         view = new Tutoriapps.Views.NewPost(collection: @posts)
@@ -21,6 +24,7 @@ class Tutoriapps.Views.MultipleForm extends Backbone.View
       when 'books'
         view = new Tutoriapps.Views.NewBook(collection: @books)
     @$el.append(view.render().el)
+    @$('.'+@active_form).addClass('active')
     this
 
   change_active: (evt) =>
