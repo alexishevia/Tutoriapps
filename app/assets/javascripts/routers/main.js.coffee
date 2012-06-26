@@ -44,33 +44,36 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         books = new Tutoriapps.Collections.Books(group: group)
         items = new Tutoriapps.Collections.Items(group: group)
         items.fetch()
-        view = new Tutoriapps.Views.FormSelect({
-          group: group
-          posts: posts
-          board_pics: board_pics
-          books: books
-        })
-        $('#content').append(view.render().el)
-        view = new Tutoriapps.Views.Items(
-          collection: items
-          posts: posts
-          board_pics: board_pics
-          books: books
-        )
-        $('#content').append(view.render().el)
+        views = [
+          new Tutoriapps.Views.FormSelect(
+            group: group
+            posts: posts
+            board_pics: board_pics
+            books: books
+          )
+          new Tutoriapps.Views.Items(
+            collection: items
+            posts: posts
+            board_pics: board_pics
+            books: books
+          )
+        ]
 
       when 'board_pics'
         board_pics = new Tutoriapps.Collections.BoardPics(group: group)
         board_pics.fetch()
-        view = new Tutoriapps.Views.NewBoardPic(collection: board_pics)
-        $('#content').append(view.render().el)
-        view = new Tutoriapps.Views.BoardPics(collection: board_pics)
-        $('#content').append(view.render().el)
+        views = [
+          new Tutoriapps.Views.NewBoardPic(collection: board_pics)
+          new Tutoriapps.Views.BoardPics(collection: board_pics)
+        ]
 
       when 'books'
         books = new Tutoriapps.Collections.Books(group: group)
         books.fetch()
-        view = new Tutoriapps.Views.NewBook(collection: books)
-        $('#content').prepend(view.render().el)
-        view = new Tutoriapps.Views.Books(collection: books)
-        $('#content').append(view.render().el)
+        views = [
+          new Tutoriapps.Views.NewBook(collection: books)
+          new Tutoriapps.Views.Books(collection: books)
+        ]
+
+    for view in views
+      $('#content').append(view.render().el)

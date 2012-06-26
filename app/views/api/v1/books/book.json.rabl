@@ -1,5 +1,8 @@
 object @book
 attributes :id, :title, :author, :publisher, :additional_info, :contact_info, :offer_type, :created_at
+node(:price) do |book|
+  book.price.to_f
+end
 child :owner => :owner do
   attributes :id, :name
 end
