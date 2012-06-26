@@ -43,6 +43,15 @@ class User < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
   has_many :groups, :through => :enrollments
 
+  after_create :reload_enrollments
+
+  def reload_enrollments
+    for enrollment in Enrollment.where(:user_email => email)
+      enrollment.search_user_by_email
+      enrollment.save
+    end
+  end
+
   def readable(klass)
     klass = klass.to_s.singularize.camelcase.constantize
     if admin?

@@ -45,7 +45,7 @@ Característica: Privacidad
     Cuando visite la página de inicio
     Entonces podrá ver los 3 grupos a los que pertenece
 
-  @javascript @wip
+  @javascript
   Escenario: Usuario con grupos creados se registra
     Dado que los grupos [Cálculo II, OAC] han sido creados
     Y que el usuario "fulano@utp.ac.pa" ya fue agregado a los grupos [Cálculo II, OAC]

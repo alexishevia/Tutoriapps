@@ -14,12 +14,12 @@ class Enrollment < ActiveRecord::Base
   belongs_to :group
   belongs_to :user
 
-  before_validation :search_user_email
+  before_validation :search_user_by_email
   validates :group, :presence => true
   validates :user_id, :user_email, :uniqueness => {:scope => :group_id}
   validates :user_id, :presence => {:unless => :user_email}
-  validates :user_email, :allow_nil => true, :format => { :with => /@utp.ac.pa$/, :message => 
-    "#{I18n.t('errors.messages.invalid')} - " + 
+  validates :user_email, :allow_nil => true, :format => { :with => /@utp.ac.pa$/, :message =>
+    "#{I18n.t('errors.messages.invalid')} - " +
     "#{I18n.t('activerecord.errors.user.email.only_utp')}" }
   validates :user_id, :existence => { :allow_nil => true }
 
@@ -28,7 +28,7 @@ class Enrollment < ActiveRecord::Base
   end
 
   def user_name
-    return user.name if user 
+    return user.name if user
     user_email
   end
 
@@ -44,13 +44,14 @@ class Enrollment < ActiveRecord::Base
     super(options)
   end
 
-  private
-    def search_user_email
-      return unless !user and user_email
+  def search_user_by_email
+    if !user and user_email
       user = User.find_by_email(user_email)
       if user
         self.user_email = nil
         self.user = user
       end
     end
+  end
+
 end
