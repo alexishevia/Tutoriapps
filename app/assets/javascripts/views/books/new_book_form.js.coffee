@@ -1,6 +1,6 @@
-class Tutoriapps.Views.NewBook extends Backbone.View
+class Tutoriapps.Views.NewBookForm extends Backbone.View
   className: 'newBookView'
-  template: SMT['books/new_book']
+  template: SMT['books/new_book_form']
 
   initialize: (options) =>
     @collection.on('reset', @render)

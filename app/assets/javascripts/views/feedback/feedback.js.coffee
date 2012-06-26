@@ -24,18 +24,18 @@ class Tutoriapps.Views.Feedback extends Backbone.View
             t_message: I18n.t('helpers.messages.feedback_sent')
           }
           $('.navbar').after(template(translations))
-          $('#myModal').modal('hide')
           $(evt.target).find('textarea').val('')
+          $(evt.target).parents('.modal').modal('hide')
         error: ->
           template = SMT['alerts/error']
           translations = {
             t_message: I18n.t('helpers.messages.feedback_error')
           }
           $('.navbar').after(template(translations))
-          $('#myModal').modal('hide')
+          $(evt.target).parents('.modal').modal('hide')
         }
       )
-  
+
   toggleSubmitFeedbackButton: (evt) =>
     textarea = evt.target
     submit_button = $(evt.target).parents('form').find('input[type="submit"]')
@@ -43,4 +43,4 @@ class Tutoriapps.Views.Feedback extends Backbone.View
       # textarea is empty or contains only white-space
       $(submit_button).addClass('disabled')
     else
-      $(submit_button).removeClass('disabled')  
+      $(submit_button).removeClass('disabled')

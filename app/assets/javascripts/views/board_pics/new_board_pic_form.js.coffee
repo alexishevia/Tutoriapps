@@ -1,5 +1,5 @@
-class Tutoriapps.Views.NewBoardPic extends Backbone.View
-  template: SMT['board_pics/new_board_pic']
+class Tutoriapps.Views.NewBoardPicForm extends Backbone.View
+  template: SMT['board_pics/new_board_pic_form']
 
   events:
     'submit form': 'createBoardPic'

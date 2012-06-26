@@ -225,6 +225,7 @@ es:
       post: Post
       user: Usuario
       board_pic: Pizarra
+      book: Libro
     attributes:
       user:
         name: Nombre

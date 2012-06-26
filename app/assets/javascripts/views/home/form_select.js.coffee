@@ -18,11 +18,11 @@ class Tutoriapps.Views.FormSelect extends Backbone.View
       @$('.board_pics').remove()
     switch @active_form
       when 'posts'
-        view = new Tutoriapps.Views.NewPost(collection: @posts)
+        view = new Tutoriapps.Views.NewPostForm(collection: @posts)
       when 'board_pics'
-        view = new Tutoriapps.Views.NewBoardPic(collection: @board_pics)
+        view = new Tutoriapps.Views.NewBoardPicForm(collection: @board_pics)
       when 'books'
-        view = new Tutoriapps.Views.NewBook(collection: @books)
+        view = new Tutoriapps.Views.NewBookForm(collection: @books)
     @$el.append(view.render().el)
     @$('.'+@active_form).addClass('active')
     this

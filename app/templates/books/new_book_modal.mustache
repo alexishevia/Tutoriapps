@@ -1,0 +1,29 @@
+<a class="btn btn-success" data-toggle="modal" href="#book_modal" ><strong>{{t_add_book}}</strong></a>
+
+<div class="modal hide" id="book_modal">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>{{t_add_book}}</h3>
+  </div>
+  <form class="new_book">
+    <div class="modal-body">
+      <div><input name="title" placeholder="{{t_title}}"></div>
+      <div><input name="author" placeholder="{{t_author}}"></div>
+      <div><input name="publisher" placeholder="{{t_publisher}}"></div>
+      <div><textarea name="additional_info" placeholder="{{t_additional_info}}"></textarea></div>
+      <div>
+        <select name="offer_type">
+          <option value="">{{t_offer_type}}...</option>
+          <option value="gift">{{t_gift}}</option>
+          <option value="loan">{{t_loan}}</option>
+          <option value="sale">{{t_sale}}</option>
+        </select>
+      </div>
+      <div><input name="price" placeholder="{{t_price}}"></div>
+      <div><textarea name="contact_info" placeholder="{{t_contact_info}}"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-primary">
+    </div>
+  </form>
+</div>

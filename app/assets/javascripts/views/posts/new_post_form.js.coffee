@@ -1,7 +1,7 @@
-class Tutoriapps.Views.NewPost extends Backbone.View
+class Tutoriapps.Views.NewPostForm extends Backbone.View
   className: 'newPostView'
-  template: SMT['posts/new_post']
-    
+  template: SMT['posts/new_post_form']
+
   initialize: (options) =>
     @collection.on('reset', @render)
 
@@ -20,7 +20,7 @@ class Tutoriapps.Views.NewPost extends Backbone.View
     data = Backbone.Syphon.serialize(evt.target)
     @collection.create data,
       wait: true
-      success: -> 
+      success: ->
         evt.target.reset()
       error: @handleError
 
@@ -42,6 +42,6 @@ class Tutoriapps.Views.NewPost extends Backbone.View
               $("body").off('mouseup')
               evt.preventDefault()
               $(button_container).hide()
-              $(textarea).animate({height: "1.5em"}, 200)            
+              $(textarea).animate({height: "1.5em"}, 200)
         )
     )

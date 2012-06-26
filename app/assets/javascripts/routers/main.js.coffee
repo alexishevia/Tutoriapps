@@ -63,7 +63,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         board_pics = new Tutoriapps.Collections.BoardPics(group: group)
         board_pics.fetch()
         views = [
-          new Tutoriapps.Views.NewBoardPic(collection: board_pics)
+          new Tutoriapps.Views.NewBoardPicModal(collection: board_pics)
           new Tutoriapps.Views.BoardPics(collection: board_pics)
         ]
 
@@ -71,7 +71,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         books = new Tutoriapps.Collections.Books(group: group)
         books.fetch()
         views = [
-          new Tutoriapps.Views.NewBook(collection: books)
+          new Tutoriapps.Views.NewBookModal(collection: books)
           new Tutoriapps.Views.Books(collection: books)
         ]
 
