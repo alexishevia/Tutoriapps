@@ -3,12 +3,16 @@ class Api::V1::BooksController < ApplicationController
   before_filter :check_format
 
   def index
+    params[:page] ||= 1
+    params[:per_page] ||= 10
     if params[:group_id] == 'home'
       @books = current_user.readable(:books).order('created_at DESC')
+        .paginate(:page => params[:page], :per_page => params[:per_page])
     else
       group = Group.find(params[:group_id])
       authorize! :read, group
       @books = group.books.order('created_at DESC')
+        .paginate(:page => params[:page], :per_page => params[:per_page])
     end
   end
 

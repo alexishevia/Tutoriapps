@@ -251,7 +251,7 @@ es:
         additional_info: Información Adicional
         contact_info: Información de Contacto
         price: Precio
-        offer_type: Disponible como
+        offer_type: Disponible para
         offer_types:
           gift: Regalo
           loan: Préstamo

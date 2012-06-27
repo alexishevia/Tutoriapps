@@ -5,9 +5,13 @@ class Tutoriapps.Views.Books extends Backbone.View
     @collection.on('reset', @render)
     @collection.on('add', @prependBook)
 
+  events:
+    'click a': 'nextPage'
+
   render: =>
     @$el.empty()
     @collection.each(@appendBook)
+    @$el.append('<a href="#">Next</a>')
     this
 
   appendBook: (book) =>
@@ -18,3 +22,8 @@ class Tutoriapps.Views.Books extends Backbone.View
   prependBook: (book) =>
     view = new Tutoriapps.Views.Book(model: book)
     @$el.prepend(view.render().el)
+
+  nextPage: (evt) =>
+    evt.preventDefault()
+    @collection.page += 1
+    @collection.fetch({add:true})
