@@ -140,9 +140,11 @@ es:
       create: Crear %{model}
       submit: Guardar %{model}
       update: Actualizar %{model}
-      add: Añadir %{model}
+      add: Agregar %{model}
+      add1: Agregar
       send: Enviar
       share: Compartir %{model}
+      share1: Compartir
     messages:
       created: "%{model} creado exitosamente."
       added: "%{model} añadido exitosamente."

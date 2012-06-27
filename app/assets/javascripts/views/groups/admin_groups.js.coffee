@@ -11,11 +11,11 @@ class Tutoriapps.Views.AdminGroups extends Backbone.View
     @collection.on('add', @appendGroup)
 
   render: =>
-    translations = 
+    translations =
       t_groups: I18n.t('activerecord.models.groups')
       t_add_group: I18n.t('helpers.submit.add', model: I18n.t('activerecord.models.group'))
       t_group_name: I18n.t('activerecord.attributes.group.name')
-      t_submit: I18n.t('helpers.submit.send')
+      t_submit: I18n.t('helpers.submit.add1')
     $(@el).html(@template(translations))
     @$('a.new_group').next().hide()
     @collection.each(@appendGroup)
@@ -31,7 +31,7 @@ class Tutoriapps.Views.AdminGroups extends Backbone.View
     data = Backbone.Syphon.serialize(evt.target);
     @collection.create data,
       wait: true
-      success: -> 
+      success: ->
         evt.target.reset()
         $(evt.target).hide()
         $(evt.target).prev().show()
@@ -44,6 +44,6 @@ class Tutoriapps.Views.AdminGroups extends Backbone.View
 
   showNewGroupForm: (evt) ->
     evt.preventDefault()
-    $(evt.target).hide().next().show('slow', 
+    $(evt.target).hide().next().show('slow',
       () -> $(this).find('input[type=text]').focus()
     )

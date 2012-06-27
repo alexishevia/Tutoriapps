@@ -19,7 +19,7 @@ class Tutoriapps.Views.AdminGroup extends Backbone.View
     translations =
       t_add_user: I18n.t('helpers.submit.add', model: I18n.t('activerecord.models.user'))
       t_user_email: I18n.t('activerecord.attributes.enrollment.user_email')
-      t_submit: I18n.t('helpers.submit.send')
+      t_submit: I18n.t('helpers.submit.add1')
     hash = $.extend(translations, @model.toJSON())
     $(@el).html(@template(hash))
     @$('.name .open').parent().next().hide()
@@ -39,8 +39,8 @@ class Tutoriapps.Views.AdminGroup extends Backbone.View
 
   showNewEnrollmentForm: (evt) ->
     evt.preventDefault()
-    $(evt.target).hide().next().show('slow', 
-      () -> 
+    $(evt.target).hide().next().show('slow',
+      () ->
         $(this).find('input[type=email]').focus()
     )
 
@@ -53,7 +53,7 @@ class Tutoriapps.Views.AdminGroup extends Backbone.View
     data = Backbone.Syphon.serialize(evt.target);
     @enrollments.create data,
       wait: true
-      success: -> 
+      success: ->
         evt.target.reset()
         $(evt.target).hide()
         $(evt.target).prev().show()

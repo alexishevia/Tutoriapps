@@ -2,4 +2,5 @@ class Tutoriapps.Collections.BoardPics extends Backbone.Collection
   model: Tutoriapps.Models.BoardPic
 
   initialize: (options) =>
-    @url = 'api/v1/groups/' + options.group.id + '/board_pics'
+    @group = options.group
+    @url = 'api/v1/groups/' + @group.id + '/board_pics'

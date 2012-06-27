@@ -1,11 +1,11 @@
-<a class="btn btn-success" data-toggle="modal" href="#board_pic_modal" ><strong>{{t_add_board_pic}}</strong></a>
+<button class="btn btn-success" data-toggle="modal" href="#board_pic_modal" ><strong>{{t_add_board_pic}}</strong></button>
 
 <div class="modal hide" id="board_pic_modal">
     <div class="modal-header">
       <button class="close" data-dismiss="modal">×</button>
       <h3>{{t_add_board_pic}}</h3>
     </div>
-    <form id="new_board_pic" method="post" action="/api/v1/groups/1/board_pics.json"
+    <form id="new_board_pic" method="post" action="/api/v1/groups/{{group_id}}/board_pics.json"
     enctype="multipart/form-data">
       <div class="modal-body">
         <input type="file" name="board_pic[image]">
@@ -13,7 +13,7 @@
           placeholder="yyyy-mm-dd" data-date-format="yyyy-mm-dd">
       </div>
       <div class="modal-footer">
-        <input type="submit" class="btn btn-primary">
+        <input type="submit" class="btn btn-primary disabled" value="{{t_submit}}">
       </div>
     </form>
 </div>
