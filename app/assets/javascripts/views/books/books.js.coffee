@@ -6,12 +6,12 @@ class Tutoriapps.Views.Books extends Backbone.View
     @collection.on('add', @prependBook)
 
   events:
-    'click a': 'nextPage'
+    'click a.nextPage': 'nextPage'
 
   render: =>
     @$el.empty()
     @collection.each(@appendBook)
-    @$el.append('<a href="#">Next</a>')
+    @$el.append('<a href="#" class=".nextPage">Next</a>')
     this
 
   appendBook: (book) =>

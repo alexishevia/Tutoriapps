@@ -22,7 +22,7 @@ describe "Feed V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    3.times do
+    5.times do
       FactoryGirl.create(:post, :group => @groups[:fisica])
       FactoryGirl.create(:book, :group => @groups[:fisica])
       FactoryGirl.create(:board_pic, :group => @groups[:fisica])
@@ -44,9 +44,10 @@ describe "Feed V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with all of the group's objects (posts, board_pics, and books)" do
+      it "returns a JSON array with the latest group's objects (posts, board_pics, and books)" do
         @data.class.should eq(Array)
-        @data.length.should eq(@groups[:fisica].content.count)
+        @data.length.should be > 10
+        @data.length.should be < 13
       end
       it "group's objects are ordered by creation date, with last created appearing first" do
         last_created_at = @data.first['data']['created_at']
@@ -73,6 +74,63 @@ describe "Feed V1 API" do
             object["data"]["image"].should be_true
           when "book"
             object["data"]["title"].should be_true
+          end
+        end
+      end
+    end
+
+    describe "when paging query params are sent" do
+      describe "?page=1&per_page=6" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
+          url += "&page=1&per_page=6"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "returns a JSON array with group's last 6 objects (posts, board_pics, and books)" do
+          @data.class.should eq(Array)
+          @data.length.should eq(6)
+          for board_pic in @group.board_pics.order('created_at DESC').limit(2)
+            @data.detect { |object| object["data"]["id"] == board_pic.id }.should be_true
+          end
+          for book in @group.books.order('created_at DESC').limit(2)
+            @data.detect { |object| object["data"]["id"] == book.id }.should be_true
+          end
+          for post in @group.posts.order('created_at DESC').limit(2)
+            @data.detect { |object| object["data"]["id"] == post.id }.should be_true
+          end
+        end
+      end
+      describe "?page=2&per_page=3" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
+          url += "&page=2&per_page=3"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "returns a JSON array with group's objects from 4 to 6 (ordered by created_at)" do
+          @data.class.should eq(Array)
+          @data.length.should eq(3)
+          for board_pic in @group.board_pics.order('created_at DESC').limit(1).offset(1)
+            @data.detect { |object| object["data"]["id"] == board_pic.id }.should be_true
+          end
+          for book in @group.books.order('created_at DESC').limit(1).offset(1)
+            @data.detect { |object| object["data"]["id"] == book.id }.should be_true
+          end
+          for post in @group.posts.order('created_at DESC').limit(1).offset(1)
+            @data.detect { |object| object["data"]["id"] == post.id }.should be_true
           end
         end
       end

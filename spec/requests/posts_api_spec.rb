@@ -22,7 +22,7 @@ describe "Posts V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    3.times do
+    15.times do
       FactoryGirl.create(:post, :group => @groups[:fisica])
     end
 
@@ -42,9 +42,11 @@ describe "Posts V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with group's posts" do
+      it "returns a JSON array with group's last 10 posts" do
         @data.class.should eq(Array)
-        @data.length.should eq(@groups[:fisica].posts.count)
+        @data.length.should eq(10)
+        @data.detect { |post| post["id"] == @groups[:fisica].posts
+          .order('created_at DESC').first.id }.should be_true
         for post in @data
           @groups[:fisica].posts.where(:id => post["id"]).count.should eq(1)
         end
@@ -94,10 +96,14 @@ describe "Posts V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with all posts the user can read" do
+      it "returns a JSON array with the last 10 posts the user can read" do
         @data.class.should eq(Array)
-        @data.length.should eq(@groups[:fisica].posts.count +
-          @groups[:calculo].posts.count)
+        @data.length.should eq(10)
+        @data.detect { |post| post["id"] == @users[:fulano].readable(:posts)
+          .order('created_at DESC').first.id }.should be_true
+        for post in @data
+          @users[:fulano].readable(:posts).where(:id => post["id"]).count.should eq(1)
+        end
       end
     end
 

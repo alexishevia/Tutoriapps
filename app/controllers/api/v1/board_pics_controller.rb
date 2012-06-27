@@ -3,9 +3,16 @@ class Api::V1::BoardPicsController < ApplicationController
   before_filter :check_format
 
   def index
+    if(params[:group_id] == 'home')
+      return render :json => {:errors => "Home doesn't have board_pics."},
+                    :status => :bad_request
+    end
+    params[:page] ||= 1
+    params[:per_page] ||= 10
     group = Group.find(params[:group_id])
     authorize! :read, group
     @board_pics = group.board_pics.order('class_date DESC')
+      .paginate(:page => params[:page], :per_page => params[:per_page])
   end
 
   def create

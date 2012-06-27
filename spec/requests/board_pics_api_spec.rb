@@ -22,7 +22,7 @@ describe "Board Pics V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    3.times do
+    15.times do
       FactoryGirl.create(:board_pic, :group => @groups[:fisica])
       FactoryGirl.create(:board_pic, :group => @groups[:calculo])
     end
@@ -44,9 +44,11 @@ describe "Board Pics V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with group's board_pics" do
+      it "returns a JSON array with group's last 10 board_pics (ordered by class_date)" do
         @data.class.should eq(Array)
-        @data.length.should eq(@group.board_pics.count)
+        @data.length.should eq(10)
+        @data.detect { |bp| bp["id"] == @group.board_pics.order('class_date DESC').first.id }
+          .should be_true
         for board_pic in @data
           @group.board_pics.where(:id => board_pic["id"]).count.should eq(1)
         end
@@ -79,6 +81,67 @@ describe "Board Pics V1 API" do
           board_pic["author"]["name"].should be_true
           board_pic["author"]["name"].should be_true
         end
+      end
+    end
+
+    describe "when paging query params are sent" do
+      describe "?page=1&per_page=5" do
+        before(:all) do
+          @user = @users[:mengano]
+          @group = @groups[:fisica]
+          url = "/api/v1/groups/#{@group.id}/board_pics"
+          url += "?auth_token=#{@user.authentication_token}&page=1&per_page=5"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "returns a JSON array with group's last 5 board_pics (ordered by class_date)" do
+          @data.class.should eq(Array)
+          @data.length.should eq(5)
+          for board_pic in @group.board_pics.order('class_date DESC').limit(5)
+            @data.detect { |bp| bp["id"] == board_pic.id }.should be_true
+          end
+        end
+      end
+      describe "?page=2&per_page=3" do
+        before(:all) do
+          @user = @users[:mengano]
+          @group = @groups[:fisica]
+          url = "/api/v1/groups/#{@group.id}/board_pics"
+          url += "?auth_token=#{@user.authentication_token}&page=2&per_page=3"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "returns a JSON array with group's board_pics from 4 to 6 (ordered by class_date)" do
+          @data.class.should eq(Array)
+          @data.length.should eq(3)
+          for board_pic in @group.board_pics.order('class_date DESC').limit(3).offset(3)
+            @data.detect { |bp| bp["id"] == board_pic.id }.should be_true
+          end
+        end
+      end
+    end
+
+    describe "when group_id is 'home'" do
+      before(:all) do
+        @user = @users[:mengano]
+        url = "/api/v1/groups/home/board_pics?auth_token=#{@user.authentication_token}"
+        get url, nil, @headers
+        @status = response.status
+        @data = JSON.parse(response.body)
+      end
+      it "returns status code 400 (Bad Request)" do
+        @status.should eq(400)
+      end
+      it "does not return the group's board_pics" do
+        @data.class.should_not eq(Array)
       end
     end
 
