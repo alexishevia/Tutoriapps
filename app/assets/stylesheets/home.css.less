@@ -19,3 +19,39 @@
       width: 520px;
       height: 50px;
 }
+.form_select {
+  .selector {
+    position: relative;
+    .nub {
+      display: none;
+      background-image: url('/assets/nub.gif');
+      position: absolute;
+      left: 2px;
+      top: 23px;
+      width: 9px;
+      height: 6px;
+    }
+    &.active {
+      a {
+        color: black;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      .nub {
+        display: block;
+      }
+    }
+  }
+  .divider {
+    margin: 0 0.5em;
+  }
+  .form-container {
+    background: white;
+    border: 1px solid #B4BBCD;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 1.5em;
+    padding: 0;
+  }
+}

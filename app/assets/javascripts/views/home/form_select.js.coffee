@@ -23,7 +23,7 @@ class Tutoriapps.Views.FormSelect extends Backbone.View
         view = new Tutoriapps.Views.NewBoardPicForm(collection: @board_pics)
       when 'books'
         view = new Tutoriapps.Views.NewBookForm(collection: @books)
-    @$el.append(view.render().el)
+    @$('.form-container').html(view.render().el)
     @$('.'+@active_form).addClass('active')
     this
 
