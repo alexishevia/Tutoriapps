@@ -59,8 +59,6 @@ class Tutoriapps.Views.Items extends Backbone.View
           $(window).off('scroll')
         else
           @add = 'after'
-          data.each(
-            (item) => @collection.add(item)
-          )
+          data.each( (item) => @collection.add(item) )
           @add = 'before'
     )

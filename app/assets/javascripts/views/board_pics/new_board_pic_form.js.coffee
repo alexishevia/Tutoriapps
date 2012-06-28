@@ -7,7 +7,8 @@ class Tutoriapps.Views.NewBoardPicForm extends Backbone.View
   render: =>
     translations =
       t_add_board_pic: I18n.t('helpers.submit.share', {model: I18n.t('activerecord.models.board_pic')})
-    $(@el).html(@template(translations))
+    hash = $.extend(translations, {group_id: @collection.group.id})
+    $(@el).html(@template(hash))
     @$('.datepicker').datepicker()
     this
 

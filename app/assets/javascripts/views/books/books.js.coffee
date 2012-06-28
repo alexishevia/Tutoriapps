@@ -46,8 +46,6 @@ class Tutoriapps.Views.Books extends Backbone.View
           $(window).off('scroll')
         else
           @add = 'after'
-          data.each(
-            (book) => @collection.add(book)
-          )
+          data.each( (book) => @collection.add(book) )
           @add = 'before'
     )
