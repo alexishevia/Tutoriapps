@@ -22,10 +22,14 @@ describe "Feed V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
+    created_at = 5.days.ago
     5.times do
-      FactoryGirl.create(:post, :group => @groups[:fisica])
-      FactoryGirl.create(:book, :group => @groups[:fisica])
-      FactoryGirl.create(:board_pic, :group => @groups[:fisica])
+      FactoryGirl.create(:post, :group => @groups[:fisica], :created_at => created_at)
+      created_at += 1.hour
+      FactoryGirl.create(:book, :group => @groups[:fisica], :created_at => created_at)
+      created_at += 1.hour
+      FactoryGirl.create(:board_pic, :group => @groups[:fisica], :created_at => created_at)
+      created_at += 1.hour
     end
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
@@ -44,10 +48,9 @@ describe "Feed V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with the latest group's objects (posts, board_pics, and books)" do
+      it "returns a JSON array with the group's last 5 objects (combining posts, board_pics, and books)" do
         @data.class.should eq(Array)
-        @data.length.should be > 10
-        @data.length.should be < 13
+        @data.length.should eq(5)
       end
       it "group's objects are ordered by creation date, with last created appearing first" do
         last_created_at = @data.first['data']['created_at']
@@ -79,13 +82,14 @@ describe "Feed V1 API" do
       end
     end
 
-    describe "when paging query params are sent" do
-      describe "?page=1&per_page=6" do
+    describe "when query params are sent" do
+      describe "?older_than=:object_id&type=:object_type" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
+          @fifth = @group.content.sort{|a,b| a.created_at <=> b.created_at }.reverse[5]
           url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
-          url += "&page=1&per_page=6"
+          url += "&older_than=#{@fifth.id}&type=#{@fifth.class.to_s.underscore}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -93,26 +97,20 @@ describe "Feed V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's last 6 objects (posts, board_pics, and books)" do
+        it "returns a JSON array with group's objects older than the one sent" do
           @data.class.should eq(Array)
-          @data.length.should eq(6)
-          for board_pic in @group.board_pics.order('created_at DESC').limit(2)
-            @data.detect { |object| object["data"]["id"] == board_pic.id }.should be_true
-          end
-          for book in @group.books.order('created_at DESC').limit(2)
-            @data.detect { |object| object["data"]["id"] == book.id }.should be_true
-          end
-          for post in @group.posts.order('created_at DESC').limit(2)
-            @data.detect { |object| object["data"]["id"] == post.id }.should be_true
+          for object in @data
+            object["data"]["created_at"].to_time.should be <= @fifth.created_at
           end
         end
       end
-      describe "?page=2&per_page=3" do
+      describe "?newer_than=:object_id&type=:object_type" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
+          @fifth = @group.content.sort{|a,b| a.created_at <=> b.created_at }.reverse[5]
           url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
-          url += "&page=2&per_page=3"
+          url += "&newer_than=#{@fifth.id}&type=#{@fifth.class.to_s.underscore}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -120,18 +118,26 @@ describe "Feed V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's objects from 4 to 6 (ordered by created_at)" do
+        it "returns a JSON array with group's objects older than the one sent" do
           @data.class.should eq(Array)
-          @data.length.should eq(3)
-          for board_pic in @group.board_pics.order('created_at DESC').limit(1).offset(1)
-            @data.detect { |object| object["data"]["id"] == board_pic.id }.should be_true
+          for object in @data
+            object["data"]["created_at"].to_time.should be >= @fifth.created_at
           end
-          for book in @group.books.order('created_at DESC').limit(1).offset(1)
-            @data.detect { |object| object["data"]["id"] == book.id }.should be_true
-          end
-          for post in @group.posts.order('created_at DESC').limit(1).offset(1)
-            @data.detect { |object| object["data"]["id"] == post.id }.should be_true
-          end
+        end
+      end
+      describe "when older_than or newer_than is used but object_type is not sent" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          @fifth = @group.content.sort{|a,b| a.created_at <=> b.created_at }.reverse[5]
+          url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
+          url += "&older_than=#{@fifth.id}"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 400 (Bad Request)" do
+          @status.should eq(400)
         end
       end
     end

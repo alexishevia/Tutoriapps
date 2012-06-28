@@ -22,10 +22,10 @@ describe "Books V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    created_at = 30.days.ago
+    created_at = 5.days.ago
     8.times do
       FactoryGirl.create(:book, :group => @groups[:fisica], :created_at => created_at)
-      created_at += 1.day
+      created_at += 1.hour
     end
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
