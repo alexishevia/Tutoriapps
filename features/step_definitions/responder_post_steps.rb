@@ -20,8 +20,8 @@ Dado /^que el post ha recibido (\d+) comentarios$/ do |n|
   @post = @group.posts.first
   timestamp = Time.now
   without_timestamping_of Reply do
-    n.to_i.times do 
-      FactoryGirl.create(:reply, :post => @post, 
+    n.to_i.times do
+      FactoryGirl.create(:reply, :post => @post,
         :created_at => timestamp, :updated_at => timestamp)
       timestamp += 1.seconds
     end
@@ -33,7 +33,7 @@ Cuando /^el post aparezca en el muro$/ do
   within "#groups_panel" do
     page.click_link @post.group.name
   end
-  within "#content .posts" do
+  within "#content_panel" do
     page.should have_content(@post.text)
   end
 end
