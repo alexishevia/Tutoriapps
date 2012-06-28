@@ -256,7 +256,8 @@ es:
         offer_type: Disponible para
         offer_types:
           gift: Regalo
-          loan: Préstamo
+          borrow: Préstamo
+          loan: Alquiler
           sale: Venta
     errors:
       messages:

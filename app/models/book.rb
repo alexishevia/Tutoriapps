@@ -18,7 +18,7 @@
 #
 
 class Book < ActiveRecord::Base
-  OFFER_TYPES = %w[gift loan sale]
+  OFFER_TYPES = %w[gift borrow loan sale]
 
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :group
