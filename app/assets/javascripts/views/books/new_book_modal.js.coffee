@@ -22,6 +22,7 @@ class Tutoriapps.Views.NewBookModal extends Backbone.View
       t_sale: I18n.t('activerecord.attributes.book.offer_types.sale')
       t_add_book: I18n.t('helpers.submit.share',
         {model: I18n.t('activerecord.models.book')})
+      t_submit: I18n.t('helpers.submit.share1')
     $(@el).html(@template(translations))
     this
 

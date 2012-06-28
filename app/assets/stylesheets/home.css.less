@@ -34,24 +34,34 @@
     &.active {
       a {
         color: black;
-        &:hover {
-          text-decoration: none;
-        }
+        &:hover { text-decoration: none; }
       }
-      .nub {
-        display: block;
-      }
+      .nub { display: block; }
     }
   }
-  .divider {
-    margin: 0 0.5em;
-  }
-  .form-container {
-    background: white;
-    border: 1px solid #B4BBCD;
+  .divider { margin: 0 0.5em; }
+}
+.form-container {
+  background: white;
+  border: 1px solid #B4BBCD;
+  margin: 0;
+  margin-top: 10px;
+  margin-bottom: 1.5em;
+  padding: 0;
+  form {
     margin: 0;
-    margin-top: 10px;
-    margin-bottom: 1.5em;
     padding: 0;
+    .form-body {
+      padding: 0.4em 1em;
+    }
+    .form-footer {
+      background: #F2F2F2;
+      padding: 0.3em;
+      text-align: right;
+      border-top: 1px solid #E6E6E6;
+      .btn {
+        padding: 0.25em 0.5em;
+      }
+    }
   }
 }

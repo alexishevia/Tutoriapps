@@ -24,6 +24,7 @@ class Tutoriapps.Views.NewBookForm extends Backbone.View
       t_borrow: I18n.t('activerecord.attributes.book.offer_types.borrow')
       t_loan: I18n.t('activerecord.attributes.book.offer_types.loan')
       t_sale: I18n.t('activerecord.attributes.book.offer_types.sale')
+      t_submit: I18n.t('helpers.submit.share1')
     $(@el).html(@template(translations))
     this
 

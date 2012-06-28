@@ -35,7 +35,7 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
   expand: (evt) =>
     evt.preventDefault()
     textarea = evt.target
-    button_container = $(textarea).siblings(".form-footer")
+    button_container = $(textarea).parents('form').find(".form-footer")
     $(textarea).animate({height: "5em"}, 200)
     $(button_container).show(0,
       () =>
