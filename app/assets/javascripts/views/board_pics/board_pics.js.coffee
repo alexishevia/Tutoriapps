@@ -17,7 +17,9 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
     view = new Tutoriapps.Views.BoardPic(model: board_pic)
     gallery = @findGallery(board_pic.get('class_date'))
     if !gallery
-      gallery = $(@template(date: board_pic.get('class_date')))
+      date = board_pic.get('class_date')
+      t_date = I18n.l("date.formats.long", date)
+      gallery = $(@template({date: date, t_date: t_date}))
       @$el.append(gallery)
     $(gallery).find('[data-toggle="modal-gallery"]').prepend(view.render().el)
 
@@ -25,7 +27,7 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
     found = null
     @$('.gallery').each(
       (index, gallery) =>
-        if($(gallery).find('.date').html() == date)
+        if($(gallery).find('.date').attr('data-iso') == date)
           return found = gallery
     )
     return found

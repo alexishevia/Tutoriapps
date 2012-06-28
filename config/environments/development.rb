@@ -35,4 +35,10 @@ Tutoriapps::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Path to Image Magick
+  Paperclip.options[:command_path] = "/usr/bin/"
+
+  # Save Paperclip files on local system
+  PAPERCLIP_STORAGE_OPTIONS = {}
 end

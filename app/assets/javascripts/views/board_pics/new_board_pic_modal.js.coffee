@@ -1,5 +1,6 @@
 class Tutoriapps.Views.NewBoardPicModal extends Backbone.View
   template: SMT['board_pics/new_board_pic_modal']
+  className: 'new_board_pic'
 
   events:
     'submit form': 'createBoardPic'
