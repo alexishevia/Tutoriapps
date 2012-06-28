@@ -8,6 +8,7 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
   events:
     'submit form': 'createPost'
     'focus textarea[name=text]': 'expand'
+    'keyup textarea': 'toggleSubmitButton'
 
   render: =>
     translations =
@@ -17,12 +18,14 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
 
   createPost: (evt) =>
     evt.preventDefault()
-    data = Backbone.Syphon.serialize(evt.target)
-    @collection.create data,
-      wait: true
-      success: ->
-        evt.target.reset()
-      error: @handleError
+    enabled = !$(evt.target).find('input[type="submit"]').hasClass('disabled')
+    if(enabled)
+      data = Backbone.Syphon.serialize(evt.target)
+      @collection.create data,
+        wait: true
+        success: ->
+          evt.target.reset()
+        error: @handleError
 
   handleError: (group, response) ->
     if response.status = 422
@@ -45,3 +48,12 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
               $(textarea).animate({height: "1.5em"}, 200)
         )
     )
+
+  toggleSubmitButton: (evt) =>
+    textarea = evt.target
+    submit_button = $(evt.target).parents('form').find('input[type="submit"]')
+    if (!$.trim($(textarea).val()))
+      # textarea is empty or contains only white-space
+      $(submit_button).addClass('disabled')
+    else
+      $(submit_button).removeClass('disabled')
