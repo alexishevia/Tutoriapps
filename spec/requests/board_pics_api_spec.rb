@@ -22,11 +22,14 @@ describe "Board Pics V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    15.times do
-      FactoryGirl.create(:board_pic, :group => @groups[:fisica])
-      FactoryGirl.create(:board_pic, :group => @groups[:calculo])
+    class_date = 10.days.ago
+    8.times do    # 8 class_dates
+      3.times do  # 3 board_pics per class
+        FactoryGirl.create(:board_pic, :group => @groups[:fisica],
+          :class_date => class_date)
+      end
+      class_date += 1.day
     end
-
     @headers = {'HTTP_ACCEPT'  => 'application/json'}
   end
 
@@ -44,13 +47,17 @@ describe "Board Pics V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with group's last 10 board_pics (ordered by class_date)" do
+      it "returns a JSON array with all board_pics for the last 5 class dates" do
         @data.class.should eq(Array)
-        @data.length.should eq(10)
-        @data.detect { |bp| bp["id"] == @group.board_pics.order('class_date DESC').first.id }
-          .should be_true
+        by_date = {}
         for board_pic in @data
-          @group.board_pics.where(:id => board_pic["id"]).count.should eq(1)
+          date = board_pic['class_date'].to_s
+          by_date[date] ||= []
+          by_date[date] << board_pic
+        end
+        by_date.length.should eq(5)
+        by_date.each do |date, board_pics|
+          board_pics.length.should eq(3)
         end
       end
       it "group's board_pics are ordered by class_date, with newest date appearing first" do
@@ -82,15 +89,23 @@ describe "Board Pics V1 API" do
           board_pic["author"]["name"].should be_true
         end
       end
+      it "returns each board_pic's group as an object with id and name" do
+        for board_pic in @data
+          board_pic["group"]["id"].should be_true
+          board_pic["group"]["name"].should be_true
+        end
+      end
     end
 
-    describe "when paging query params are sent" do
-      describe "?page=1&per_page=5" do
+    describe "when query params are sent" do
+      describe "?older_than=:class_date" do
         before(:all) do
-          @user = @users[:mengano]
+          token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
-          url = "/api/v1/groups/#{@group.id}/board_pics"
-          url += "?auth_token=#{@user.authentication_token}&page=1&per_page=5"
+          @fifth = @group.board_pics.group('class_date').order('class_date DESC')
+            .offset(4).first
+          url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{token}"
+          url += "&older_than=#{@fifth.id}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -98,20 +113,22 @@ describe "Board Pics V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's last 5 board_pics (ordered by class_date)" do
+        it "returns a JSON array with group's board_pics older than the one sent" do
           @data.class.should eq(Array)
-          @data.length.should eq(5)
-          for board_pic in @group.board_pics.order('class_date DESC').limit(5)
-            @data.detect { |bp| bp["id"] == board_pic.id }.should be_true
+          for board_pic in @data
+            board_pic["id"].should be < @fifth.id
+            board_pic["class_date"].to_time.should be <= @fifth.class_date
           end
         end
       end
-      describe "?page=2&per_page=3" do
+      describe "?newer_than=:class_date" do
         before(:all) do
-          @user = @users[:mengano]
+          token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
-          url = "/api/v1/groups/#{@group.id}/board_pics"
-          url += "?auth_token=#{@user.authentication_token}&page=2&per_page=3"
+          @fifth = @group.board_pics.group('class_date').order('class_date DESC')
+            .offset(4).first
+          url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{token}"
+          url += "&newer_than=#{@fifth.id}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -119,11 +136,11 @@ describe "Board Pics V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's board_pics from 4 to 6 (ordered by class_date)" do
+        it "returns a JSON array with group's board_pics older than the one sent" do
           @data.class.should eq(Array)
-          @data.length.should eq(3)
-          for board_pic in @group.board_pics.order('class_date DESC').limit(3).offset(3)
-            @data.detect { |bp| bp["id"] == board_pic.id }.should be_true
+          for board_pic in @data
+            board_pic["id"].should be > @fifth.id
+            board_pic["class_date"].to_time.should be >= @fifth.class_date
           end
         end
       end
@@ -137,11 +154,15 @@ describe "Board Pics V1 API" do
         @status = response.status
         @data = JSON.parse(response.body)
       end
-      it "returns status code 400 (Bad Request)" do
-        @status.should eq(400)
+      it "returns status code 200 (OK)" do
+        @status.should eq(200)
       end
-      it "does not return the group's board_pics" do
-        @data.class.should_not eq(Array)
+      it "returns a JSON array with all board_pics for the last 5 class dates the user has access to" do
+        @data.class.should eq(Array)
+        for board_pic in @data
+          group = Group.find(board_pic["group"]["id"])
+          group.members.include?@user.should be_true
+        end
       end
     end
 

@@ -3,17 +3,42 @@ class Api::V1::BoardPicsController < ApplicationController
   before_filter :check_format
 
   def index
-    params[:page] ||= 1
-    params[:per_page] ||= 10
+    params[:count] ||= 5
+
+    if params[:newer_than]
+      newer_than = BoardPic.find(params[:newer_than]).class_date
+    else
+      newer_than = "2000-01-01".to_date
+    end
+
+    if params[:older_than]
+      older_than = BoardPic.find(params[:older_than]).class_date
+    else
+      older_than = "2100-01-01".to_date
+    end
+
     if params[:group_id] == 'home'
-      @board_pics = current_user.readable(:board_pics).order('created_at DESC')
-        .paginate(:page => params[:page], :per_page => params[:per_page])
+      dates = current_user.readable(:board_pics).where('class_date > ?', newer_than)
+        .where('class_date < ?', older_than).group('class_date')
+        .order('class_date DESC').limit(params[:count])
+        .collect{|bp| bp.class_date}
+      @board_pics = []
+      for date in dates
+        @board_pics += current_user.readable(:board_pics).where('class_date = ?', date)
+      end
     else
       group = Group.find(params[:group_id])
       authorize! :read, group
-      @board_pics = group.board_pics.order('class_date DESC')
-        .paginate(:page => params[:page], :per_page => params[:per_page])
+      dates = group.board_pics.where('class_date > ?', newer_than)
+        .where('class_date < ?', older_than).group('class_date')
+        .order('class_date DESC').limit(params[:count])
+        .collect{|bp| bp.class_date}
+      @board_pics = []
+      for date in dates
+        @board_pics += group.board_pics.where('class_date = ?', date)
+      end
     end
+    @board_pics
   end
 
   def create
