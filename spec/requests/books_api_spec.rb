@@ -22,7 +22,7 @@ describe "Books V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    15.times do
+    8.times do
       FactoryGirl.create(:book, :group => @groups[:fisica])
     end
 
@@ -42,9 +42,9 @@ describe "Books V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with group's last 10 books (ordered by created_at)" do
+      it "returns a JSON array with group's last 5 books (ordered by created_at)" do
         @data.class.should eq(Array)
-        @data.length.should eq(10)
+        @data.length.should eq(5)
         @data.detect { |book| book["id"] == @groups[:fisica].books
           .order('created_at DESC').first.id }.should be_true
         for book in @data
@@ -90,12 +90,14 @@ describe "Books V1 API" do
       end
     end
 
-    describe "when paging query params are sent" do
-      describe "?page=1&per_page=5" do
+    describe "when query params are sent" do
+      describe "?older_than=:book_id" do
         before(:all) do
           token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          @fifth = @group.books.order('created_at DESC').offset(4).first
           url = "/api/v1/groups/#{@groups[:fisica].id}/books?auth_token=#{token}"
-          url += "&page=1&per_page=5"
+          url += "&older_than=#{@fifth.id}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -103,19 +105,21 @@ describe "Books V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's last 5 board_pics (ordered by created_at)" do
+        it "returns a JSON array with group's books older than the one sent" do
           @data.class.should eq(Array)
-          @data.length.should eq(5)
-          for book in @groups[:fisica].books.order('created_at DESC').limit(5)
-            @data.detect { |b| b["id"] == book.id }.should be_true
+          for book in @data
+            book["id"].should be < @fifth.id
+            book["created_at"].to_time.should be <= @fifth.created_at
           end
         end
       end
-      describe "?page=2&per_page=3" do
+      describe "?newer_than=:book_id" do
         before(:all) do
           token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          @fifth = @group.books.order('created_at DESC').offset(4).first
           url = "/api/v1/groups/#{@groups[:fisica].id}/books?auth_token=#{token}"
-          url += "&page=2&per_page=3"
+          url += "&newer_than=#{@fifth.id}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -123,11 +127,11 @@ describe "Books V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's board_pics from 4 to 6 (ordered by created_at)" do
+        it "returns a JSON array with group's books newer than the one sent" do
           @data.class.should eq(Array)
-          @data.length.should eq(3)
-          for book in @groups[:fisica].books.order('created_at DESC').limit(3).offset(3)
-            @data.detect { |b| b["id"] == book.id }.should be_true
+          for book in @data
+            book["id"].should be > @fifth.id
+            book["created_at"].to_time.should be >= @fifth.created_at
           end
         end
       end
@@ -144,9 +148,9 @@ describe "Books V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with the last 10 books (ordered by created_at) that are readable by the user" do
+      it "returns a JSON array with the last 5 books (ordered by created_at) that are readable by the user" do
         @data.class.should eq(Array)
-        @data.length.should eq(10)
+        @data.length.should eq(5)
         @data.detect { |book| book["id"] == @users[:fulano].readable(:books)
           .order('created_at DESC').first.id }.should be_true
         for book in @data

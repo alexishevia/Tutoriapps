@@ -3,16 +3,20 @@ class Api::V1::BooksController < ApplicationController
   before_filter :check_format
 
   def index
-    params[:page] ||= 1
-    params[:per_page] ||= 10
+    params[:newer_than] ||= 0
+    params[:older_than] ||= 99999999
+    params[:count] ||= 5
+
     if params[:group_id] == 'home'
-      @books = current_user.readable(:books).order('created_at DESC')
-        .paginate(:page => params[:page], :per_page => params[:per_page])
+      @books = current_user.readable(:books).where('id > ?', params[:newer_than])
+          .where('id < ?', params[:older_than]).order('created_at DESC')
+          .limit(params[:count])
     else
       group = Group.find(params[:group_id])
       authorize! :read, group
-      @books = group.books.order('created_at DESC')
-        .paginate(:page => params[:page], :per_page => params[:per_page])
+      @books = group.books.where('id > ?', params[:newer_than])
+        .where('id < ?', params[:older_than]).order('created_at DESC')
+        .limit(params[:count])
     end
   end
 

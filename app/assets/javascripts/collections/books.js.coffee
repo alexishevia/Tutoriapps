@@ -3,7 +3,8 @@ class Tutoriapps.Collections.Books extends Backbone.Collection
 
   initialize: (options) =>
     @group = options.group
-    @page = 1
-
-  url: () =>
-    'api/v1/groups/' + @group.id + '/books?per_page=1&page=' + @page
+    @url = 'api/v1/groups/' + @group.id + '/books?'
+    if options.newer_than
+      @url += '&newer_than=' + options.newer_than
+    if options.older_than
+      @url += '&older_than=' + options.older_than
