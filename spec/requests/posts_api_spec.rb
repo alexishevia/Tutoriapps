@@ -22,8 +22,10 @@ describe "Posts V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    15.times do
+    created_at = 5.days.ago
+    8.times do
       FactoryGirl.create(:post, :group => @groups[:fisica])
+      created_at += 1.hour
     end
 
     @headers = {'HTTP_ACCEPT' => 'application/json'}
@@ -42,9 +44,9 @@ describe "Posts V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with group's last 10 posts" do
+      it "returns a JSON array with group's last 5 posts (ordered by created_at)" do
         @data.class.should eq(Array)
-        @data.length.should eq(10)
+        @data.length.should eq(5)
         @data.detect { |post| post["id"] == @groups[:fisica].posts
           .order('created_at DESC').first.id }.should be_true
         for post in @data
@@ -85,6 +87,53 @@ describe "Posts V1 API" do
       end
     end
 
+    describe "when query params are sent" do
+      describe "?older_than=:post_id" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          @fifth = @group.posts.order('created_at DESC').offset(4).first
+          url = "/api/v1/groups/#{@group.id}/posts?auth_token=#{token}"
+          url += "&older_than=#{@fifth.id}"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "returns a JSON array with group's posts older than the one sent" do
+          @data.class.should eq(Array)
+          for post in @data
+            post["id"].should be < @fifth.id
+            post["created_at"].to_time.should be <= @fifth.created_at
+          end
+        end
+      end
+      describe "?newer_than=:post_id" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          @fifth = @group.posts.order('created_at DESC').offset(4).first
+          url = "/api/v1/groups/#{@group.id}/posts?auth_token=#{token}"
+          url += "&newer_than=#{@fifth.id}"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "returns a JSON array with group's posts newer than the one sent" do
+          @data.class.should eq(Array)
+          for post in @data
+            post["id"].should be > @fifth.id
+            post["created_at"].to_time.should be >= @fifth.created_at
+          end
+        end
+      end
+    end
+
     describe "when group id is 'home'" do
       before(:all) do
         token = @users[:fulano].authentication_token
@@ -96,9 +145,9 @@ describe "Posts V1 API" do
       it "returns status code 200 (OK)" do
         @status.should eq(200)
       end
-      it "returns a JSON array with the last 10 posts the user can read" do
+      it "returns a JSON array with the last 5 posts (ordered by created_at) the user can read" do
         @data.class.should eq(Array)
-        @data.length.should eq(10)
+        @data.length.should eq(5)
         @data.detect { |post| post["id"] == @users[:fulano].readable(:posts)
           .order('created_at DESC').first.id }.should be_true
         for post in @data

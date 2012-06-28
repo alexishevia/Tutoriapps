@@ -98,7 +98,7 @@ describe "Books V1 API" do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
           @fifth = @group.books.order('created_at DESC').offset(4).first
-          url = "/api/v1/groups/#{@groups[:fisica].id}/books?auth_token=#{token}"
+          url = "/api/v1/groups/#{@group.id}/books?auth_token=#{token}"
           url += "&older_than=#{@fifth.id}"
           get url, nil, @headers
           @status = response.status
@@ -120,7 +120,7 @@ describe "Books V1 API" do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
           @fifth = @group.books.order('created_at DESC').offset(4).first
-          url = "/api/v1/groups/#{@groups[:fisica].id}/books?auth_token=#{token}"
+          url = "/api/v1/groups/#{@group.id}/books?auth_token=#{token}"
           url += "&newer_than=#{@fifth.id}"
           get url, nil, @headers
           @status = response.status

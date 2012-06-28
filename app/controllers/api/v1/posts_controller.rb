@@ -3,16 +3,30 @@ class Api::V1::PostsController < ApplicationController
   before_filter :check_format
 
   def index
-    params[:page] ||= 1
-    params[:per_page] ||= 10
+    params[:count] ||= 5
+
+    if params[:newer_than]
+      newer_than = Post.find(params[:newer_than]).created_at
+    else
+      newer_than = "2000-01-01".to_time
+    end
+
+    if params[:older_than]
+      older_than = Post.find(params[:older_than]).created_at
+    else
+      older_than = "2100-01-01".to_time
+    end
+
     if params[:group_id] == 'home'
-      @posts = current_user.readable(:posts).order('created_at DESC')
-        .paginate(:page => params[:page], :per_page => params[:per_page])
+      @posts = current_user.readable(:posts).where('created_at > ?', newer_than)
+          .where('created_at < ?', older_than).order('created_at DESC')
+          .limit(params[:count])
     else
       group = Group.find(params[:group_id])
       authorize! :read, group
-      @posts = group.posts.order('created_at DESC')
-        .paginate(:page => params[:page], :per_page => params[:per_page])
+      @posts = group.posts.where('created_at > ?', newer_than)
+        .where('created_at < ?', older_than).order('created_at DESC')
+        .limit(params[:count])
     end
   end
 
