@@ -5,6 +5,7 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
   initialize: (options) =>
     @collection.on('reset', @render)
     @collection.on('add', @addBoardPic)
+    $(window).on('scroll', @windowScroll)
 
   render: =>
     @$el.empty()
@@ -28,3 +29,20 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
           return found = gallery
     )
     return found
+
+  windowScroll: =>
+    if $(window).scrollTop() == $(document).height() - $(window).height()
+      @loadMore()
+
+  loadMore: =>
+    older_pics = new Tutoriapps.Collections.BoardPics(
+      group: @collection.group
+      older_than: @collection.last()
+    )
+    older_pics.fetch(
+      success: (data)=>
+        if data.length == 0
+          $(window).off('scroll')
+        else
+          data.each( (board_pic) => @collection.add(board_pic) )
+    )
