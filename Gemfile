@@ -14,7 +14,6 @@ gem 'validates_existence', '0.7.1'
 gem 'foreigner', '1.1.6'
 gem 'paperclip', '3.0.4'
 gem 'multipart_body', '0.2.1'
-gem 'will_paginate', '3.0.3'
 
 group :assets do
   gem 'sass-rails', '3.2.5'
