@@ -36,7 +36,7 @@ class Book < ActiveRecord::Base
   private
 
     def price_if_sale
-      if offer_type == 'sale'
+      if offer_type == 'sale' or offer_type == 'loan'
         errors.add(:price, I18n.t('activerecord.errors.messages.blank')) unless price
       end
     end
