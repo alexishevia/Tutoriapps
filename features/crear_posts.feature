@@ -1,7 +1,7 @@
 # coding: utf-8
 # language: es
 Característica: Crear Posts
-  
+
   Como estudiante
   Para compartir información con mis compañeros
   Quiero crear posts en mis grupos
@@ -18,9 +18,9 @@ Característica: Crear Posts
   @javascript
   Escenario: Crear un post público
     Dado que el usuario "mengano@utp.ac.pa" ha iniciado sesión
-    Y que está viendo el muro "Todos"
+    Y que está viendo el muro "Inicio"
     Cuando escriba un post
-    Entonces el post aparecerá en el muro "Todos"
+    Entonces el post aparecerá en el muro "Inicio"
     Pero el post no aparecerá en el muro "Cálculo II"
     Y el post no aparecerá en el muro "OAC"
 
@@ -30,5 +30,5 @@ Característica: Crear Posts
     Y que está viendo el muro "Cálculo II"
     Cuando escriba un post
     Entonces el post aparecerá en el muro "Cálculo II"
-    Y el post aparecerá en el muro "Todos"
+    Y el post aparecerá en el muro "Inicio"
     Pero el post no aparecerá en el muro "Programación I"
