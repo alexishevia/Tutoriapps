@@ -25,7 +25,7 @@ class Api::V1::FeedsController < ApplicationController
 
     if params[:group_id] == 'home'
       @feed_items = []
-      for association in [:posts, :books]
+      for association in [:posts, :board_pics, :books]
         @feed_items += current_user.readable(association)
           .where('created_at > ?', newer_than).where('created_at < ?', older_than)
           .order('created_at DESC').limit(params[:count])
