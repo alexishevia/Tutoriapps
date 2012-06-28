@@ -19,13 +19,15 @@ class Tutoriapps.Views.NewBoardPicModal extends Backbone.View
 
   createBoardPic: (evt)=>
     evt.preventDefault()
-    $(evt.target).ajaxSubmit(
-      success: (data) =>
-        board_pic = new Tutoriapps.Models.BoardPic(data)
-        @collection.add(board_pic)
-        evt.target.reset()
-        $(evt.target).parents('.modal').modal('hide')
-    )
+    enabled = !$(evt.target).find('input[type="submit"]').hasClass('disabled')
+    if(enabled)
+      $(evt.target).ajaxSubmit(
+        success: (data) =>
+          board_pic = new Tutoriapps.Models.BoardPic(data)
+          @collection.add(board_pic)
+          evt.target.reset()
+          $(evt.target).parents('.modal').modal('hide')
+      )
 
   toggleSubmitButton: (evt) =>
     form = $(evt.target).parents('form')
