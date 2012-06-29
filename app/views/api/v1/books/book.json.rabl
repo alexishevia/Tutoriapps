@@ -5,6 +5,12 @@ node(:price) do |book|
 end
 child :owner => :owner do
   attributes :id, :name
+  child :profile_pic => :profile_pic do
+    attributes :url, :size, :content_type
+    node :thumbnail_url do |img|
+      img.url(:thumb)
+    end
+  end
 end
 node(:group) do |book|
   if book.group

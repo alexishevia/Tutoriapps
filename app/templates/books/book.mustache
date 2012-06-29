@@ -1,20 +1,26 @@
-<div class="row">
-  <div class="span3">
-    <strong>{{owner.name}}</strong>
-  </div>
-  <div class="span3 time">
-    {{group.name}} ·
-    <span class="timeago" title="{{created_at}}"></span>
-  </div>
+<div class="profile_pic">
+  <img src="{{owner.profile_pic.thumbnail_url}}">
 </div>
-<div class="row"><div class="span6">{{title}}</div></div>
-<div class="row"><div class="span6">{{author}}</div></div>
-<div class="row"><div class="span6">{{publisher}}</div></div>
-<div class="row"><div class="span6">{{additional_info}}</div></div>
-<div class="row"><div class="span6">{{contact_info}}</div></div>
-<div class="row"><div class="span6">{{offer_type}}</div></div>
-<div class="row"><div class="span6">{{price}}</div></div>
-<div class="post-options">
-  <i class="icon-share-alt"></i>
-  <a class="reply_link" href="#">{{t_reply}}</a>
+<div class="data">
+  <div class="info">
+    <strong class="author">{{owner.name}}</strong>
+    <div class="time">
+      {{group.name}} · <span class="timeago" title="{{created_at}}"></span>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="text">
+    <p>Está ofreciendo un libro:</p>
+    <div><strong>Título:</strong> {{title}}</div>
+    <div><strong>Autor:</strong> {{author}}</div>
+    <div><strong>Editorial:</strong> {{publisher}}</div>
+    <div><strong>Para:</strong> {{t_offer_type}}</div>
+    <div><strong>Precio:</strong> ${{price}}</div>
+    <div>{{additional_info}}</div>
+    <div>{{contact_info}}</div>
+  </div>
+  <a class="reply_link" href="#">
+    <i class="icon-share-alt"></i> {{t_reply}}
+  </a>
 </div>
+<div class="clearfix"></div>
