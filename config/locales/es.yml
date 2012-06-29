@@ -2,6 +2,7 @@ es:
   slogan: Aprende · Comparte · Enseña
   error: Error
   fix_and_try_again: Por favor corrija estos errores y vuélvalo a intentar
+  my_account: Mi Cuenta
   date:
     abbr_day_names:
     - dom
@@ -131,6 +132,7 @@ es:
     suggestions: Sugerencias
     reply: Responder
     delete: Eliminar
+    sign_out: Cerrar Sesión
     select:
       prompt: Por favor seleccione
     confirm_delete:
@@ -140,9 +142,11 @@ es:
       create: Crear %{model}
       submit: Guardar %{model}
       update: Actualizar %{model}
+      update1: Actualizar
       add: Agregar %{model}
       add1: Agregar
       send: Enviar
+      save: Guardar
       share: Compartir %{model}
       share1: Compartir
     messages:
@@ -235,6 +239,8 @@ es:
         password: Contraseña
         password_confirmation: Repetir contraseña
         current_password: Contraseña actual
+        new_password: Nueva Contraseña
+        new_password_confirmation: Repetir nueva contraseña
         remember_me: No cerrar sesión
       group:
         name: Nombre

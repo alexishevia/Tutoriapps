@@ -12,6 +12,8 @@ es:
   devise:
     sign_up: Crear Cuenta
     sign_in: Iniciar Sesión
+    edit_account: Editar Mi Cuenta
+    cancel_account: Cerrar Mi Cuenta
     sign_up_you: Regístrate
     sign_up_message: Es fácil y rápido
     failure:
@@ -45,6 +47,8 @@ es:
       signed_up_but_locked: 'Te has registrado correctamente, pero tu cuenta está bloqueada.'
       updated: 'Actualizaste tu cuenta correctamente.'
       update_needs_confirmation: "Actualizaste tu cuenta correctamente, pero tenemos que revalidar tu email. Revisa tu correo para confirmar la dirección."
+      destroy_warning: 'Es una lástima verte partir. Si hay algo en lo que te podemos ayudar o si tienes alguna sugerencia que nos permita mejorar, no dudes en contactarnos.'
+      destroy_confirmation: 'Si procedes, toda tu información será eliminada y no podrá ser recuperada. ¿Estás seguro que deseas cerrar tu cuenta?'
       destroyed: 'Adiós, tu cuenta ha sido eliminada. Esperamos verte de vuelta pronto!'
     unlocks:
       send_instructions: 'Recibirás un email con instrucciones para desbloquear tu cuenta en unos minutos'
