@@ -16,12 +16,13 @@ class Tutoriapps.Views.Post extends Backbone.View
     hash = $.extend(translations, @model.toJSON())
     $(@el).html(@template(hash))
     if @model.get('reply_count') > 0
-      @$('.post-options').remove()
+      @$('.reply_link').remove()
     @$(".timeago").timeago()
     view = new Tutoriapps.Views.Replies(collection: @replies)
-    $(@el).append(view.render().el)
+    @$('.data').append(view.render().el)
     this
 
   showReplyForm: (evt)=>
     evt.preventDefault()
+    $(evt.target).remove()
     @$('form').show()

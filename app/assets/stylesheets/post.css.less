@@ -1,36 +1,52 @@
 .post {
-  margin: 20px 0 20px 0;
-  color: #000000;
-  border-bottom: 1px solid;
-  border-bottom-color: silver;
- }
+  padding-bottom: 1.3em;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid silver;
+  .profile_pic {
+    width: 11%;
+    float: left;
+    img { max-width: 100%; }
+  }
+  .data {
+    float: right;
+    width: 86%;
+    .info {
+      .author { float: left; }
+      .time { float: right; }
+    }
+    .text { padding: 0.3em 0; }
+  }
+  .reply_link {
+    display: block;
+    font-size: 0.8em;
+    margin-top: 0.3em;
+  }
+}
 .time {
-      text-align: right;
-      color: #999;
-      font-size: 10px;
-}
-.time-reply {
-      text-align: left;
-      color: #999;
-      font-size: 10px;
-}
-.post-options {
-      padding-top: 1em;
-      text-align: left;
-      color: #999;
-      font-size: 10px;
+  text-align: right;
+  color: #999;
+  font-size: 0.8em;
 }
 .replies {
   background-color: #E4F0DE;
-  margin: 20px 0px 20px 0;
-  padding-left: 0.4em;
-  padding-right: 0.4em;
-}
-.reply {
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid;
-  border-bottom-color: #F5F5F5;
+  margin-top: 0.5em;
+  padding: 0 1em;
+  form {
+    padding: 0.5em 0;
+    margin: 0;
+    text-align: right;
+  }
+  textarea {
+    display: block;
+    width: 98%;
+    margin: 0.5em auto;
+    height: 1.5em;
+  }
+  .reply, .see_all {
+    display: block;
+    padding: 0.7em 0;
+    border-bottom: 1px solid #F5F5F5;
+  }
 }
 form.new_post {
   textarea {

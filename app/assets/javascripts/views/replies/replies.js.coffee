@@ -8,8 +8,7 @@ class Tutoriapps.Views.Replies extends Backbone.View
     @collection.on('add', @appendReply)
 
   events:
-    'keyup textarea': 'toggleSubmitFeedbackButton'
-    'submit form.new_reply': 'createReply'
+    'keyup textarea': 'checkForEnter'
     'click .see_all': 'showAll'
 
   render: =>
@@ -34,26 +33,18 @@ class Tutoriapps.Views.Replies extends Backbone.View
     view = new Tutoriapps.Views.Reply(model: reply)
     @$('.replies_container').append(view.render().el)
 
-  createReply: (evt) =>
-    evt.preventDefault()
-    enabled = !$(evt.target).find('input[type="submit"]').hasClass('disabled')
-    if(enabled)
-      data = Backbone.Syphon.serialize(evt.target)
-      @collection.create data,
-      wait: true
-      success: => 
-        evt.target.reset()
-
   showAll: (evt) =>
     evt.preventDefault()
     @show = 'all'
     @render()
 
-  toggleSubmitFeedbackButton: (evt) =>
-    textarea = evt.target
-    submit_button = $(evt.target).parents('form').find('input[type="submit"]')
-    if (!$.trim($(textarea).val()))
-      # textarea is empty or contains only white-space
-      $(submit_button).addClass('disabled')
-    else
-      $(submit_button).removeClass('disabled')  
+  checkForEnter: (evt) =>
+    if evt.keyCode == 13 and !evt.shiftKey
+      evt.preventDefault()
+      value = $.trim($(evt.target).val())
+      if !!value
+        data = {text: value}
+        @collection.create data,
+        wait: true
+        success: =>
+          $(evt.target).val('')

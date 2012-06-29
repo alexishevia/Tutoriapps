@@ -1,16 +1,19 @@
-<div class="row">
-  <div class="span3">
-    <strong>{{author.name}}</strong>
+<div class="profile_pic">
+  <img src="{{author.profile_pic.thumbnail_url}}">
+</div>
+<div class="data">
+  <div class="info">
+    <strong class="author">{{author.name}}</strong>
+    <div class="time">
+      {{group.name}} · <span class="timeago" title="{{created_at}}"></span>
+    </div>
+    <div class="clearfix"></div>
   </div>
-  <div class="span3 time">
-    {{group.name}} ·
-    <span class="timeago" title="{{created_at}}"></span>
+  <div class="text">
+    {{text}}
   </div>
+  <a class="reply_link" href="#">
+    <i class="icon-share-alt"></i> {{t_reply}}
+  </a>
 </div>
-<div class="row">
-  <div class="span6">{{text}}</div><br>      
-</div>
-<div class="post-options">
-  <i class="icon-share-alt"></i>
-  <a class="reply_link" href="#">{{t_reply}}</a>
-</div>
+<div class="clearfix"></div>
