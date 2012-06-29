@@ -10,7 +10,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
       $('#admin_panel').remove()
 
     view = new Tutoriapps.Views.GroupSelect(collection: @groups)
-    $('#groups_panel').html(view.render().el)
+    $('#groups_panel .groups').html(view.render().el)
 
     view = new Tutoriapps.Views.FilterSelect(collection: @groups)
     $('#filter_selector').html(view.render().el)

@@ -1,7 +1,14 @@
 <div class="row">
   <div class="sidebar span4">
     <div id="admin_panel" class="admin_panel well"></div>
-    <div id="groups_panel" class="groups_panel well"></div>
+    <div id="groups_panel" class="groups_panel well">
+      <a class="current_user" href="<%= edit_user_registration_path %>">
+        <%= image_tag current_user.profile_pic.url(:medium) %><span><%= current_user.name %></span>
+      </a>
+      <div class="groups">
+
+      </div>
+    </div>
   </div>
   <div id="content_panel" class="content_panel well span6">
     <div id="filter_selector"></div>
