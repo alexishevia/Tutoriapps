@@ -1,5 +1,6 @@
 class Tutoriapps.Views.NewBookModal extends Backbone.View
   template: SMT['books/new_book_modal']
+  className: 'new_book'
 
   events:
     'submit form': 'createBook'
