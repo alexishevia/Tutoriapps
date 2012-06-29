@@ -1,4 +1,19 @@
-{{author.name}} shared a new board_pic for {{class_date}}:
-<a href="{{image.url}}" rel="gallery">
-  <img src="{{image.thumbnail_url}}">
-</a>
+<div class="profile_pic">
+  <img src="{{author.profile_pic.thumbnail_url}}">
+</div>
+<div class="data">
+  <div class="info">
+    <strong class="author">{{author.name}}</strong>
+    <div class="time">
+      {{group.name}} · <span class="timeago" title="{{created_at}}"></span>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="text">
+    Pizarra para la clase del {{t_date}}: <br>
+    <a href="{{image.url}}" target="_blank">
+      <img src="{{image.thumbnail_url}}">
+    </a>
+  </div>
+</div>
+<div class="clearfix"></div>

@@ -27,17 +27,17 @@ es:
     - nov
     - dic
     day_names:
-    - Domingo
-    - Lunes
-    - Martes
-    - Miércoles
-    - Jueves
-    - Viernes
-    - Sábado
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
     formats:
       default: ! '%d/%m/%Y'
       long: ! '%A %d de %B de %Y'
-      short: ! '%d de %b'
+      short: ! '%A %d de %B'
     month_names:
     -
     - enero

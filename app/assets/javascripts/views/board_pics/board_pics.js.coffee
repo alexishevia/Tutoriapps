@@ -18,7 +18,7 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
     gallery = @findGallery(board_pic.get('class_date'))
     if !gallery
       date = board_pic.get('class_date')
-      t_date = I18n.l("date.formats.long", date)
+      t_date = @capitalize(I18n.l("date.formats.long", date))
       gallery = $(@template({date: date, t_date: t_date}))
       @$el.append(gallery)
     $(gallery).find('[data-toggle="modal-gallery"]').prepend(view.render().el)
@@ -48,3 +48,6 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
         else
           data.each( (board_pic) => @collection.add(board_pic) )
     )
+
+  capitalize: (string) ->
+    string.charAt(0).toUpperCase() + string.slice(1);

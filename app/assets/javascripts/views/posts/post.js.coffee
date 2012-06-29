@@ -1,6 +1,6 @@
 class Tutoriapps.Views.Post extends Backbone.View
   template: SMT['posts/post']
-  className: 'post'
+  className: 'post feed_item'
 
   initialize: ->
     @model.on('change', @render)
