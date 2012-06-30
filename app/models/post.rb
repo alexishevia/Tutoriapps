@@ -18,10 +18,10 @@ class Post < ActiveRecord::Base
   validates :author, :text, :presence => true
 
   def group_name
-    if group
-      return group.name
-    else
-      return I18n.t('activerecord.attributes.group.public')
-    end
+    group ? group.name : I18n.t('activerecord.attributes.group.public')
+  end
+
+  def group_id
+    group ? group.id : 'home'
   end
 end

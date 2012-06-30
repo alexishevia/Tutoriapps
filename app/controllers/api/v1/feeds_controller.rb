@@ -12,6 +12,12 @@ class Api::V1::FeedsController < ApplicationController
           .where('created_at < ?', params[:older_than])
           .order('created_at DESC').limit(params[:count])
       end
+      if params[:include_replies]
+        @feed_items += Reply.where('created_at > ?', params[:newer_than])
+          .where('created_at < ?', params[:older_than]).select{ |reply|
+            reply.post.group_id == 'home' or reply.post.group.members.include? current_user
+          }
+      end
     else
       group = Group.find(params[:group_id])
       authorize! :read, group

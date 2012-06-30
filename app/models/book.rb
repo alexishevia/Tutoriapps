@@ -33,6 +33,14 @@ class Book < ActiveRecord::Base
     I18n.t("activerecord.attributes.books.offer_types.#{status}")
   end
 
+  def group_name
+    group ? group.name : I18n.t('activerecord.attributes.group.public')
+  end
+
+  def group_id
+    group ? group.id : 'home'
+  end
+
   private
 
     def price_if_sale
