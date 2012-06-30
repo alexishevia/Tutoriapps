@@ -1,4 +1,4 @@
-form.new_post {
+form.new_post, form.new_reply {
   textarea {
     margin: 0;
     width: 98%;
@@ -6,7 +6,6 @@ form.new_post {
     padding: 1%;
     outline: none;
     resize: none;
-    border: none;
     overflow: hidden;
   }
   .form-body {
@@ -14,5 +13,25 @@ form.new_post {
   }
   .form-footer {
     display: none;
+  }
+  &.focused {
+    textarea{
+      height: 5em;
+      resize: vertical;
+    }
+    .form-footer {
+      display: block;
+    }
+  }
+}
+form.new_post {
+  textarea { border: none; }
+}
+form.new_reply {
+  padding: 0.5em 0;
+  margin: 0;
+  text-align: right;
+  textarea {
+    margin: 0.5em auto;
   }
 }

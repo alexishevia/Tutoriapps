@@ -7,7 +7,7 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
 
   events:
     'submit form': 'createPost'
-    'focus textarea[name=text]': 'expand'
+    'focus textarea': 'expand'
     'keyup textarea': 'toggleSubmitButton'
 
   render: =>
@@ -25,6 +25,7 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
         wait: true
         success: ->
           evt.target.reset()
+          $(evt.target).removeClass('focused')
         error: @handleError
 
   handleError: (group, response) ->
@@ -34,20 +35,8 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
 
   expand: (evt) =>
     evt.preventDefault()
-    textarea = evt.target
-    button_container = $(textarea).parents('form').find(".form-footer")
-    $(textarea).animate({height: "5em"}, 200)
-    $(button_container).show(0,
-      () =>
-        $("body").on('mouseup'
-          (evt) =>
-            if $(evt.target).parents('.new_post').length <= 0
-              $("body").off('mouseup')
-              evt.preventDefault()
-              $(button_container).hide()
-              $(textarea).animate({height: "1.5em"}, 200)
-        )
-    )
+    form = $(evt.target).parents('form')
+    $(form).addClass('focused')
 
   toggleSubmitButton: (evt) =>
     textarea = evt.target

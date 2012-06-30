@@ -8,7 +8,9 @@ class Tutoriapps.Views.Replies extends Backbone.View
     @collection.on('add', @appendReply)
 
   events:
-    'keyup textarea': 'checkForEnter'
+    'submit form': 'createReply'
+    'focus textarea': 'expand'
+    'keyup textarea': 'toggleSubmitButton'
     'click .see_all': 'showAll'
 
   render: =>
@@ -38,13 +40,33 @@ class Tutoriapps.Views.Replies extends Backbone.View
     @show = 'all'
     @render()
 
-  checkForEnter: (evt) =>
-    if evt.keyCode == 13 and !evt.shiftKey
-      evt.preventDefault()
-      value = $.trim($(evt.target).val())
-      if !!value
-        data = {text: value}
-        @collection.create data,
+  expand: (evt) =>
+    evt.preventDefault()
+    form = $(evt.target).parents('form')
+    $(form).addClass('focused')
+
+  createReply: (evt) =>
+    evt.preventDefault()
+    enabled = !$(evt.target).find('input[type="submit"]').hasClass('disabled')
+    if(enabled)
+      data = Backbone.Syphon.serialize(evt.target)
+      @collection.create data,
         wait: true
-        success: =>
-          $(evt.target).val('')
+        success: ->
+          evt.target.reset()
+          $(evt.target).removeClass('focused')
+        error: @handleError
+
+  handleError: (group, response) ->
+    if response.status = 422
+      errors = $.parseJSON(response.responseText)
+      alert errors[0]
+
+  toggleSubmitButton: (evt) =>
+    textarea = evt.target
+    submit_button = $(evt.target).parents('form').find('input[type="submit"]')
+    if (!$.trim($(textarea).val()))
+      # textarea is empty or contains only white-space
+      $(submit_button).addClass('disabled')
+    else
+      $(submit_button).removeClass('disabled')
