@@ -4,7 +4,7 @@ class Tutoriapps.Views.Book extends Backbone.View
 
   initialize: ->
     @model.on('change', @render)
-    @replies = new Tutoriapps.Collections.Replies({book: @model})
+    @replies = new Tutoriapps.Collections.Replies([], {book: @model})
     @replies.fetch()
 
   events: =>

@@ -4,7 +4,7 @@ class Tutoriapps.Views.Post extends Backbone.View
 
   initialize: ->
     @model.on('change', @render)
-    @replies = new Tutoriapps.Collections.Replies({post: @model})
+    @replies = new Tutoriapps.Collections.Replies([], {post: @model})
     @replies.fetch()
 
   events: =>

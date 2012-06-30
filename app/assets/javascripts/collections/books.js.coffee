@@ -1,7 +1,7 @@
 class Tutoriapps.Collections.Books extends Backbone.Collection
   model: Tutoriapps.Models.Book
 
-  initialize: (options) =>
+  initialize: (models, options) =>
     @group = options.group
     @url = 'api/v1/groups/' + @group.id + '/books?'
     if options.newer_than

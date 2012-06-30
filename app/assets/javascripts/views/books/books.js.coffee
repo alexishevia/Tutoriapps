@@ -36,9 +36,11 @@ class Tutoriapps.Views.Books extends Backbone.View
       @loadMore()
 
   loadMore: =>
-    older_books = new Tutoriapps.Collections.Books(
-      group: @collection.group
-      older_than: @collection.last().get('created_at')
+    older_books = new Tutoriapps.Collections.Books( [],
+      {
+        group: @collection.group
+        older_than: @collection.last().get('created_at')
+      }
     )
     older_books.fetch(
       success: (data)=>

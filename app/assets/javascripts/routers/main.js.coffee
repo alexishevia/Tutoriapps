@@ -39,10 +39,10 @@ class Tutoriapps.Routers.Main extends Backbone.Router
     $('#content').empty()
     switch filter
       when 'all'
-        posts = new Tutoriapps.Collections.Posts(group: group)
-        board_pics = new Tutoriapps.Collections.BoardPics(group: group)
-        books = new Tutoriapps.Collections.Books(group: group)
-        items = new Tutoriapps.Collections.Items(group: group)
+        posts = new Tutoriapps.Collections.Posts([], {group: group})
+        board_pics = new Tutoriapps.Collections.BoardPics([], {group: group})
+        books = new Tutoriapps.Collections.Books([], {group: group})
+        items = new Tutoriapps.Collections.Items([], {group: group})
         items.fetch()
         views = [
           new Tutoriapps.Views.FormSelect(
@@ -60,7 +60,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         ]
 
       when 'board_pics'
-        board_pics = new Tutoriapps.Collections.BoardPics(group: group)
+        board_pics = new Tutoriapps.Collections.BoardPics([], {group: group})
         board_pics.fetch()
         views = [
           new Tutoriapps.Views.NewBoardPicModal(collection: board_pics)
@@ -68,7 +68,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         ]
 
       when 'books'
-        books = new Tutoriapps.Collections.Books(group: group)
+        books = new Tutoriapps.Collections.Books([], {group: group})
         books.fetch()
         views = [
           new Tutoriapps.Views.NewBookModal(collection: books)
