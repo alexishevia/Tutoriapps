@@ -10,10 +10,12 @@
     <div class="clearfix"></div>
   </div>
   <div class="text">
-    Compartió una pizarra para la clase del {{t_date}}: <br>
-    <a href="{{image.url}}" target="_blank">
-      <img src="{{image.thumbnail_url}}">
-    </a>
+    Compartió una pizarra para la clase del {{t_date}}:
+    <div data-toggle="modal-gallery" data-target="#modal-gallery">
+      <a href="{{image.url}}" rel="gallery">
+        <img src="{{image.thumbnail_url}}">
+      </a>
+    </div>
   </div>
 </div>
 <div class="clearfix"></div>
