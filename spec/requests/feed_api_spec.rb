@@ -22,9 +22,11 @@ describe "Feed V1 API" do
     @groups[:fisica].members << @users[:mengano]
     @groups[:calculo].members << @users[:fulano]
 
-    created_at = 5.days.ago
+    created_at = 30.days.ago
     5.times do
       FactoryGirl.create(:post, :group => @groups[:fisica], :created_at => created_at)
+      created_at += 1.hour
+      FactoryGirl.create(:reply, :post => @groups[:fisica].posts.last)
       created_at += 1.hour
       FactoryGirl.create(:book, :group => @groups[:fisica], :created_at => created_at)
       created_at += 1.hour
@@ -82,7 +84,7 @@ describe "Feed V1 API" do
       end
     end
 
-    describe "when query params are sent" do
+    describe "with query params" do
       describe "?older_than=:datetime_as_utc_iso8601" do
         before(:all) do
           token = @users[:fulano].authentication_token
@@ -118,7 +120,7 @@ describe "Feed V1 API" do
         it "returns status code 200 (OK)" do
           @status.should eq(200)
         end
-        it "returns a JSON array with group's objects older than the one sent" do
+        it "returns a JSON array with group's objects newer than the one sent" do
           @data.class.should eq(Array)
           for object in @data
             object["data"]["created_at"].to_time.should be >= @fifth.created_at
@@ -138,6 +140,55 @@ describe "Feed V1 API" do
         end
         it "returns status code 400 (Bad Request)" do
           @status.should eq(400)
+        end
+      end
+      describe "?count=:N" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          @requests = [{:n => 3}, {:n => 8}, {:n => 15}]
+          for request in @requests
+            url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
+            url += "&count=#{request[:n]}"
+            get url, nil, @headers
+            request[:status] = response.status
+            request[:data] = JSON.parse(response.body)
+          end
+        end
+        it "returns status code 200 (OK)" do
+          for request in @requests
+            request[:status].should eq(200)
+          end
+        end
+        it "returns a JSON array with the group's last N objects (combining posts, board_pics, and books)" do
+          for request in @requests
+            request[:data].class.should eq(Array)
+            request[:data].length.should eq(request[:n])
+          end
+        end
+      end
+      describe "?include_replies=1" do
+        before(:all) do
+          token = @users[:fulano].authentication_token
+          @group = @groups[:fisica]
+          url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
+          url += "&include_replies=1"
+          get url, nil, @headers
+          @status = response.status
+          @data = JSON.parse(response.body)
+        end
+        it "returns status code 200 (OK)" do
+          @status.should eq(200)
+        end
+        it "includes replies along with posts, board_pics, and books" do
+          count = Hash.new(0)
+          for item in @data
+            count[item["type"]] += 1
+          end
+          count["post"].should be > 0
+          count["board_pic"].should be > 0
+          count["book"].should be > 0
+          count["reply"].should be > 0
         end
       end
     end
