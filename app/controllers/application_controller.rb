@@ -34,6 +34,7 @@ class ApplicationController < ActionController::Base
 
   def load_paging_params
     params[:count] ||= 5
+    params[:count] = params[:count].to_i
 
     if params[:newer_than]
       begin

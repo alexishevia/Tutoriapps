@@ -1,6 +1,7 @@
 class Tutoriapps.Routers.Main extends Backbone.Router
   initialize: (options) =>
     @is_admin = options.is_admin
+    @user_id = options.user_id
     @groups = new Tutoriapps.Collections.Groups()
 
     if @is_admin
@@ -50,6 +51,10 @@ class Tutoriapps.Routers.Main extends Backbone.Router
             posts: posts
             board_pics: board_pics
             books: books
+          )
+          new Tutoriapps.Views.LoadNewItems(
+            collection: items
+            user_id: @user_id
           )
           new Tutoriapps.Views.Items(
             collection: items

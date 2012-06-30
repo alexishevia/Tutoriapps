@@ -30,6 +30,7 @@
 
 <%= content_for :javascript do %>
   <%= javascript_tag do %>
-    Tutoriapps.initialize({is_admin: <%= current_user.admin? %>});
+    Tutoriapps.initialize({user_id: <%= current_user.id %>,
+      is_admin: <%= current_user.admin? %>});
   <% end %>
 <% end %>

@@ -15,6 +15,15 @@ child :author => :author do
     end
   end
 end
+child :author => :owner do
+  attributes :id, :name
+  child :profile_pic => :profile_pic do
+    attributes :url, :size, :content_type
+    node :thumbnail_url do |img|
+      img.url(:thumb)
+    end
+  end
+end
 node(:group) do |post|
   if post.group
     attributes :id => post.group.id, :name => post.group.name

@@ -133,6 +133,9 @@ es:
     reply: Responder
     delete: Eliminar
     sign_out: Cerrar Sesión
+    new_items:
+      one: "%{count} artículo nuevo"
+      other: "%{count} artículos nuevos"
     select:
       prompt: Por favor seleccione
     confirm_delete:

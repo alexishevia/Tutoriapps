@@ -1,6 +1,5 @@
 class Tutoriapps.Views.Items extends Backbone.View
   className: 'items'
-  reloadTime: 15000
 
   initialize: (options) =>
     @add = 'before' # where to add new items
@@ -10,7 +9,6 @@ class Tutoriapps.Views.Items extends Backbone.View
     options.board_pics.on('add', @addBoardPic)
     options.books.on('add', @addBook)
     $(window).on('scroll', @windowScroll)
-    setTimeout(@loadNewer, @reloadTime)
 
   render: =>
     @$el.empty()
@@ -65,17 +63,4 @@ class Tutoriapps.Views.Items extends Backbone.View
           @add = 'after'
           data.each( (item) => @collection.add(item) )
           @add = 'before'
-    )
-
-  loadNewer: =>
-    newer_items = new Tutoriapps.Collections.Items( [],
-      {
-        group: @collection.group
-        newer_than: @collection.first().get('data').created_at
-      }
-    )
-    newer_items.fetch(
-      success: (data)=>
-        data.each( (item) => @collection.add(item) )
-        setTimeout(@loadNewer, @reloadTime)
     )
