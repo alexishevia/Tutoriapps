@@ -55,7 +55,7 @@ class Tutoriapps.Views.BoardPics extends Backbone.View
   loadMore: =>
     older_pics = new Tutoriapps.Collections.BoardPics(
       group: @collection.group
-      older_than: @collection.last()
+      older_than: @collection.last().get('class_date')
     )
     older_pics.fetch(
       success: (data)=>

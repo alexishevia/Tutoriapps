@@ -105,7 +105,7 @@ describe "Board Pics V1 API" do
           @fifth = @group.board_pics.group('class_date').order('class_date DESC')
             .offset(4).first
           url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{token}"
-          url += "&older_than=#{@fifth.id}"
+          url += "&older_than=#{@fifth.class_date.iso8601}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -128,7 +128,7 @@ describe "Board Pics V1 API" do
           @fifth = @group.board_pics.group('class_date').order('class_date DESC')
             .offset(4).first
           url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{token}"
-          url += "&newer_than=#{@fifth.id}"
+          url += "&newer_than=#{@fifth.class_date.iso8601}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)

@@ -51,7 +51,7 @@ class Tutoriapps.Views.Items extends Backbone.View
   loadMore: =>
     older_items = new Tutoriapps.Collections.Items(
       group: @collection.group
-      older_than: @collection.last()
+      older_than: @collection.last().get('data').created_at
     )
     older_items.fetch(
       success: (data)=>

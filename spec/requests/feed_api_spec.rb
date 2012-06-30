@@ -83,13 +83,13 @@ describe "Feed V1 API" do
     end
 
     describe "when query params are sent" do
-      describe "?older_than=:object_id&type=:object_type" do
+      describe "?older_than=:datetime_as_utc_iso8601" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
           @fifth = @group.content.sort{|a,b| a.created_at <=> b.created_at }.reverse[5]
           url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
-          url += "&older_than=#{@fifth.id}&type=#{@fifth.class.to_s.underscore}"
+          url += "&older_than=#{@fifth.created_at.utc.iso8601}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -104,13 +104,13 @@ describe "Feed V1 API" do
           end
         end
       end
-      describe "?newer_than=:object_id&type=:object_type" do
+      describe "?newer_than=:datetime_as_utc_iso8601" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
           @fifth = @group.content.sort{|a,b| a.created_at <=> b.created_at }.reverse[5]
           url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
-          url += "&newer_than=#{@fifth.id}&type=#{@fifth.class.to_s.underscore}"
+          url += "&newer_than=#{@fifth.created_at.utc.iso8601}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -125,13 +125,13 @@ describe "Feed V1 API" do
           end
         end
       end
-      describe "when older_than or newer_than is used but object_type is not sent" do
+      describe "when older_than or newer_than is used but date is invalid" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
           @fifth = @group.content.sort{|a,b| a.created_at <=> b.created_at }.reverse[5]
           url = "/api/v1/groups/#{@group.id}/all?auth_token=#{token}"
-          url += "&older_than=#{@fifth.id}"
+          url += "&older_than=invalid-date"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)

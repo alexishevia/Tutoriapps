@@ -31,4 +31,28 @@ class ApplicationController < ActionController::Base
       raise CanCan::AccessDenied
     end
   end
+
+  def load_paging_params
+    params[:count] ||= 5
+
+    if params[:newer_than]
+      begin
+        params[:newer_than] = params[:newer_than].to_time
+      rescue ArgumentError => e
+        return render :json => {:errors => e.to_s}, :status => :bad_request
+      end
+    else
+      params[:newer_than] = "2000-01-01".to_time
+    end
+
+    if params[:older_than]
+      begin
+        params[:older_than] = params[:older_than].to_time
+      rescue ArgumentError => e
+        return render :json => {:errors => e.to_s}, :status => :bad_request
+      end
+    else
+      params[:older_than] = "2100-01-01".to_time
+    end
+  end
 end
