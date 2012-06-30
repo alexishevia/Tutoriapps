@@ -73,7 +73,7 @@ class Tutoriapps.Views.Items extends Backbone.View
     type = reply.get('reply_to').type
     $.each( @collection.where({type: type}),
       (i, item) =>
-        if item.get('data').id = reply.get('reply_to').id
+        if item.get('data').id == reply.get('reply_to').id
           item.view.replies.add(reply)
           return false
     )

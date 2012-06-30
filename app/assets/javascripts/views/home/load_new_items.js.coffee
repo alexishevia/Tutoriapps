@@ -7,7 +7,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
 
   initialize: (options) =>
     @user_id = options.user_id
-    @buffer = new Tutoriapps.Collections.Items([], {group: @collection.group})
+    @buffer = new (@collection.constructor)([], {group: @collection.group})
     @buffer.on('reset', @render)
     @buffer.on('add', @render)
     @newest_date = @ISODateString(new Date())
@@ -22,7 +22,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     this
 
   loadNew: =>
-    new_items = new Tutoriapps.Collections.Items( [],
+    new_items = new (@collection.constructor)([],
       group: @collection.group
       newer_than: @newest_date
       include_replies: true
@@ -32,9 +32,10 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
         data.each(
           (item) =>
             @newest_date = @ISODateString(new Date())
-            if item.get('data').owner.id != @user_id
+            data = item.get('data')
+            if data.owner.id != @user_id
               if item.get('type') == 'reply'
-                @collection.addReply(new Tutoriapps.Models.Reply(item.get('data')))
+                @collection.addReply(new Tutoriapps.Models.Reply(data))
               else
                 @buffer.add(item)
         )
@@ -42,7 +43,18 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
 
   transferItems: (evt) =>
     evt.preventDefault()
-    @buffer.each((item) => @collection.add(item))
+    @buffer.each(
+      (item) =>
+        if @collection not instanceof Tutoriapps.Collections.Items
+          switch item.get('type')
+            when 'post'
+              item = new Tutoriapps.Models.Post(item.get('data'))
+            when 'board_pic'
+              item = new Tutoriapps.Models.BoardPic(item.get('data'))
+            when 'book'
+              item = new Tutoriapps.Models.Book(item.get('data'))
+        @collection.add(item)
+    )
     @buffer.reset()
 
   ISODateString: (d) ->

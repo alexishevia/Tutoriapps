@@ -5,6 +5,7 @@ class Tutoriapps.Views.Books extends Backbone.View
     @add = 'before' # where to add new books
     @collection.on('reset', @render)
     @collection.on('add', @addBook)
+    @collection.on('add_reply', @addReply)
     $(window).on('scroll', @windowScroll)
 
   render: =>
@@ -23,13 +24,12 @@ class Tutoriapps.Views.Books extends Backbone.View
       console.log('ERROR: @add value is not valid: ' + @add)
 
   appendBook: (book) =>
-    if book.id
-      view = new Tutoriapps.Views.Book(model: book)
-      @$el.append(view.render().el)
+    book.view = new Tutoriapps.Views.Book(model: book)
+    @$el.append(book.view.render().el)
 
   prependBook: (book) =>
-    view = new Tutoriapps.Views.Book(model: book)
-    @$el.prepend(view.render().el)
+    book.view = new Tutoriapps.Views.Book(model: book)
+    @$el.prepend(book.view.render().el)
 
   windowScroll: =>
     if $(window).scrollTop() == $(document).height() - $(window).height()
@@ -51,3 +51,7 @@ class Tutoriapps.Views.Books extends Backbone.View
           data.each( (book) => @collection.add(book) )
           @add = 'before'
     )
+
+  addReply: (reply) =>
+    book = @collection.get(reply.get('reply_to').id)
+    book.view.replies.add(reply)

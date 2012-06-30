@@ -77,6 +77,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
         books.fetch()
         views = [
           new Tutoriapps.Views.NewBookModal(collection: books)
+          new Tutoriapps.Views.LoadNewItems( collection: books, user_id: @user_id)
           new Tutoriapps.Views.Books(collection: books)
         ]
 

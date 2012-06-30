@@ -8,3 +8,8 @@ class Tutoriapps.Collections.Books extends Backbone.Collection
       @url += '&newer_than=' + options.newer_than
     if options.older_than
       @url += '&older_than=' + options.older_than
+    if options.include_replies
+      @url += '&include_replies=1'
+
+  addReply: (reply) =>
+    @trigger('add_reply', reply)
