@@ -18,3 +18,9 @@ child :author => :owner do
     end
   end
 end
+child :post => :reply_to do
+  node :type do |item|
+    item.class.to_s.underscore
+  end
+  attributes :id
+end

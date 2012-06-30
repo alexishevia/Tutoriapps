@@ -17,3 +17,6 @@ class Tutoriapps.Collections.Items extends Backbone.Collection
       @url += '&older_than=' + date
     if options.include_replies
       @url += '&include_replies=1'
+
+  addReply: (reply) =>
+    @trigger('add_reply', reply)

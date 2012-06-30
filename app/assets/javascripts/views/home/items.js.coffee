@@ -5,9 +5,13 @@ class Tutoriapps.Views.Items extends Backbone.View
     @add = 'before' # where to add new items
     @collection.on('reset', @render)
     @collection.on('add', @addItem)
-    options.posts.on('add', @addPost)
-    options.board_pics.on('add', @addBoardPic)
-    options.books.on('add', @addBook)
+    @collection.on('add_reply', @addReply)
+    @posts = options.posts
+    @posts.on('add', @addPost)
+    @board_pics = options.board_pics
+    @board_pics.on('add', @addBoardPic)
+    @books = options.books
+    @books.on('add', @addBook)
     $(window).on('scroll', @windowScroll)
 
   render: =>
@@ -22,18 +26,18 @@ class Tutoriapps.Views.Items extends Backbone.View
     switch type
       when 'post'
         post = new Tutoriapps.Models.Post(item.get('data'))
-        view = new Tutoriapps.Views.Post(model: post)
+        item.view = new Tutoriapps.Views.Post(model: post)
       when 'board_pic'
         board_pic = new Tutoriapps.Models.BoardPic(item.get('data'))
-        view = new Tutoriapps.Views.BoardPicInFeed(model: board_pic)
+        item.view = new Tutoriapps.Views.BoardPicInFeed(model: board_pic)
       when 'book'
         book = new Tutoriapps.Models.Book(item.get('data'))
-        view = new Tutoriapps.Views.Book(model: book)
-    if view
+        item.view = new Tutoriapps.Views.Book(model: book)
+    if item.view
       if @add == 'before'
-        @$el.prepend(view.render().el)
+        @$el.prepend(item.view.render().el)
       else if @add == 'after'
-        @$el.append(view.render().el)
+        @$el.append(item.view.render().el)
 
   addPost: (post) =>
     @collection.add({type:'post', data: post.toJSON()})
@@ -63,4 +67,13 @@ class Tutoriapps.Views.Items extends Backbone.View
           @add = 'after'
           data.each( (item) => @collection.add(item) )
           @add = 'before'
+    )
+
+  addReply: (reply) =>
+    type = reply.get('reply_to').type
+    $.each( @collection.where({type: type}),
+      (i, item) =>
+        if item.get('data').id = reply.get('reply_to').id
+          item.view.replies.add(reply)
+          return false
     )

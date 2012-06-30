@@ -1,6 +1,6 @@
 class Tutoriapps.Views.LoadNewItems extends Backbone.View
   className: 'new_items'
-  reloadTime: 15000
+  reloadTime: 5000
 
   events:
     'click': 'transferItems'
@@ -34,7 +34,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
             @newest_date = @ISODateString(new Date())
             if item.get('data').owner.id != @user_id
               if item.get('type') == 'reply'
-                console.log('add_reply')
+                @collection.addReply(new Tutoriapps.Models.Reply(item.get('data')))
               else
                 @buffer.add(item)
         )

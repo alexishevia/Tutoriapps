@@ -32,7 +32,7 @@ class Tutoriapps.Routers.Main extends Backbone.Router
       @showGroupContent(group, filter)
     else
       if tried_before
-        console.log('Error. Group Id "' + group_id + '" not found inside @groups.')
+        console.error('Error. Group Id "' + group_id + '" not found inside @groups.')
       else
         @groups.fetch( success: => @showGroup(group_id, filter, true) )
 
