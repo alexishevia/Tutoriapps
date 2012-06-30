@@ -12,5 +12,5 @@ class Tutoriapps.Views.GroupSelect extends Backbone.View
   appendButton: (group) =>
     view = new Tutoriapps.Views.GroupSelectButton(model: group)
     @$el.append(view.render().el)
-    if group.get('id') == 'home'
+    if group.get('id') == 'home' and @collection.length > 1
       @$el.append("<h2>" + I18n.t('activerecord.models.groups') + "</h2>")
