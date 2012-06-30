@@ -10,6 +10,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     @buffer = new Tutoriapps.Collections.Items([], {group: @collection.group})
     @buffer.on('reset', @render)
     @buffer.on('add', @render)
+    @newest_date = @ISODateString(new Date())
     setInterval(@loadNew, @reloadTime)
 
   render: =>
@@ -21,15 +22,21 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     this
 
   loadNew: =>
-    first = @buffer.first() || @collection.first()
     new_items = new Tutoriapps.Collections.Items( [],
       group: @collection.group
-      newer_than: first.get('data').created_at
+      newer_than: @newest_date
+      include_replies: true
     )
     new_items.fetch(
       success: (data)=>
         data.each(
-          (item) => @buffer.add(item) if item.get('data').owner.id != @user_id
+          (item) =>
+            @newest_date = @ISODateString(new Date())
+            if item.get('data').owner.id != @user_id
+              if item.get('type') == 'reply'
+                console.log('add_reply')
+              else
+                @buffer.add(item)
         )
     )
 
@@ -37,3 +44,12 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     evt.preventDefault()
     @buffer.each((item) => @collection.add(item))
     @buffer.reset()
+
+  ISODateString: (d) ->
+    pad = (n) -> if n < 10 then '0'+n else n
+    d.getUTCFullYear() + '-' +
+      pad(d.getUTCMonth()+1) + '-' +
+      pad(d.getUTCDate()) + 'T' +
+      pad(d.getUTCHours()) + ':' +
+      pad(d.getUTCMinutes()) + ':' +
+      pad(d.getUTCSeconds()) + 'Z'

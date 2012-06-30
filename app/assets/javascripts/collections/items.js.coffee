@@ -10,15 +10,10 @@ class Tutoriapps.Collections.Items extends Backbone.Collection
 
   initialize: (models, options) =>
     @group = options.group
-    @base_url = 'api/v1/groups/' + @group.id + '/all?'
-    @url = @base_url
+    @url = 'api/v1/groups/' + @group.id + '/all?'
     if date = options.newer_than
-      @newer_than(date)
+      @url += '&newer_than=' + date
     if date = options.older_than
-      @older_than(date)
-
-  newer_than: (date) =>
-    @url = @base_url + '&newer_than=' + date
-
-  older_than: (date) =>
-    @url = @base_url + '&older_than=' + date
+      @url += '&older_than=' + date
+    if options.include_replies
+      @url += '&include_replies=1'
