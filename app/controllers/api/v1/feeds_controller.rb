@@ -28,6 +28,12 @@ class Api::V1::FeedsController < ApplicationController
           .where('created_at < ?', params[:older_than])
           .order('created_at DESC').limit(params[:count])
       end
+      if params[:include_replies]
+        @feed_items += Reply.where('created_at > ?', params[:newer_than])
+          .where('created_at < ?', params[:older_than]).select{ |reply|
+            reply.post.group_id == group.id
+          }
+      end
     end
     @feed_items = @feed_items.sort{|a,b| a.created_at <=> b.created_at }
                   .reverse[0, params[:count]]

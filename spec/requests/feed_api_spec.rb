@@ -26,7 +26,7 @@ describe "Feed V1 API" do
     5.times do
       FactoryGirl.create(:post, :group => @groups[:fisica], :created_at => created_at)
       created_at += 1.hour
-      FactoryGirl.create(:reply, :post => @groups[:fisica].posts.last)
+      FactoryGirl.create(:reply, :post => @groups[:fisica].posts.last, :created_at => created_at)
       created_at += 1.hour
       FactoryGirl.create(:book, :group => @groups[:fisica], :created_at => created_at)
       created_at += 1.hour
