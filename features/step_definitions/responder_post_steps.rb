@@ -59,13 +59,15 @@ Cuando /^intente agregar el primer comentario en blanco$/ do
   step 'el post aparezca en el muro'
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
     page.click_link(I18n.t('helpers.reply'))
+    page.fill_in "text", :with => ""
+    page.find('.btn-primary').click
   end
-  step 'intente agregar un comentario en blanco'
 end
 
 Cuando /^intente agregar un comentario en blanco$/ do
   step 'el post aparezca en el muro'
   within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.fill_in "text", :with => ""
     page.find('.btn-primary').click
   end
 end
@@ -154,7 +156,9 @@ Entonces /^no aparecerá la opción de responder$/ do
 end
 
 Entonces /^el post seguirá sin comentarios$/ do
-  step 'se podrá observar que aún no tiene comentarios'
+  within find(:xpath, ".//*[contains(text(), '#{@post.text}')]").find(:xpath,".//ancestor::*[contains(@class, 'post')]") do
+    page.should_not have_css('.replies .reply')
+  end
 end
 
 Entonces /^el post seguirá con (\d+) comentarios$/ do |n|

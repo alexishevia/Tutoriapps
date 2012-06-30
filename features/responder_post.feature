@@ -17,7 +17,7 @@ Característica: Responder a un post
     Y que se ha creado 1 post en el grupo "Cálculo II"
     Y que el usuario "mengano@utp.ac.pa" ha iniciado sesión
 
-  @javascript 
+  @javascript
   Escenario: Ver post sin comentarios
     Dado que el post no ha recibido comentarios
     Cuando el post aparezca en el muro
