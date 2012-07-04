@@ -46,3 +46,7 @@ group :development, :test do
   gem 'rspec-rails', '2.9.0'
   gem 'therubyracer', '0.10.1'
 end
+
+group :production do
+  gem "pg"
+end
