@@ -14,12 +14,12 @@ gem 'validates_existence', '0.7.1'
 gem 'foreigner', '1.1.6'
 gem 'paperclip', '3.0.4'
 gem 'multipart_body', '0.2.1'
+gem 'twitter-bootstrap-rails', '2.0.8'
 
 group :assets do
   gem 'sass-rails', '3.2.5'
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '1.2.4'
-  gem 'twitter-bootstrap-rails', '2.0.8'
 end
 
 group :development do
