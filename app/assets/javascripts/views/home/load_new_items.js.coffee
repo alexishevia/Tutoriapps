@@ -1,6 +1,6 @@
 class Tutoriapps.Views.LoadNewItems extends Backbone.View
   className: 'new_items'
-  reloadTime: 5000
+  reloadTime: 30000
 
   events:
     'click': 'transferItems'

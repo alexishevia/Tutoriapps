@@ -50,7 +50,7 @@ Tutoriapps::Application.configure do
 
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
-  config.action_mailer.default_url_options = { :host => 'tutoriapps.com' }
+  config.action_mailer.default_url_options = { :host => 'tutoriapps.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
