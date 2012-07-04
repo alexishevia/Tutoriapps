@@ -7,4 +7,3 @@ public/system
 public/assets
 config/deploy.rb
 database.yml
-Gemfile.lock
