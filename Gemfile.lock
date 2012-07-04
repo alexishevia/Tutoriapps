@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/fnando/i18n-js.git
+  revision: eeec14066b50f72876aa789c9b1f226172452798
+  specs:
+    i18n-js (2.1.2)
+      i18n
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -111,8 +118,6 @@ GEM
       json (>= 1.4.6)
     hike (1.2.1)
     i18n (0.6.0)
-    i18n-js (3.0.0.rc2)
-      i18n
     journey (1.0.3)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
@@ -259,7 +264,7 @@ DEPENDENCIES
   factory_girl_rails (= 3.1.0)
   foreigner (= 1.1.6)
   forgery (= 0.5.0)
-  i18n-js (= 3.0.0.rc2)
+  i18n-js!
   jquery-rails (= 2.0.2)
   launchy (= 2.1.0)
   multipart_body (= 0.2.1)
