@@ -58,6 +58,6 @@ module Tutoriapps
     config.assets.version = '1.0'
 
     # Generate translations.js for i18n-js
-    config.middleware.use I18n::JS::Middleware
+    # config.middleware.use I18n::JS::Middleware
   end
 end
