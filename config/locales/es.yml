@@ -150,6 +150,7 @@ es:
       add1: Agregar
       send: Enviar
       save: Guardar
+      publish: Publicar
       share: Compartir %{model}
       share1: Compartir
     messages:

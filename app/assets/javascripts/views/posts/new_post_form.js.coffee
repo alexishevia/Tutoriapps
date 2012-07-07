@@ -13,6 +13,7 @@ class Tutoriapps.Views.NewPostForm extends Backbone.View
   render: =>
     translations =
       t_write_post: I18n.t('helpers.posts.write')
+      t_submit: I18n.t('helpers.submit.publish')
     $(@el).html(@template(translations))
     this
 
