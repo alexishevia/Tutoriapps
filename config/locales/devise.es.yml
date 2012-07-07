@@ -10,7 +10,7 @@ es:
         other: "Han habido %{count} errores:"
 
   devise:
-    sign_up: Crear Cuenta
+    sign_up: Crear cuenta
     sign_in: Iniciar Sesión
     edit_account: Editar Mi Cuenta
     cancel_account: Cerrar Mi Cuenta
