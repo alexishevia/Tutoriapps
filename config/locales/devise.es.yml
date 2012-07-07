@@ -11,9 +11,9 @@ es:
 
   devise:
     sign_up: Crear cuenta
-    sign_in: Iniciar Sesión
-    edit_account: Editar Mi Cuenta
-    cancel_account: Cerrar Mi Cuenta
+    sign_in: Iniciar sesión
+    edit_account: Editar mi cuenta
+    cancel_account: Cerrar mi cuenta
     sign_up_you: Regístrate
     sign_up_message: Es fácil y rápido
     failure:

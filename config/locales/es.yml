@@ -162,9 +162,14 @@ es:
       reply_error: Tu respuesta no pudo ser enviada. Por favor intente nuevamente.
     posts:
       write: Escribe tu post...
+      write1: Escribe un post
     comments:
       see_all: Ver todos los comentarios
       write: Escribe tu respuesta o comentario...
+    board_pics:
+      share: Comparte una pizarra
+    books:
+      share: Comparte un libro
   number:
     currency:
       format:

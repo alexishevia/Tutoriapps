@@ -13,7 +13,11 @@ class Tutoriapps.Views.FormSelect extends Backbone.View
     'click a': 'change_active'
 
   render: =>
-    @$el.html(@template())
+    translations =
+      t_write_post: I18n.t('helpers.posts.write1')
+      t_share_book: I18n.t('helpers.books.share')
+      t_share_board_pic: I18n.t('helpers.board_pics.share')
+    @$el.html(@template(translations))
     if @group.get('id') == 'home'
       @$('.board_pics').remove()
     switch @active_form
