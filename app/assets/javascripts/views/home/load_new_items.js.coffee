@@ -29,9 +29,9 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     )
     new_items.fetch(
       success: (data)=>
+        @newest_date = @ISODateString(new Date())
         data.each(
           (item) =>
-            @newest_date = @ISODateString(new Date())
             data = item.get('data')
             if data.owner.id != @user_id
               if item.get('type') == 'reply'
