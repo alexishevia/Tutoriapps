@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.2'
 gem 'jquery-rails', '2.0.2'
 gem 'mysql2', '0.3.11'
+gem 'pg', '0.14.0'
 gem 'devise', '2.0.4'
 gem 'cancan', '1.6.7'
 gem 'simple_form', '2.0.1'
@@ -48,6 +49,5 @@ group :development, :test do
 end
 
 group :production do
-  gem "pg"
   gem "aws-sdk"
 end

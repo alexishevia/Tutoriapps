@@ -24,7 +24,7 @@ describe "Posts V1 API" do
 
     created_at = 5.days.ago
     8.times do
-      FactoryGirl.create(:post, :group => @groups[:fisica])
+      FactoryGirl.create(:post, :group => @groups[:fisica], :created_at => created_at)
       created_at += 1.hour
     end
 

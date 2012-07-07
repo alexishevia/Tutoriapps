@@ -275,7 +275,7 @@ DEPENDENCIES
   multipart_body (= 0.2.1)
   mysql2 (= 0.3.11)
   paperclip (= 3.0.4)
-  pg
+  pg (= 0.14.0)
   quiet_assets (= 1.0.0)
   rabl (= 0.6.12)
   rack-test (= 0.6.1)

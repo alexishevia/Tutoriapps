@@ -18,10 +18,6 @@ class Group < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  def to_param
-    "#{id}-#{name.parameterize}"
-  end
-
   def unregistered_members
     enrollments.where('user_id IS NULL').collect do |enrollment|
       User.new(:email => enrollment.user_email)

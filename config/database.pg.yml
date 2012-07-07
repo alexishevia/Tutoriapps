@@ -1,11 +1,9 @@
 common: &common
-  adapter: mysql2
-  host: localhost
-  username: root
-  password:
-  encoding: utf8
-  pool: 5
-  socket: /var/run/mysqld/mysqld.sock
+ adapter: postgresql
+ username: user_name
+ password: user_password
+ encoding: utf8
+ pool: 5
 
 development:
   <<: *common

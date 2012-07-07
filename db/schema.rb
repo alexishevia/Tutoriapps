@@ -48,9 +48,6 @@ ActiveRecord::Schema.define(:version => 20120629010808) do
     t.integer  "user_id"
   end
 
-  add_index "enrollments", ["group_id"], :name => "enrollments_group_id_fk"
-  add_index "enrollments", ["user_id"], :name => "enrollments_user_id_fk"
-
   create_table "feedbacks", :force => true do |t|
     t.text     "text"
     t.datetime "created_at", :null => false

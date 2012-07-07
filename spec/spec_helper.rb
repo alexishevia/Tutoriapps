@@ -36,18 +36,22 @@ Spork.prefork do
       DatabaseCleaner.strategy = :transaction
     end
 
-    config.before(:all) do 
-      DatabaseCleaner.clean_with :truncation      
+    config.before(:all) do
+      DatabaseCleaner.clean_with :truncation
     end
 
-    config.after(:all) do 
-      DatabaseCleaner.clean_with :truncation      
+    config.after(:all) do
+      DatabaseCleaner.clean_with :truncation
     end
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+
+    # If true, RSpec will stop immediately and output the failure details
+    # whenever it fails for the first time
+    config.fail_fast = true
 
     config.include(EmailSpec::Helpers)
     config.include(EmailSpec::Matchers)
