@@ -76,6 +76,6 @@ Tutoriapps::Application.configure do
      :access_key_id => ENV['S3_KEY'],
      :secret_access_key => ENV['S3_SECRET']
    },
-   :path => "/:style/:filename", :s3_protocol => 'https'
+   :path => "/:style/:filename", :s3_protocol => 'http'
  }
 end

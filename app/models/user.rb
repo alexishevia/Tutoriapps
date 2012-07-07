@@ -46,8 +46,10 @@ class User < ActiveRecord::Base
   has_many :posts, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   has_many :groups, :through => :enrollments
-  has_attached_file :profile_pic, :styles => { :medium => "100x100#", :thumb => "75x75#" },
+  has_attached_file :profile_pic, {
+    :styles => { :medium => "100x100#", :thumb => "75x75#" },
     :default_url => '/assets/unknown-user.png'
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
   after_create :reload_enrollments
 
