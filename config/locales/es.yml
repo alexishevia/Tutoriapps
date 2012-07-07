@@ -2,7 +2,7 @@ es:
   slogan: Aprende · Comparte · Enseña
   error: Error
   fix_and_try_again: Por favor corrija estos errores y vuélvalo a intentar
-  my_account: Mi Cuenta
+  my_account: Mi cuenta
   date:
     abbr_day_names:
     - dom
@@ -132,7 +132,7 @@ es:
     suggestions: Sugerencias
     reply: Responder
     delete: Eliminar
-    sign_out: Cerrar Sesión
+    sign_out: Cerrar sesión
     new_items:
       one: "%{count} artículo nuevo"
       other: "%{count} artículos nuevos"
