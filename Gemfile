@@ -25,7 +25,7 @@ end
 group :development do
   gem 'annotate', '2.4.0'
   gem 'quiet_assets', '1.0.0'
-  # gem 'thin', '1.3.1' #use thin instead of webrick for rails s
+  gem 'thin', '1.3.1' #use thin instead of webrick for rails s
 end
 
 group :test do
