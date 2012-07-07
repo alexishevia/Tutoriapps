@@ -11,7 +11,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     @buffer.on('reset', @render)
     @buffer.on('add', @render)
     @newest_date = @ISODateString(new Date())
-    setInterval(@loadNew, @reloadTime)
+    setTimeout(@loadNew, @reloadTime)
 
   render: =>
     if @buffer.length > 0
@@ -30,6 +30,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     new_items.fetch(
       success: (data)=>
         @newest_date = @ISODateString(new Date())
+        setTimeout(@loadNew, @reloadTime)
         data.each(
           (item) =>
             data = item.get('data')
