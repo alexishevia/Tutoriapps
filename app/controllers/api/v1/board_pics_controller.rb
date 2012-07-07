@@ -5,7 +5,7 @@ class Api::V1::BoardPicsController < ApplicationController
 
   def index
     if params[:group_id] == 'home'
-      dates = current_user.readable(:board_pics)
+      dates = current_user.readable(:board_pics).select('class_date')
         .where('class_date > ?', params[:newer_than])
         .where('class_date < ?', params[:older_than])
         .group('class_date')
@@ -18,7 +18,7 @@ class Api::V1::BoardPicsController < ApplicationController
     else
       group = Group.find(params[:group_id])
       authorize! :read, group
-      dates = group.board_pics
+      dates = group.board_pics.select('class_date')
         .where('class_date > ?', params[:newer_than])
         .where('class_date < ?', params[:older_than])
         .group('class_date')

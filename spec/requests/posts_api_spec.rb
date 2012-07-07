@@ -94,7 +94,7 @@ describe "Posts V1 API" do
           @group = @groups[:fisica]
           @fifth = @group.posts.order('created_at DESC').offset(4).first
           url = "/api/v1/groups/#{@group.id}/posts?auth_token=#{token}"
-          url += "&older_than=#{@fifth.created_at.utc.iso8601}"
+          url += "&older_than=#{@fifth.created_at.utc.iso8601(10)}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)
@@ -116,7 +116,7 @@ describe "Posts V1 API" do
           @group = @groups[:fisica]
           @fifth = @group.posts.order('created_at DESC').offset(4).first
           url = "/api/v1/groups/#{@group.id}/posts?auth_token=#{token}"
-          url += "&newer_than=#{@fifth.created_at.utc.iso8601}"
+          url += "&newer_than=#{@fifth.created_at.utc.iso8601(10)}"
           get url, nil, @headers
           @status = response.status
           @data = JSON.parse(response.body)

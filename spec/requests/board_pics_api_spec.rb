@@ -102,8 +102,10 @@ describe "Board Pics V1 API" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
-          @fifth = @group.board_pics.group('class_date').order('class_date DESC')
-            .offset(4).first
+          fifth_date = @group.board_pics.select('class_date').group('class_date')
+            .order('class_date DESC').offset(4).first
+          @fifth = @group.board_pics.where('class_date = ?',
+            fifth_date.class_date).first
           url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{token}"
           url += "&older_than=#{@fifth.class_date.iso8601}"
           get url, nil, @headers
@@ -125,8 +127,10 @@ describe "Board Pics V1 API" do
         before(:all) do
           token = @users[:fulano].authentication_token
           @group = @groups[:fisica]
-          @fifth = @group.board_pics.group('class_date').order('class_date DESC')
-            .offset(4).first
+          fifth_date = @group.board_pics.select('class_date').group('class_date')
+            .order('class_date DESC').offset(4).first
+          @fifth = @group.board_pics.where('class_date = ?',
+            fifth_date.class_date).first
           url = "/api/v1/groups/#{@group.id}/board_pics?auth_token=#{token}"
           url += "&newer_than=#{@fifth.class_date.iso8601}"
           get url, nil, @headers
