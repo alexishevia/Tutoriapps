@@ -265,8 +265,8 @@ es:
         title: Título
         author: Autor
         publisher: Editorial
-        additional_info: Información Adicional
-        contact_info: Información de Contacto
+        additional_info: Información adicional
+        contact_info: Información de contacto
         price: Precio
         offer_type: Disponible para
         offer_types:
