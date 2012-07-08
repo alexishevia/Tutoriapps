@@ -10,8 +10,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     @buffer = new (@collection.constructor)([], {group: @collection.group})
     @buffer.on('reset', @render)
     @buffer.on('add', @render)
-    @newest_date = @ISODateString(new Date())
-    setTimeout(@loadNew, @reloadTime)
+    @newTimeout()
 
   render: =>
     if @buffer.length > 0
@@ -24,13 +23,12 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
   loadNew: =>
     new_items = new (@collection.constructor)([],
       group: @collection.group
-      newer_than: @newest_date
+      newer_than: @ISODateString(@newest_date)
       include_replies: true
     )
     new_items.fetch(
       success: (data)=>
-        @newest_date = @ISODateString(new Date())
-        setTimeout(@loadNew, @reloadTime)
+        @newTimeout()
         data.each(
           (item) =>
             data = item.get('data')
@@ -38,6 +36,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
               if item.get('type') == 'reply'
                 @collection.addReply(new Tutoriapps.Models.Reply(data))
               else
+                @newTimeout(data.created_at)
                 @buffer.add(item)
         )
     )
@@ -65,4 +64,12 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
       pad(d.getUTCDate()) + 'T' +
       pad(d.getUTCHours()) + ':' +
       pad(d.getUTCMinutes()) + ':' +
-      pad(d.getUTCSeconds()) + 'Z'
+      pad(d.getUTCSeconds()) + '.' +
+      pad(d.getUTCMilliseconds()) + 'Z'
+
+  newTimeout: (new_date = new Date()) =>
+    clearTimeout(@timeout)
+    @newest_date ||= new_date
+    if new_date > @newest_date
+      @newest_date = new_date
+    @timeout = setTimeout(@loadNew, @reloadTime)
