@@ -1,5 +1,8 @@
 object @book
-attributes :id, :title, :author, :publisher, :additional_info, :contact_info, :offer_type, :created_at
+attributes :id, :title, :author, :publisher, :additional_info, :contact_info, :offer_type
+node(:created_at) do |post|
+  post.created_at.utc.iso8601(6)
+end
 node(:price) do |book|
   book.price.to_f
 end

@@ -1,5 +1,8 @@
 object @post
 attributes :id, :text, :created_at
+node(:created_at) do |post|
+  post.created_at.utc.iso8601(6)
+end
 child :author => :author do
   attributes :id, :name
   child :profile_pic => :profile_pic do

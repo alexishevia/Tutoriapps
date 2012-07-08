@@ -1,5 +1,8 @@
 object @board_pic
-attributes :id, :class_date, :created_at
+attributes :id, :class_date
+node(:created_at) do |post|
+  post.created_at.utc.iso8601(6)
+end
 child :image => :image do
   attributes :url, :size, :content_type
   node :thumbnail_url do |img|
