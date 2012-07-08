@@ -21,6 +21,7 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     this
 
   loadNew: =>
+    console.log('newer_than: ' + @ISODateString(@newest_date))
     new_items = new (@collection.constructor)([],
       group: @collection.group
       newer_than: @ISODateString(@newest_date)
@@ -36,7 +37,8 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
               if item.get('type') == 'reply'
                 @collection.addReply(new Tutoriapps.Models.Reply(data))
               else
-                @newTimeout(data.created_at)
+                console.log('nuevo articulo: ' + @ISODateString(new Date(data.created_at)))
+                @newTimeout(new Date(data.created_at))
                 @buffer.add(item)
         )
     )
