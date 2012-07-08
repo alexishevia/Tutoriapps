@@ -10,7 +10,8 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     @buffer = new (@collection.constructor)([], {group: @collection.group})
     @buffer.on('reset', @render)
     @buffer.on('add', @render)
-    @newTimeout()
+    @collection.on('reset', @newTimeoutFromCollection)
+    @newTimeoutFromCollection()
 
   render: =>
     if @buffer.length > 0
@@ -75,3 +76,10 @@ class Tutoriapps.Views.LoadNewItems extends Backbone.View
     if new_date > @newest_date
       @newest_date = new_date
     @timeout = setTimeout(@loadNew, @reloadTime)
+
+  newTimeoutFromCollection: =>
+    if first = @collection.first()
+      created_at = first.get('created_at') || first.get('data').created_at
+      @newTimeout(new Date(created_at))
+    else
+      @newTimeout()

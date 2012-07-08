@@ -1,5 +1,8 @@
 object @reply
-attributes :id, :text, :created_at
+attributes :id, :text
+node(:created_at) do |obj|
+  obj.created_at.utc.iso8601(3)
+end
 child :author => :author do
   attributes :id, :name
   child :profile_pic => :profile_pic do

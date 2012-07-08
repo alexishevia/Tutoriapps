@@ -1,5 +1,5 @@
 object @post
-attributes :id, :text, :created_at
+attributes :id, :text
 node(:created_at) do |post|
   post.created_at.utc.iso8601(3)
 end
