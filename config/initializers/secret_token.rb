@@ -20,4 +20,4 @@ def find_secure_token
   end
 end
 
-YOUR_RAILS_APP::Application.config.secret_token = find_secure_token
+Tutoriapps::Application.config.secret_token = find_secure_token
